@@ -458,32 +458,31 @@ export default function App() {
       {ctx ? (
         <AppCtx.Provider value={ctx}>
           <div className="overlay-layer">
-            <TopBar entries={entries} activeId={activeId} onPick={pickScenario} onHowItWorks={() => setShowMethod(true)} />
+            <TopBar
+              entries={entries}
+              activeId={activeId}
+              onPick={pickScenario}
+              onHowItWorks={() => setShowMethod(true)}
+              demo={Boolean(scenario?.mock)}
+            />
 
-            {error ? (
+            {error || demoParts.length || handle?.kind === 'stub' ? (
               <div className="banner-stack" aria-live="polite">
-                <div className="banner banner-error">
-                  {error}
-                  <button type="button" className="btn btn-ghost btn-small" onClick={() => setError(null)} aria-label="Dismiss">
-                    <Icon name="close" size={12} />
-                  </button>
-                </div>
+                {error ? (
+                  <div className="banner banner-error">
+                    {error}
+                    <button type="button" className="btn btn-ghost btn-small" onClick={() => setError(null)} aria-label="Dismiss">
+                      <Icon name="close" size={12} />
+                    </button>
+                  </div>
+                ) : null}
+                {demoParts.length ? <div className="banner banner-demo">Built-in placeholder {demoParts.join(', ')} (pipeline files not found)</div> : null}
+                {handle?.kind === 'stub' ? <div className="banner banner-demo">Simple preview map (pixel-art renderer not loaded)</div> : null}
               </div>
             ) : null}
 
             <div className={`left-col ${sheet === 'proposal' || (narrow && selected !== null) ? 'sheet-open' : ''}`}>
               {sheetClose}
-              {scenario?.mock || demoParts.length || handle?.kind === 'stub' ? (
-                <div className="ribbons" aria-live="polite">
-                  {scenario?.mock ? (
-                    <div className="banner">
-                      <Icon name="sparkle" size={16} /> Demo data — real Nemotron results pending
-                    </div>
-                  ) : null}
-                  {demoParts.length ? <div className="banner banner-demo">Built-in placeholder {demoParts.join(', ')} (pipeline files not found)</div> : null}
-                  {handle?.kind === 'stub' ? <div className="banner banner-demo">Simple preview map (pixel-art renderer not loaded)</div> : null}
-                </div>
-              ) : null}
               {selected !== null ? (
                 <ResidentCard
                   residentId={selected}
@@ -505,16 +504,18 @@ export default function App() {
                     health={health}
                     apiOffline={apiOffline}
                   />
-                ) : (
-                  <>
-                    {scenario ? <ProposalPanel scenario={scenario} collapsed={proposalCollapsed} onToggle={() => setProposalCollapsed(!proposalCollapsed)} /> : null}
-                    <div>
-                      <button type="button" className="btn" onClick={() => setEditing(true)}>
+                ) : scenario ? (
+                  <ProposalPanel
+                    scenario={scenario}
+                    collapsed={proposalCollapsed}
+                    onToggle={() => setProposalCollapsed(!proposalCollapsed)}
+                    footer={
+                      <button type="button" className="btn btn-small" onClick={() => setEditing(true)}>
                         <Icon name="pencil" size={14} /> Edit and run again
                       </button>
-                    </div>
-                  </>
-                )
+                    }
+                  />
+                ) : null
               ) : scenario ? (
                 <ProposalPanel scenario={scenario} collapsed={proposalCollapsed} onToggle={() => setProposalCollapsed(!proposalCollapsed)} />
               ) : null}

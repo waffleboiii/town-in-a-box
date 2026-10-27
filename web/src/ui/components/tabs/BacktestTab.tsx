@@ -3,7 +3,6 @@ import { useState } from 'react';
 import type { BacktestSector } from '../../../types';
 import { useApp } from '../../context';
 import { niceDate, pct, pct2, pts } from '../../format';
-import { Icon } from '../../icons';
 import { Seg, useTooltip } from '../common';
 
 export function BacktestTab() {
@@ -21,7 +20,7 @@ export function BacktestTab() {
   const markers = [
     { key: 'actual', label: 'Official vote', value: bt.actual.yesShare, shape: 'diamond' as const },
     { key: 'att', label: 'Simulated likely voters', value: sim.attendeesYes, shape: 'square' as const },
-    { key: 'all', label: 'Simulated everyone', value: sim.everyoneYes, shape: 'hollow' as const },
+    { key: 'all', label: 'Simulated, all Paris residents', value: sim.everyoneYes, shape: 'hollow' as const },
     ...(bt.poll ? [{ key: 'poll', label: `Poll (${bt.poll.org})`, value: bt.poll.yesShare, shape: 'circle' as const }] : []),
   ].filter((m) => Number.isFinite(m.value));
 
@@ -39,9 +38,7 @@ export function BacktestTab() {
   return (
     <div>
       <div className="section">
-        <h3>
-          <Icon name="ballot" size={16} /> {bt.voteName}
-        </h3>
+        <h4 className="bt-title">{bt.voteName}</h4>
         <p className="small muted">
           {niceDate(bt.date)} · turnout {pct2(bt.actual.turnout)}
         </p>
@@ -63,10 +60,10 @@ export function BacktestTab() {
             <Marker key={m.key} shape={m.shape} left={m.value} />
           ))}
         </div>
-        <div style={{ marginTop: 16 }}>
+        <div className="marker-list">
           {markers.map((m) => (
-            <div key={m.key} className="row-between small" style={{ padding: '2px 0' }}>
-              <span className="row" style={{ gap: 8 }}>
+            <div key={m.key} className="row-between small">
+              <span className="row">
                 <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
                   <MarkerShape shape={m.shape} />
                 </svg>
@@ -87,11 +84,11 @@ export function BacktestTab() {
 
       <div className="section">
         <div className="metric-grid">
-          <div className="card metric">
+          <div className="metric">
             <div className="m-value num">{(metrics.sectorMae * 100).toFixed(1)} pts</div>
             <div className="m-label">Average error by sector (likely voters)</div>
           </div>
-          <div className="card metric">
+          <div className="metric">
             <div className="m-value num">r = {metrics.sectorCorrelation.toFixed(2)}</div>
             <div className="m-label">Do high and low sectors line up? (1 = perfectly)</div>
           </div>
@@ -112,8 +109,8 @@ export function BacktestTab() {
           />
         </div>
         <Scatter sectors={sectors} yView={yView} tip={tip} />
-        <div className="row-between wrap" style={{ marginTop: 6 }}>
-          <span className="small muted">Colour the map:</span>
+        <div className="row-between wrap tab-tools">
+          <span className="small muted">Colour the map</span>
           <Seg
             label="Colour the map"
             value={overlay === 'backtest_actual' || overlay === 'backtest_sim' ? overlay : 'none'}
@@ -129,9 +126,7 @@ export function BacktestTab() {
 
       {after && maeAfter !== undefined ? (
         <div className="section">
-          <h3>
-            <Icon name="people" size={16} /> Does talking help?
-          </h3>
+          <h3>Does talking help?</h3>
           <table className="tbl">
             <thead>
               <tr>
@@ -158,7 +153,7 @@ export function BacktestTab() {
               </tr>
             </tbody>
           </table>
-          <p className="small" style={{ marginTop: 6 }}>
+          <p className="small after-table">
             <b>{talkVerdict}</b> Official result: {pct2(bt.actual.yesShare)}.
           </p>
         </div>
@@ -187,9 +182,7 @@ export function BacktestTab() {
                 <tr key={b.name}>
                   <td>
                     {b.name}
-                    <div className="muted" style={{ fontSize: 14 }}>
-                      {b.description}
-                    </div>
+                    <div className="muted small">{b.description}</div>
                   </td>
                   <td className="r">{Number.isFinite(b.yesShare) ? pct(b.yesShare) : 'pending'}</td>
                   <td className="r">{b.sectorMae !== undefined && Number.isFinite(b.sectorMae) ? `${(b.sectorMae * 100).toFixed(1)} pts` : '–'}</td>
@@ -201,17 +194,15 @@ export function BacktestTab() {
       ) : null}
 
       <div className="section">
-        <div className="card callout">
-          <h3 style={{ marginBottom: 4 }}>
-            <Icon name="eye" size={16} /> Leakage check: does the model remember the result?
-          </h3>
+        <div className="callout">
+          <h3>Leakage check: does the model remember the result?</h3>
           {bt.leakage.probed ? (
             <>
               <p className="small">
                 <b>Bare model’s answer:</b> “{bt.leakage.bareModelAnswer ?? '–'}”
               </p>
               {bt.leakage.verdict ? (
-                <p className="small" style={{ marginTop: 4 }}>
+                <p className="small">
                   <b>Verdict:</b> {bt.leakage.verdict}
                 </p>
               ) : null}
@@ -262,7 +253,7 @@ function Marker({ shape, left }: { shape: Shape; left: number }) {
 function Scatter({ sectors, yView, tip }: { sectors: BacktestSector[]; yView: 'attendees' | 'everyone'; tip: ReturnType<typeof useTooltip> }) {
   const W = 320;
   const H = 230;
-  const pad = { l: 40, r: 10, t: 10, b: 34 };
+  const pad = { l: 48, r: 10, t: 10, b: 34 };
   const ys = sectors.map((s) => (yView === 'attendees' ? s.simAttendeesYes : s.simEveryoneYes));
   const xs = sectors.map((s) => s.actualYes);
   const all = [...xs, ...ys].filter(Number.isFinite);
@@ -292,7 +283,7 @@ function Scatter({ sectors, yView, tip }: { sectors: BacktestSector[]; yView: 'a
       <text x={(W + pad.l) / 2} y={H - 4} textAnchor="middle">
         Official “pour” by sector
       </text>
-      <text x={12} y={(H - pad.b) / 2} textAnchor="middle" transform={`rotate(-90 12 ${(H - pad.b) / 2})`}>
+      <text x={10} y={(H - pad.b) / 2} textAnchor="middle" transform={`rotate(-90 10 ${(H - pad.b) / 2})`}>
         Simulated
       </text>
       {sectors.map((s, i) => {

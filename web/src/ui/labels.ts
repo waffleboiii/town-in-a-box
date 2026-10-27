@@ -45,6 +45,25 @@ export const KIND_BADGE: Record<ScenarioKind, string> = {
   custom: 'Your proposal',
 };
 
+/** Short names for the scenario switcher (the full title is shown in the proposal panel). */
+const SHORT_TITLE: Record<string, string> = {
+  saint_denis_datacenter: 'AI data centre',
+  paris_suv_2024: 'SUV parking fee',
+  paris_scooters_2023: 'Rental e-scooters',
+  custom: 'Your own idea',
+};
+
+export function shortTitle(id: string, title: string): string {
+  return SHORT_TITLE[id] ?? title;
+}
+
+/** One-line kicker above a scenario name: "Hypothetical", "Real vote · 2024", "Live test". */
+export function kindKicker(kind: ScenarioKind, date?: string): string {
+  if (kind === 'backtest') return date ? `Real vote · ${date.slice(0, 4)}` : 'Real vote';
+  if (kind === 'custom') return 'Live test';
+  return 'Hypothetical';
+}
+
 export const TENURE_LABEL: Record<Tenure, string> = {
   owner: 'Owns their home',
   private_renter: 'Rents privately',

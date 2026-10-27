@@ -8,7 +8,7 @@ export function LoadingScreen({ progress, label, done, error }: { progress: numb
   return (
     <div className={`loading ${done ? 'done' : ''}`} aria-hidden={done}>
       <div className="panel loading-box" role="status" aria-live="polite">
-        <div className="bob" style={{ color: 'var(--wood-9)' }}>
+        <div className="bob">
           <Icon name="house" size={64} />
         </div>
         <h1>Town-in-a-Box</h1>
@@ -19,7 +19,7 @@ export function LoadingScreen({ progress, label, done, error }: { progress: numb
           ))}
         </div>
         {error ? (
-          <p className="banner banner-error" style={{ display: 'flex' }}>
+          <p className="banner banner-error banner-block">
             {error}
           </p>
         ) : (

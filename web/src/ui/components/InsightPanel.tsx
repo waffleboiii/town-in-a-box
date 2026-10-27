@@ -9,13 +9,13 @@ import { OverviewTab } from './tabs/OverviewTab';
 import { TalkTab } from './tabs/TalkTab';
 import { ThemesTab } from './tabs/ThemesTab';
 
-const TABS: { id: TabId; label: string; icon: string }[] = [
-  { id: 'overview', label: 'Overview', icon: 'eye' },
-  { id: 'consult', label: 'Who to consult', icon: 'pin' },
-  { id: 'themes', label: 'Themes', icon: 'chat' },
-  { id: 'districts', label: 'Districts', icon: 'map' },
-  { id: 'backtest', label: 'Backtest', icon: 'ballot' },
-  { id: 'talk', label: 'Talk', icon: 'people' },
+const TABS: { id: TabId; label: string; icon: string; title: string }[] = [
+  { id: 'overview', label: 'Overview', icon: 'eye', title: 'How the town reacts' },
+  { id: 'consult', label: 'Consult', icon: 'pin', title: 'Who to consult: groups a consultation would under-hear' },
+  { id: 'themes', label: 'Themes', icon: 'chat', title: 'The arguments residents gave' },
+  { id: 'districts', label: 'Districts', icon: 'map', title: 'Results by district' },
+  { id: 'backtest', label: 'Backtest', icon: 'ballot', title: 'Simulation against the official result' },
+  { id: 'talk', label: 'Talk', icon: 'people', title: 'Neighbour conversations' },
 ];
 
 export function availableTabs(s: Scenario | null): TabId[] {
@@ -38,10 +38,18 @@ export function InsightPanel({
   const current = tabs.some((t) => t.id === tab) ? tab : 'overview';
   return (
     <section className={`panel side-panel insights ${collapsed ? 'collapsed' : ''}`} aria-label="What the simulation shows">
-      <div className="row-between" style={{ padding: '4px 6px 0 10px' }}>
-        <h2 style={{ fontSize: 18, color: 'var(--wood-9)' }}>What the town says</h2>
-        <button type="button" className="btn btn-icon btn-small" onClick={onToggle} aria-expanded={!collapsed} aria-label={collapsed ? 'Show the analysis' : 'Hide the analysis'}>
-          <Icon name={collapsed ? 'left' : 'right'} size={14} style={{ transform: 'rotate(-90deg)' }} />
+      <div className="panel-head">
+        <div className="head-text">
+          <h2>What the town says</h2>
+        </div>
+        <button
+          type="button"
+          className="btn btn-ghost btn-icon"
+          onClick={onToggle}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? 'Show the analysis' : 'Hide the analysis'}
+        >
+          <Icon name="left" size={14} style={{ transform: collapsed ? 'rotate(-90deg)' : 'rotate(90deg)' }} />
         </button>
       </div>
       {!collapsed ? (
@@ -57,6 +65,7 @@ export function InsightPanel({
                 aria-selected={current === t.id}
                 tabIndex={current === t.id ? 0 : -1}
                 className="tab"
+                title={t.title}
                 onClick={() => onTab(t.id)}
                 onKeyDown={(e) => {
                   if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -66,8 +75,8 @@ export function InsightPanel({
                   document.getElementById(`tab-${next.id}`)?.focus();
                 }}
               >
-                <Icon name={t.icon} size={12} />
-                {t.label}
+                <Icon name={t.icon} size={16} />
+                <span>{t.label}</span>
               </button>
             ))}
           </div>
@@ -76,7 +85,7 @@ export function InsightPanel({
             {!scenario ? (
               <div className="empty">
                 <Icon name="pencil" size={36} />
-                <p style={{ marginTop: 8 }}>Your results will appear here once you run your proposal.</p>
+                <p>Your results will appear here once you run your proposal.</p>
               </div>
             ) : current === 'overview' ? (
               <OverviewTab />

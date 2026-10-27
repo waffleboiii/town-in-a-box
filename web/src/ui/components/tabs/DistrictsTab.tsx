@@ -59,16 +59,16 @@ export function DistrictsTab() {
           ]}
         />
       </div>
-      <div className="legend" style={{ margin: '4px 0 6px' }}>
+      <div className="legend district-legend">
         <span>
-          <i style={{ background: 'var(--paper-3)', boxShadow: 'inset 0 0 0 2px var(--wood-9)' }} />
+          <i className="sw-everyone" />
           Everyone
         </span>
         <span>
-          <i style={{ background: 'var(--lantern)', boxShadow: 'inset 0 0 0 2px var(--wood-9)' }} />
+          <i className="sw-attendees" />
           Likely to show up
         </span>
-        <span className="muted">line = 50% in favour</span>
+        <span className="muted">centre line = 50% in favour</span>
       </div>
       {sorted.map((r) => {
         const d = districtsByIdx.get(r.districtIdx)!;
@@ -89,10 +89,7 @@ export function DistrictsTab() {
             <span className="d-name">
               {d.kind === 'arrondissement' ? `Paris ${d.name}` : d.name}
               {d.kind === 'commune' ? (
-                <span className="muted" style={{ fontWeight: 400 }}>
-                  {' '}
-                  {d.dept}
-                </span>
+                <span className="d-dept"> {d.dept}</span>
               ) : null}
             </span>
             <span className="dot-track" aria-hidden="true">

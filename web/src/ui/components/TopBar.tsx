@@ -1,6 +1,6 @@
-/** Logo, the scenario cards, the permanent "simulated" badge and the "How it works" button. */
+/** One bar across the top: logo, the scenario switcher, the "simulated" status and the "How it works" button. */
 import type { ScenarioIndexEntry } from '../../types';
-import { KIND_BADGE } from '../labels';
+import { kindKicker, shortTitle } from '../labels';
 import { Icon } from '../icons';
 
 export const CUSTOM_ENTRY: ScenarioIndexEntry = {
@@ -19,47 +19,60 @@ export function TopBar({
   activeId,
   onPick,
   onHowItWorks,
+  demo,
 }: {
   entries: ScenarioIndexEntry[];
   activeId: string | null;
   onPick: (id: string) => void;
   onHowItWorks: () => void;
+  /** The current results are placeholders (no Nemotron run yet). */
+  demo: boolean;
 }) {
   return (
-    <header className="topbar">
-      <div className="panel brand">
-        <Icon name="house" size={34} />
-        <div>
-          <h1>Town-in-a-Box</h1>
-          <small>Rehearse a consultation on 2,000 simulated residents</small>
-        </div>
+    <header className="topbar panel">
+      <div className="brand">
+        <Icon name="house" size={30} />
+        <h1>Town-in-a-Box</h1>
       </div>
 
       <nav className="scenario-strip" aria-label="Decisions to test">
         {[...entries, CUSTOM_ENTRY].map((e) => (
-          <button key={e.id} type="button" className="scenario-card" aria-pressed={e.id === activeId} onClick={() => onPick(e.id)} title={e.subtitle}>
+          <button
+            key={e.id}
+            type="button"
+            className="scenario-card"
+            aria-pressed={e.id === activeId}
+            onClick={() => onPick(e.id)}
+            title={`${e.title}: ${e.subtitle}`}
+          >
             <span className="sc-icon">
-              <Icon name={ICON_FOR[e.icon] ?? 'map'} size={24} />
+              <Icon name={ICON_FOR[e.icon] ?? 'map'} size={22} />
             </span>
-            <span className="sc-title">{e.title}</span>
-            <span className="sc-meta">
-              <span className="badge-kind" data-kind={e.kind}>
-                {KIND_BADGE[e.kind]}
-              </span>
+            <span className="sc-text">
+              <span className="sc-kicker">{kindKicker(e.kind, e.date)}</span>
+              <span className="sc-title">{shortTitle(e.id, e.title)}</span>
             </span>
           </button>
         ))}
       </nav>
 
       <div className="top-right">
-        <div className="sim-badge" role="note">
-          <Icon name="ghost" size={18} />
-          <span>
-            <strong>SIMULATED</strong> <span className="long">— not evidence of public opinion</span>
+        <div className="sim-status" role="note">
+          <span className="sim-line">
+            <Icon name="ghost" size={16} />
+            <span>
+              <b>Simulated</b>
+              <span className="long"> residents, not real opinion</span>
+            </span>
           </span>
+          {demo ? (
+            <span className="demo-pill" title="These results are placeholders made without the AI. Real Nemotron results are pending.">
+              Demo data
+            </span>
+          ) : null}
         </div>
-        <button type="button" className="btn" onClick={onHowItWorks} aria-label="How it works">
-          <Icon name="question" size={16} />
+        <button type="button" className="btn btn-small" onClick={onHowItWorks} aria-label="How it works">
+          <Icon name="question" size={14} />
           <span className="btn-label">How it works</span>
         </button>
       </div>

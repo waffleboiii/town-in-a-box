@@ -18,11 +18,9 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
   if (!scenario || !views) {
     return (
       <div className="dock-inner">
-        <div className="gapboard">
-          <div className="gb-label">The gap</div>
-          <p className="gb-sentence" style={{ fontSize: 17 }}>
-            Describe your proposal and run it: you will see who a consultation would hear, and who it would miss.
-          </p>
+        <div className="gapboard gapboard-empty">
+          <span className="gb-title">Who gets heard?</span>
+          <p className="gb-sentence">Describe your proposal and run it: you will see who a consultation would hear, and who it would miss.</p>
         </div>
         {mobile}
       </div>
@@ -83,15 +81,15 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
         <p className="gb-sentence">
           {sentence}
           {scenario.backtest ? (
-            <span style={{ color: 'var(--chalk-dim)' }}> Real vote: {pct2(scenario.backtest.actual.yesShare)} “pour”.</span>
+            <span className="gb-dim"> Real vote: {pct2(scenario.backtest.actual.yesShare)} “pour”.</span>
           ) : null}
-          {isLiveSample ? <span style={{ color: 'var(--chalk-dim)' }}> Small live sample: wide ranges.</span> : null}
+          {isLiveSample ? <span className="gb-dim"> Small live sample: wide ranges.</span> : null}
         </p>
         <div className="view-toggle" role="group" aria-label="Whose voices to count">
           <div className="vt-group">
             {(['everyone', 'eligible', 'attendees'] as ViewMode[]).map((v) => (
               <button key={v} type="button" className="vt-btn" aria-pressed={view === v} onClick={() => setView(v)}>
-                <Icon name={VIEW_ICON[v]} size={22} />
+                <Icon name={VIEW_ICON[v]} size={20} />
                 <span className="vt-text">
                   <span>{viewLabel(v, scope)}</span>
                   <span className="vt-count">

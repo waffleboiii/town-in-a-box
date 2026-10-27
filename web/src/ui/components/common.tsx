@@ -47,23 +47,38 @@ export function LangToggle({ lang, onChange }: { lang: 'en' | 'fr'; onChange: (l
   );
 }
 
-export function ImputedChip({ title }: { title?: string }) {
+/** Where a value comes from. Quiet text tags (not boxes), so they inform without crowding the panel. */
+export function ImputedChip({ title, short = false }: { title?: string; short?: boolean }) {
   return (
-    <span className="chip chip-imputed" title={title ?? 'Not in the NVIDIA dataset: estimated from INSEE statistics'}>
-      imputed
+    <span className="tag tag-imputed" title={title ?? 'Not in the NVIDIA dataset: estimated from INSEE statistics'}>
+      {short ? 'est.' : 'estimated'}
     </span>
   );
 }
 
 export function ComputedChip({ children = 'computed, not AI' }: { children?: ReactNode }) {
-  return <span className="chip chip-computed">{children}</span>;
+  return (
+    <span className="tag tag-computed" title="Worked out by plain code from where people live and work, not by the AI">
+      {children}
+    </span>
+  );
 }
 
 export function VoiceChip() {
   return (
-    <span className="chip chip-voice" title="Written by an AI model playing this simulated resident. Not a real person.">
-      <Icon name="chat" size={13} /> simulated voice
+    <span className="tag tag-voice" title="Written by an AI model playing this simulated resident. Not a real person.">
+      simulated voice
     </span>
+  );
+}
+
+/** Section heading with an optional tag or control on the right. */
+export function SectionHead({ children, aside }: { children: ReactNode; aside?: ReactNode }) {
+  return (
+    <div className="sec-head">
+      <h3>{children}</h3>
+      {aside ? <div className="sec-aside">{aside}</div> : null}
+    </div>
   );
 }
 

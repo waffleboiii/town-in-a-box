@@ -37,16 +37,17 @@ export function Onboarding({ onDone }: { onDone: () => void }) {
           Skip
         </button>
       </div>
-      <div className="onboard-art inset" aria-hidden="true" style={{ color: 'var(--wood-9)' }}>
+      <div className="onboard-art" aria-hidden="true">
         {s.art.map((a) => (
           <Icon key={a} name={a} size={52} />
         ))}
       </div>
-      <h2 id="onboard-title">
-        {step + 1}. {s.title}
-      </h2>
+      <div className="kicker">
+        Step {step + 1} of {STEPS.length}
+      </div>
+      <h2 id="onboard-title">{s.title}</h2>
       <p>{s.text}</p>
-      <div className="row-between" style={{ marginTop: 18 }}>
+      <div className="row-between onboard-foot">
         <span className="muted small">Every voice here is simulated, not a real person.</span>
         <div className="row">
           {step > 0 ? (

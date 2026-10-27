@@ -10,7 +10,7 @@ import { districtName, useApp } from '../context';
 import { pct } from '../format';
 import { Icon, PixelPortrait, StanceFace } from '../icons';
 import { COMMUTE_LABEL, EXPOSURE_LEVEL, HOUSEHOLD_LABEL, NATIONALITY_LABEL, stanceLabel, TENURE_LABEL } from '../labels';
-import { ComputedChip, ImputedChip, LangToggle, Pips, VoiceChip } from './common';
+import { ComputedChip, ImputedChip, LangToggle, Pips, SectionHead, VoiceChip } from './common';
 
 export interface AskEntry {
   id: number;
@@ -113,66 +113,58 @@ export function ResidentCard({
     <section className="panel side-panel resident-card" aria-labelledby="rc-name">
       <div className="rc-head">
         <Portrait resident={resident} renderPortrait={renderPortrait} />
-        <div style={{ minWidth: 0 }}>
+        <div className="rc-id">
+          <div className="kicker">Simulated resident</div>
           <h2 id="rc-name" className="rc-name">
             {resident.name}
           </h2>
           <div className="rc-sub">
             {resident.age} · {resident.occupationEn || resident.occupation}
           </div>
-          <div className="rc-sub row wrap" style={{ gap: 6 }}>
+          <div className="rc-sub rc-home">
             <Icon name="house" size={14} /> {districtName(districtsByIdx, resident.districtIdx)}
-            {resident.districtSource === 'imputed' ? <ImputedChip title="The dataset row had no arrondissement; it was assigned using occupation and education." /> : null}
+            {resident.districtSource === 'imputed' ? (
+              <ImputedChip short title="The dataset row had no arrondissement; it was assigned using occupation and education." />
+            ) : null}
           </div>
-          <span className="chip" style={{ marginTop: 4 }}>
-            simulated resident
-          </span>
         </div>
-        <button type="button" className="btn btn-icon btn-small" onClick={onClose} aria-label="Close resident card">
+        <button type="button" className="btn btn-ghost btn-icon" onClick={onClose} aria-label="Close resident card">
           <Icon name="close" size={14} />
         </button>
       </div>
 
       <div className="panel-body">
         <div className="section">
-          <dl className="facts facts-3">
+          <dl className="facts">
             <dt>Household</dt>
             <dd>{HOUSEHOLD_LABEL[resident.household] ?? resident.householdRaw}</dd>
-            <dd className="chipcell">
-              <span className="chip">dataset</span>
-            </dd>
             <dt>Housing</dt>
-            <dd>{TENURE_LABEL[imp.tenure]}</dd>
-            <dd className="chipcell">
-              <ImputedChip />
+            <dd>
+              {TENURE_LABEL[imp.tenure]} <ImputedChip short />
             </dd>
             <dt>Car</dt>
-            <dd>{imp.car ? (imp.heavyCar ? 'Yes, a heavy one (1.6 t+)' : 'Yes, a lighter one') : 'No car'}</dd>
-            <dd className="chipcell">
-              <ImputedChip />
+            <dd>
+              {imp.car ? (imp.heavyCar ? 'Yes, a heavy one (1.6 t+)' : 'Yes, a lighter one') : 'No car'} <ImputedChip short />
             </dd>
             <dt>Commute</dt>
             <dd>
               {COMMUTE_LABEL[resident.commuteMode]}
-              {workName ? ` to ${workName}` : ''}
-            </dd>
-            <dd className="chipcell">
-              <ImputedChip />
+              {workName ? ` to ${workName}` : ''} <ImputedChip short />
             </dd>
             <dt>Can vote</dt>
             <dd>
-              {resident.eligibleParis ? 'Yes, in Paris votations' : 'No, not in Paris votations'}
-              <span className="muted"> ({NATIONALITY_LABEL[imp.nationality]})</span>
-            </dd>
-            <dd className="chipcell">
-              <ImputedChip />
+              {resident.eligibleParis ? 'Yes, in Paris votations' : 'Not in Paris votations'}
+              <span className="muted"> · {NATIONALITY_LABEL[imp.nationality]}</span> <ImputedChip short />
             </dd>
           </dl>
+          <p className="section-note">
+            <span className="tag tag-imputed">est.</span> estimated from INSEE statistics; the NVIDIA dataset does not include it.
+          </p>
         </div>
 
         {!result ? (
           <div className="section">
-            <div className="card callout">
+            <div className="callout">
               {scenario?.kind === 'custom'
                 ? 'This resident was not in the live sample of your proposal. Pick a coloured resident, or use Next.'
                 : 'No reaction for this resident in this scenario.'}
@@ -181,17 +173,11 @@ export function ResidentCard({
         ) : (
           <>
             <div className="section">
-              <h3>
-                <Icon name="pin" size={16} /> What changes for them
-              </h3>
-              <div className="row small wrap" style={{ gap: 8, marginBottom: 2 }}>
+              <SectionHead aside={<ComputedChip />}>What changes for them</SectionHead>
+              <div className="touched">
                 <Pips value={result.exposure.score} label={`Exposure ${result.exposure.score} of 3`} />
                 <b>Touched: {EXPOSURE_LEVEL[result.exposure.score].toLowerCase()}</b>
-                <ComputedChip />
               </div>
-              <p className="section-note" style={{ marginTop: 0 }}>
-                Computed from where they live and their situation, not by the AI.
-              </p>
               {result.exposure.reasons.map((r) => (
                 <div key={r.code + r.text} className="reason">
                   <span className="r-icon">
@@ -210,71 +196,64 @@ export function ResidentCard({
             </div>
 
             <div className="section">
-              <div className="row-between">
-                <h3>
-                  <Icon name="chat" size={16} /> Their reaction
-                </h3>
-                <LangToggle lang={lang} onChange={setLang} />
-              </div>
-              <div className="card voice">
+              <SectionHead aside={<LangToggle lang={lang} onChange={setLang} />}>Their reaction</SectionHead>
+              <div className="voice" data-side={result.stance > 0 ? 'support' : result.stance < 0 ? 'oppose' : 'neutral'}>
                 <StanceFace stance={result.stance} size={36} />
                 <div>
-                  <div className="row wrap" style={{ gap: 6, marginBottom: 4 }}>
-                    <b style={{ fontFamily: 'var(--font-px)', fontSize: 17 }}>{stanceLabel(result.stance)}</b>
+                  <div className="voice-head">
+                    <b>{stanceLabel(result.stance)}</b>
                     <VoiceChip />
                   </div>
                   <blockquote lang={lang}>“{lang === 'en' ? result.reasonEn : result.reasonFr}”</blockquote>
                   {result.behaviourEn ? (
-                    <p className="small" style={{ marginTop: 6 }}>
+                    <p className="small voice-do">
                       <b>What they would do:</b> {result.behaviourEn}
                     </p>
                   ) : null}
                 </div>
               </div>
               <p className="section-note">
-                They feel affected {result.affectedLLM}/3 (AI’s own estimate); computed: {result.exposure.score}/3.
+                They feel affected {result.affectedLLM}/3 (the AI’s own estimate); computed: {result.exposure.score}/3.
                 {result.runStances && result.runStances.length > 1 ? ` Across ${result.runStances.length} runs: ${result.runStances.map((s) => (s > 0 ? `+${s}` : `${s}`)).join(', ')}.` : ''}
               </p>
             </div>
 
             <div className="section">
-              <h3>
-                <Icon name="walk" size={16} /> Would they show up?
-              </h3>
+              <SectionHead
+                aside={
+                  <span className={`yesno ${result.attendee ? 'yes' : 'no'}`}>{result.attendee ? 'Likely to show up' : 'Unlikely to show up'}</span>
+                }
+              >
+                Would they show up?
+              </SectionHead>
               <div className="meter" role="img" aria-label={`Participation score ${pct(result.participationScore)}`}>
                 <span style={{ width: `${Math.min(100, result.participationScore * 100)}%` }} />
                 {cutoff !== null ? <i className="meter-mark" style={{ left: `${Math.min(100, cutoff * 100)}%` }} title="Score needed to count as a likely participant" /> : null}
               </div>
-              <p className="small">
-                Likely to show up:{' '}
-                <span className={`yesno ${result.attendee ? 'yes' : 'no'}`}>{result.attendee ? 'Yes' : 'No'}</span>
-                {!result.eligible ? <span className="muted"> (cannot take part in this channel)</span> : null}
-              </p>
               <p className="section-note">
-                Score {pct(result.participationScore)} from turnout patterns for people like them and how much this touches them. Their own answer (
-                {pct(result.wouldParticipateLLM)}) only nudges it. The black mark is the score needed to count.
+                {!result.eligible ? 'They cannot take part in this channel. ' : ''}
+                Score {pct(result.participationScore)}, from turnout patterns for people like them and how much this touches them. Their own answer (
+                {pct(result.wouldParticipateLLM)}) only nudges it. The dark mark is the score needed to count.
               </p>
             </div>
 
             {conversation && other ? (
               <div className="section">
-                <h3>
-                  <Icon name="people" size={16} /> Heard from a neighbour
-                </h3>
-                <div className="card transcript">
+                <SectionHead>Heard from a neighbour</SectionHead>
+                <div className="transcript">
                   {conversation.lines.slice(0, 3).map((l, i) => (
                     <div key={i} className="line done" lang={lang}>
                       <b>{residentsById.get(l.speaker)?.name.split(' ')[0]}:</b> {lang === 'en' ? l.en : l.fr}
                     </div>
                   ))}
-                  <div className="row small" style={{ gap: 6, marginTop: 6 }}>
+                  <div className="row small transcript-foot">
                     Their view: <StanceFace stance={meIsA ? conversation.stanceBefore.a : conversation.stanceBefore.b} size={18} />
                     <Icon name="right" size={10} />
                     <StanceFace stance={meIsA ? conversation.stanceAfter.a : conversation.stanceAfter.b} size={18} />
                     {stanceLabel(meIsA ? conversation.stanceAfter.a : conversation.stanceAfter.b)}
                   </div>
                 </div>
-                <div className="row" style={{ gap: 4 }}>
+                <div className="row btn-row">
                   <button
                     type="button"
                     className="btn btn-small"
@@ -299,9 +278,7 @@ export function ResidentCard({
             ) : null}
 
             <div className="section">
-              <h3>
-                <Icon name="question" size={16} /> Ask them a question
-              </h3>
+              <SectionHead>Ask them a question</SectionHead>
               <form
                 className="ask-form"
                 onSubmit={(e) => {
@@ -331,7 +308,7 @@ export function ResidentCard({
                 .slice()
                 .reverse()
                 .map((a) => (
-                  <div key={a.id} className="card answer" aria-live="polite">
+                  <div key={a.id} className="answer" aria-live="polite">
                     <div className="q">You: {a.q}</div>
                     {a.pending ? (
                       <div className="muted">Thinking…</div>
@@ -339,8 +316,8 @@ export function ResidentCard({
                       <div className="no">{a.error}</div>
                     ) : (
                       <div lang={lang}>
-                        {firstName(resident)}: “{lang === 'en' ? a.answerEn : a.answerFr}”
-                        {a.mock ? <span className="chip" style={{ marginLeft: 6 }}>demo answer</span> : null}
+                        {firstName(resident)}: “{lang === 'en' ? a.answerEn : a.answerFr}”{' '}
+                        {a.mock ? <span className="tag tag-demo">demo answer</span> : null}
                       </div>
                     )}
                   </div>
@@ -349,7 +326,7 @@ export function ResidentCard({
           </>
         )}
         {resident.groupIds.length ? (
-          <div className="section row wrap" style={{ gap: 4 }}>
+          <div className="section chips">
             <span className="small muted">Meet another:</span>
             {resident.groupIds.slice(0, 3).map((g) => (
               <button key={g} type="button" className="chip chip-btn" onClick={() => another(g)} title="Meet another resident from this group">
@@ -367,9 +344,7 @@ export function ResidentCard({
         <button type="button" className="btn btn-small" onClick={() => step(1)} aria-label="Next resident">
           Next <Icon name="right" size={12} />
         </button>
-        <span className="small muted" style={{ alignSelf: 'center', marginLeft: 'auto' }}>
-          in this view
-        </span>
+        <span className="small muted rc-foot-note">in this view</span>
       </div>
     </section>
   );

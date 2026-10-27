@@ -6,7 +6,7 @@ import { Icon } from '../../icons';
 import { LangToggle, VoiceChip } from '../common';
 
 const SIDE_COLOR = { support: 'var(--support)', oppose: 'var(--oppose)', mixed: 'var(--neutral)' } as const;
-const SIDE_LABEL = { support: 'for', oppose: 'against', mixed: 'mixed' } as const;
+const SIDE_LABEL = { support: 'For', oppose: 'Against', mixed: 'Mixed' } as const;
 
 export function ThemesTab() {
   const { scenario, resultsById, residentsById, districtsByIdx, selectResident } = useApp();
@@ -17,24 +17,40 @@ export function ThemesTab() {
   const max = Math.max(0.01, ...themes.map((t) => t.share));
   return (
     <div>
-      <div className="row-between" style={{ marginBottom: 8 }}>
-        <VoiceChip />
+      <div className="row-between tab-tools">
+        <span className="legend">
+          <span>
+            <i className="sw-oppose" />
+            Against
+          </span>
+          <span>
+            <i className="sw-support" />
+            For
+          </span>
+          <span className="miss-key">
+            <Icon name="ghost" size={13} /> often unheard
+          </span>
+        </span>
         <LangToggle lang={lang} onChange={setLang} />
       </div>
       {themes.length === 0 ? <div className="empty">No themes in this run.</div> : null}
       {themes.map((t) => {
         const expanded = open === t.id;
+        const miss = t.missingGap > 0.005;
         return (
           <div key={t.id}>
-            <button type="button" className="theme-row" aria-expanded={expanded} onClick={() => setOpen(expanded ? null : t.id)}>
+            <button
+              type="button"
+              className="theme-row"
+              aria-expanded={expanded}
+              onClick={() => setOpen(expanded ? null : t.id)}
+              title={`${SIDE_LABEL[t.side]}${miss ? `; more common among people unlikely to take part (${pts(t.missingGap)})` : ''}`}
+            >
               <span className="t-label">
                 {lang === 'fr' && t.labelFr ? t.labelFr : t.label}
-                <span className="chip" style={{ color: SIDE_COLOR[t.side] }}>
-                  {SIDE_LABEL[t.side]}
-                </span>
-                {t.missingGap > 0.005 ? (
-                  <span className="chip chip-miss" title={`More common among people unlikely to take part (${pts(t.missingGap)})`}>
-                    <Icon name="ghost" size={12} /> voices you’d miss
+                {miss ? (
+                  <span className="t-miss" aria-label="often unheard">
+                    <Icon name="ghost" size={13} />
                   </span>
                 ) : null}
               </span>
@@ -44,7 +60,7 @@ export function ThemesTab() {
               </span>
             </button>
             {expanded ? (
-              <div style={{ padding: '2px 0 8px' }}>
+              <div className="theme-detail">
                 {t.missingGap > 0.005 ? (
                   <p className="section-note">
                     {pts(t.missingGap)} more common among people unlikely to take part than among likely participants.
@@ -72,7 +88,9 @@ export function ThemesTab() {
           </div>
         );
       })}
-      <p className="section-note">Share = residents whose reason falls under this theme. Click a theme for example simulated quotes.</p>
+      <p className="section-note">
+        <VoiceChip /> Share: residents whose reason falls under this theme. Click a theme for example quotes.
+      </p>
     </div>
   );
 }

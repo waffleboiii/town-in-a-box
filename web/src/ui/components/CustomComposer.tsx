@@ -42,12 +42,10 @@ export function CustomComposer({
     <section className="panel side-panel composer" aria-labelledby="custom-title">
       <div className="panel-head">
         <div className="head-text">
-          <span className="badge-kind" data-kind="custom">
-            Your proposal
-          </span>
-          <h2 id="custom-title" style={{ marginTop: 4 }}>
-            Test your own idea
-          </h2>
+          <div className="kicker" data-kind="custom">
+            Your proposal · live test
+          </div>
+          <h2 id="custom-title">Test your own idea</h2>
           <p className="panel-sub">
             {int(SAMPLE_SIZE)} residents react live, most of them in or near your area.
           </p>
@@ -68,8 +66,8 @@ export function CustomComposer({
           onChange={(e) => set({ text: e.target.value })}
         />
         {!draft.text ? (
-          <div className="row wrap" style={{ gap: 4, marginTop: 4 }}>
-            <span className="small muted">Try:</span>
+          <div className="chips examples">
+            <span className="small muted">Or start from an example:</span>
             {EXAMPLES.map((ex) => (
               <button key={ex} type="button" className="chip chip-btn" onClick={() => set({ text: ex })} title={ex}>
                 {ex.split(' ').slice(0, 4).join(' ')}…
@@ -89,11 +87,11 @@ export function CustomComposer({
           ]}
         />
         {draft.areaKind === 'districts' ? (
-          <div style={{ marginTop: 6 }}>
-            <p className="small">
+          <div className="step-body">
+            <p className="small hint">
               <Icon name="pin" size={14} /> Click districts on the map to add or remove them.
             </p>
-            <div className="row wrap" style={{ gap: 4, marginTop: 4 }}>
+            <div className="chips">
               {draft.districts.map((d) => (
                 <button
                   key={d}
@@ -110,11 +108,11 @@ export function CustomComposer({
             </div>
           </div>
         ) : (
-          <div style={{ marginTop: 6 }}>
-            <p className="small">
+          <div className="step-body">
+            <p className="small hint">
               <Icon name="pin" size={14} /> {draft.site ? 'Site placed. Click the map again to move it.' : 'Click the map to place the site.'}
             </p>
-            <div className="row wrap" style={{ marginTop: 4 }}>
+            <div className="row wrap">
               <span className="small muted">Directly affected within</span>
               <Seg
                 label="Directly affected radius"
@@ -152,7 +150,7 @@ export function CustomComposer({
           {draft.channel === 'votation' ? ' Only Paris residents who can vote count.' : ' Every adult can attend.'}
         </p>
 
-        <p className="section-note" style={{ marginTop: 10 }}>
+        <p className="section-note api-note">
           {apiOffline || !health
             ? 'Live API not reachable here: answers come from simple in-browser demo rules (no AI).'
             : health.mock
@@ -179,12 +177,12 @@ export function CustomComposer({
           </>
         ) : (
           <>
-            <button type="button" className="btn btn-primary" style={{ width: 'calc(100% - 4px)' }} disabled={problems.length > 0} onClick={onRun}>
+            <button type="button" className="btn btn-primary btn-block" disabled={problems.length > 0} onClick={onRun}>
               <Icon name="sparkle" size={16} />
               {hasResult ? `Run again with ${SAMPLE_SIZE} residents` : `Run with ${SAMPLE_SIZE} residents`}
             </button>
             {problems.length ? (
-              <ul className="mini-list muted" style={{ marginTop: 6 }}>
+              <ul className="mini-list muted problems">
                 {problems.map((p) => (
                   <li key={p}>{p}</li>
                 ))}
@@ -193,7 +191,7 @@ export function CustomComposer({
           </>
         )}
         {progress.status === 'error' ? (
-          <p className="banner banner-error" style={{ display: 'flex', marginTop: 8 }}>
+          <p className="banner banner-error banner-block">
             {progress.message}
           </p>
         ) : null}

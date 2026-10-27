@@ -66,30 +66,38 @@ export function TalkTab() {
         <div className="empty">No neighbour conversations in this run.</div>
       ) : (
         <>
-          <div className="card callout">
-            <p>
-              <strong>{scenario.conversations.length}</strong> pairs of neighbours talked. <strong>{stats.moved}</strong> of {stats.people} people (
-              {pct(stats.people ? stats.moved / stats.people : 0)}) changed their mind by one step.
-            </p>
-            {stats.spread.length ? (
-              <div style={{ marginTop: 6 }}>
-                <span className="small muted">Arguments that moved people: </span>
-                <span className="row wrap" style={{ gap: 4, display: 'inline-flex' }}>
-                  {stats.spread.map(([id, n]) => (
-                    <span key={id} className="chip chip-wrap">
-                      {themeLabel(id) || id} ({n})
-                    </span>
-                  ))}
-                </span>
-              </div>
-            ) : null}
-            <button type="button" className="btn btn-small" style={{ marginTop: 8 }} onClick={() => setAfterTalk(!afterTalk)}>
-              {afterTalk ? 'Show numbers before talk' : 'Show numbers after talk'}
-            </button>
+          <div className="stat-row">
+            <div>
+              <b className="num">{scenario.conversations.length}</b>
+              <span>conversations</span>
+            </div>
+            <div>
+              <b className="num">{stats.moved}</b>
+              <span>changed their mind</span>
+            </div>
+            <div>
+              <b className="num">{pct(stats.people ? stats.moved / stats.people : 0)}</b>
+              <span>of the {stats.people} who talked</span>
+            </div>
           </div>
+          {stats.spread.length ? (
+            <div className="section">
+              <h3>Arguments that moved people</h3>
+              <ul className="reason-list">
+                {stats.spread.map(([id, n]) => (
+                  <li key={id}>
+                    <span className="rl-label">{themeLabel(id) || id}</span>
+                    <span className="num">{n}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          <button type="button" className="btn btn-small" onClick={() => setAfterTalk(!afterTalk)}>
+            {afterTalk ? 'Show numbers before talk' : 'Show numbers after talk'}
+          </button>
 
-
-          <div className="row-between wrap" style={{ margin: '10px 0 4px' }}>
+          <div className="row-between wrap tab-tools tab-tools-gap">
             <Seg
               label="Which conversations"
               value={filter}
@@ -122,34 +130,34 @@ export function TalkTab() {
                   <span className="muted">{a ? districtName(districtsByIdx, a.districtIdx) : ''}</span>
                   {c.themeId ? <div className="small muted">{themeLabel(c.themeId)}</div> : null}
                 </span>
-                <span className="row" style={{ gap: 6 }}>
+                <span className="row conv-faces">
                   <MiniShift before={c.stanceBefore.a} after={c.stanceAfter.a} />
                   <MiniShift before={c.stanceBefore.b} after={c.stanceAfter.b} />
                   <Icon name="play" size={16} />
                 </span>
               </button>
-              {transcriptFor === c.id ? (
-            <div className="card transcript" aria-live="polite">
-              <div className="row-between">
-                <b style={{ fontFamily: 'var(--font-px)' }}>
-                  {name(c.a)} & {name(c.b)}
-                </b>
-                <VoiceChip />
-              </div>
-              {c.lines.map((l, i) => {
-                const state = !playing ? 'done' : i < playing.line ? 'done' : i === playing.line ? 'now' : '';
-                return (
-                  <div key={i} className={`line ${state}`} lang={lang}>
-                    <b>{name(l.speaker)}:</b> {lang === 'en' ? l.en : l.fr}
+                {transcriptFor === c.id ? (
+                  <div className="transcript" aria-live="polite">
+                    <div className="row-between transcript-head">
+                      <b>
+                        {name(c.a)} & {name(c.b)}
+                      </b>
+                      <VoiceChip />
+                    </div>
+                    {c.lines.map((l, i) => {
+                      const state = !playing ? 'done' : i < playing.line ? 'done' : i === playing.line ? 'now' : '';
+                      return (
+                        <div key={i} className={`line ${state}`} lang={lang}>
+                          <b>{name(l.speaker)}:</b> {lang === 'en' ? l.en : l.fr}
+                        </div>
+                      );
+                    })}
+                    <div className="row small wrap transcript-foot">
+                      <Shift label={name(c.a)} before={c.stanceBefore.a} after={c.stanceAfter.a} />
+                      <Shift label={name(c.b)} before={c.stanceBefore.b} after={c.stanceAfter.b} />
+                    </div>
                   </div>
-                );
-              })}
-              <div className="row small" style={{ marginTop: 6, gap: 12 }}>
-                <Shift label={name(c.a)} before={c.stanceBefore.a} after={c.stanceAfter.a} />
-                <Shift label={name(c.b)} before={c.stanceBefore.b} after={c.stanceAfter.b} />
-              </div>
-            </div>
-              ) : null}
+                ) : null}
               </div>
             );
           })}
