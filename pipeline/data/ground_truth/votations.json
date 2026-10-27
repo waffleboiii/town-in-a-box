@@ -1,0 +1,2294 @@
+{
+  "_about": {
+    "what": "Official results of Paris votations used as backtests, with question wording, rules, eligibility and polls.",
+    "generatedAt": "2026-10-26T19:34:58Z",
+    "generatedBy": "pipeline/fetch_ground_truth.py",
+    "shares": "yesShare / noShare are shares of EXPRESSED votes (Pour+Contre), as published by the City.",
+    "turnout": "turnout = voters (votants) / registered (inscrits).",
+    "sectors": "17 votation sectors: 'Paris Centre' (1er-4e merged) and '5e'..'20e'. districtCodes = INSEE codes.",
+    "license": "Ville de Paris open data (opendata.paris.fr); figures re-published with attribution.",
+    "disclaimer": "Simulation outputs compared with these numbers are hypotheses, not evidence of public opinion."
+  },
+  "paris_scooters_2023": {
+    "id": "paris_scooters_2023",
+    "voteName": "Votation du 2 avril 2023 — trottinettes en libre-service",
+    "titleEn": "Paris citizens' vote on rental e-scooters",
+    "date": "2023-04-02",
+    "question": "Pour ou contre les trottinettes en libre-service à Paris ?",
+    "questionAsProclaimed": "« POUR ou CONTRE les trottinettes en libre-service à Paris ? »",
+    "ballotOptions": {
+      "pour": "Pour les trottinettes en libre-service à Paris",
+      "contre": "Contre les trottinettes en libre-service à Paris"
+    },
+    "yesMeaning": "'Pour' = keep allowing rental (self-service, free-floating) e-scooters on Paris streets, i.e. the City would renew or re-tender the public-space agreements with operators. 'Contre' = end them when the agreements expired on 31 August 2023.",
+    "legalStatus": "Consultative 'consultation facultative ouverte' (Code des relations entre le public et l'administration L.131-1; CGCT L.1111-2). The Mayor said the City would 'purely and simply' follow the result.",
+    "eligibility": {
+      "who": "People registered on the Paris electoral lists by 3 March 2023 (midnight). EU nationals registered on the complementary electoral list for municipal elections were part of the electorate (règlement, art. 7). Young people turning 18 by 1 April 2023 and newly naturalised citizens could vote if INSEE had added them to the electoral register (art. 10).",
+      "euCitizensOnComplementaryList": true,
+      "minimumAge": 18,
+      "registrationDeadline": "2023-03-03",
+      "note": "Voters living abroad and those registered under articles L.12-L.14 of the electoral code are attached to the 4e arrondissement list (règlement), which adds registrations to 'Paris Centre' and can lower its measured turnout.",
+      "verified": true,
+      "sources": [
+        {
+          "name": "Règlement de la votation du 2 avril 2023 (PDF, scanned; art. 7, 10, 12, 13)",
+          "url": "https://cdn.paris.fr/paris/2023/03/13/reglement-votation-du-2-avril-2023-OroB.pdf"
+        },
+        {
+          "name": "Rapport de la commission de contrôle, votation du 2 avril 2023 (PDF, 19 p.)",
+          "url": "https://cdn.paris.fr/paris/2023/04/14/rapport-votation-du-2-avril-2023-def-FyKO.pdf"
+        }
+      ]
+    },
+    "modalities": {
+      "hours": "09:00-19:00",
+      "pollingStations": 203,
+      "votingSites": 21,
+      "inPersonOnly": true,
+      "proxyVoting": false,
+      "electronicVoting": false,
+      "notes": [
+        "Same day as the Paris Marathon; the control commission recommended avoiding such clashes in future.",
+        "The commission noted many complaints (often older or disabled people) that there was no proxy or remote vote.",
+        "The commission criticised the operators' campaign with paid influencers (report, p. 18).",
+        "Operators offered a free ride on voting day (AFP), a tactic the press called controversial."
+      ],
+      "sources": [
+        {
+          "name": "Rapport de la commission de contrôle, votation du 2 avril 2023 (PDF, 19 p.)",
+          "url": "https://cdn.paris.fr/paris/2023/04/14/rapport-votation-du-2-avril-2023-def-FyKO.pdf"
+        },
+        {
+          "name": "Règlement de la votation du 2 avril 2023 (PDF, scanned; art. 7, 10, 12, 13)",
+          "url": "https://cdn.paris.fr/paris/2023/03/13/reglement-votation-du-2-avril-2023-OroB.pdf"
+        }
+      ]
+    },
+    "rules": {
+      "operators": [
+        "Dott",
+        "Lime",
+        "Tier"
+      ],
+      "fleetCap": "3 operators, each allowed at most 5,000 vehicles (about 15,000 in total)",
+      "agreementsExpire": "2023-08-31",
+      "scope": "Rental (self-service) e-scooters only. Privately owned e-scooters were not concerned according to some press reports (not checked in a primary source).",
+      "outcome": "Rental e-scooters left Paris streets at the end of the agreements on 31 August 2023.",
+      "sources": [
+        {
+          "name": "Anne Hidalgo, communication au Conseil de Paris, 14 mars 2023 (PDF)",
+          "url": "https://cdn.paris.fr/paris/2023/05/31/pour-contre-trottinettes-a-paris-OST8.pdf"
+        },
+        {
+          "name": "Rapport de la commission de contrôle, votation du 2 avril 2023 (PDF, 19 p.)",
+          "url": "https://cdn.paris.fr/paris/2023/04/14/rapport-votation-du-2-avril-2023-def-FyKO.pdf"
+        },
+        {
+          "name": "paris.fr — Pour ou contre les trottinettes en libre-service (results page)",
+          "url": "https://www.paris.fr/pages/pour-ou-contre-les-trottinettes-en-libre-service-23231"
+        },
+        {
+          "name": "L'Info Durable (with AFP, 3 Apr 2023) — Abstention, mais Paris dit non aux trottinettes en libre-service",
+          "url": "https://www.linfodurable.fr/vie-quotidienne/abstention-mais-paris-dit-non-aux-trottinettes-en-libre-service-37765"
+        }
+      ]
+    },
+    "costEur": {
+      "value": 390692,
+      "note": "Cost reported by City Hall to AFP (secondary source).",
+      "verified": false,
+      "sources": [
+        {
+          "name": "L'Info Durable (AFP) — le vote sur les trottinettes a coûté 390 000 euros (secondary)",
+          "url": "https://www.linfodurable.fr/paris-le-vote-sur-les-trottinettes-en-libre-service-coute-390000-euros-37830"
+        }
+      ]
+    },
+    "poll": {
+      "org": "Ifop-Fiducial for Le Figaro and Sud Radio",
+      "date": "2023-03-07/2023-03-13",
+      "n": 1002,
+      "yesShare": 0.3,
+      "url": "https://www.ifop.com/wp-content/uploads/2023/03/119819-resultats-ensemble.pdf",
+      "note": "Representative sample of Parisians aged 18+ (quotas after stratification by arrondissement, online). Voting intention among Paris voters, % of expressed: Pour 30 / Contre 70. Same question as the ballot."
+    },
+    "polls": [
+      {
+        "org": "Ifop-Fiducial",
+        "client": "Le Figaro, Sud Radio",
+        "fieldwork": "2023-03-07/2023-03-13",
+        "n": 1002,
+        "population": "Parisians aged 18+, online; voting-intention base = Paris voters",
+        "question": "Si dimanche prochain devait se dérouler la votation sur l'avenir du stationnement des trottinettes en libre-service, ici à Paris, y aurait-il plus de chances que vous votiez pour ou contre les trottinettes en libre-service à Paris ?",
+        "results": {
+          "pour": 0.3,
+          "contre": 0.7,
+          "base": "% of expressed"
+        },
+        "otherFindings": {
+          "organisingAVoteIsAGoodThing": 0.85
+        },
+        "url": "https://www.ifop.com/wp-content/uploads/2023/03/119819-resultats-ensemble.pdf",
+        "verified": true
+      }
+    ],
+    "sources": [
+      {
+        "name": "paris.fr — Pour ou contre les trottinettes en libre-service (results page)",
+        "url": "https://www.paris.fr/pages/pour-ou-contre-les-trottinettes-en-libre-service-23231"
+      },
+      {
+        "name": "Commission de contrôle — proclamation des résultats, 2 avril 2023 (PDF)",
+        "url": "https://cdn.paris.fr/paris/2023/04/03/proclamation2avril2023def-PySW.pdf"
+      },
+      {
+        "name": "Rapport de la commission de contrôle, votation du 2 avril 2023 (PDF, 19 p.)",
+        "url": "https://cdn.paris.fr/paris/2023/04/14/rapport-votation-du-2-avril-2023-def-FyKO.pdf"
+      },
+      {
+        "name": "Règlement de la votation du 2 avril 2023 (PDF, scanned; art. 7, 10, 12, 13)",
+        "url": "https://cdn.paris.fr/paris/2023/03/13/reglement-votation-du-2-avril-2023-OroB.pdf"
+      },
+      {
+        "name": "opendata.paris.fr — votation-trottinette-2023 (results by sector, xlsx)",
+        "url": "https://opendata.paris.fr/explore/dataset/votation-trottinette-2023/information/"
+      },
+      {
+        "name": "Ifop-Fiducial pour Le Figaro et Sud Radio — Le climat municipal à Paris, mars 2023 (PDF, p. 21)",
+        "url": "https://www.ifop.com/wp-content/uploads/2023/03/119819-resultats-ensemble.pdf"
+      },
+      {
+        "name": "L'Info Durable (with AFP, 3 Apr 2023) — Abstention, mais Paris dit non aux trottinettes en libre-service",
+        "url": "https://www.linfodurable.fr/vie-quotidienne/abstention-mais-paris-dit-non-aux-trottinettes-en-libre-service-37765"
+      }
+    ],
+    "result": {
+      "scope": "Paris",
+      "registered": 1382322,
+      "signatures": 103046,
+      "voters": 103084,
+      "blank": 139,
+      "null": 304,
+      "expressed": 102641,
+      "pourVotes": 11256,
+      "contreVotes": 91385,
+      "yesShare": 0.109664,
+      "noShare": 0.890336,
+      "turnout": 0.074573
+    },
+    "bySector": [
+      {
+        "sector": "Paris Centre",
+        "registered": 68816,
+        "signatures": 7305,
+        "voters": 7304,
+        "blank": 12,
+        "null": 25,
+        "expressed": 7267,
+        "pourVotes": 1034,
+        "contreVotes": 6233,
+        "yesShare": 0.142287,
+        "noShare": 0.857713,
+        "turnout": 0.106138,
+        "districtCodes": [
+          "75101",
+          "75102",
+          "75103",
+          "75104"
+        ]
+      },
+      {
+        "sector": "5e",
+        "registered": 38459,
+        "signatures": 3622,
+        "voters": 3626,
+        "blank": 3,
+        "null": 7,
+        "expressed": 3616,
+        "pourVotes": 436,
+        "contreVotes": 3180,
+        "yesShare": 0.120575,
+        "noShare": 0.879425,
+        "turnout": 0.094282,
+        "districtCodes": [
+          "75105"
+        ]
+      },
+      {
+        "sector": "6e",
+        "registered": 27266,
+        "signatures": 3096,
+        "voters": 3095,
+        "blank": 0,
+        "null": 6,
+        "expressed": 3089,
+        "pourVotes": 346,
+        "contreVotes": 2743,
+        "yesShare": 0.11201,
+        "noShare": 0.88799,
+        "turnout": 0.113511,
+        "districtCodes": [
+          "75106"
+        ]
+      },
+      {
+        "sector": "7e",
+        "registered": 33929,
+        "signatures": 3290,
+        "voters": 3291,
+        "blank": 4,
+        "null": 3,
+        "expressed": 3284,
+        "pourVotes": 373,
+        "contreVotes": 2911,
+        "yesShare": 0.113581,
+        "noShare": 0.886419,
+        "turnout": 0.096997,
+        "districtCodes": [
+          "75107"
+        ]
+      },
+      {
+        "sector": "8e",
+        "registered": 25712,
+        "signatures": 2684,
+        "voters": 2686,
+        "blank": 3,
+        "null": 5,
+        "expressed": 2678,
+        "pourVotes": 302,
+        "contreVotes": 2376,
+        "yesShare": 0.112771,
+        "noShare": 0.887229,
+        "turnout": 0.104465,
+        "districtCodes": [
+          "75108"
+        ]
+      },
+      {
+        "sector": "9e",
+        "registered": 41074,
+        "signatures": 3618,
+        "voters": 3620,
+        "blank": 5,
+        "null": 7,
+        "expressed": 3608,
+        "pourVotes": 449,
+        "contreVotes": 3159,
+        "yesShare": 0.124446,
+        "noShare": 0.875554,
+        "turnout": 0.088134,
+        "districtCodes": [
+          "75109"
+        ]
+      },
+      {
+        "sector": "10e",
+        "registered": 57859,
+        "signatures": 4393,
+        "voters": 4392,
+        "blank": 8,
+        "null": 7,
+        "expressed": 4377,
+        "pourVotes": 553,
+        "contreVotes": 3824,
+        "yesShare": 0.126342,
+        "noShare": 0.873658,
+        "turnout": 0.075909,
+        "districtCodes": [
+          "75110"
+        ]
+      },
+      {
+        "sector": "11e",
+        "registered": 96199,
+        "signatures": 6225,
+        "voters": 6229,
+        "blank": 6,
+        "null": 12,
+        "expressed": 6211,
+        "pourVotes": 725,
+        "contreVotes": 5486,
+        "yesShare": 0.116728,
+        "noShare": 0.883272,
+        "turnout": 0.064751,
+        "districtCodes": [
+          "75111"
+        ]
+      },
+      {
+        "sector": "12e",
+        "registered": 94135,
+        "signatures": 7441,
+        "voters": 7447,
+        "blank": 13,
+        "null": 20,
+        "expressed": 7414,
+        "pourVotes": 797,
+        "contreVotes": 6617,
+        "yesShare": 0.107499,
+        "noShare": 0.892501,
+        "turnout": 0.07911,
+        "districtCodes": [
+          "75112"
+        ]
+      },
+      {
+        "sector": "13e",
+        "registered": 114129,
+        "signatures": 7555,
+        "voters": 7558,
+        "blank": 7,
+        "null": 21,
+        "expressed": 7530,
+        "pourVotes": 753,
+        "contreVotes": 6777,
+        "yesShare": 0.1,
+        "noShare": 0.9,
+        "turnout": 0.066223,
+        "districtCodes": [
+          "75113"
+        ]
+      },
+      {
+        "sector": "14e",
+        "registered": 87374,
+        "signatures": 7217,
+        "voters": 7220,
+        "blank": 12,
+        "null": 38,
+        "expressed": 7170,
+        "pourVotes": 839,
+        "contreVotes": 6331,
+        "yesShare": 0.117015,
+        "noShare": 0.882985,
+        "turnout": 0.082633,
+        "districtCodes": [
+          "75114"
+        ]
+      },
+      {
+        "sector": "15e",
+        "registered": 147742,
+        "signatures": 11453,
+        "voters": 11457,
+        "blank": 15,
+        "null": 35,
+        "expressed": 11407,
+        "pourVotes": 1054,
+        "contreVotes": 10353,
+        "yesShare": 0.092399,
+        "noShare": 0.907601,
+        "turnout": 0.077547,
+        "districtCodes": [
+          "75115"
+        ]
+      },
+      {
+        "sector": "16e",
+        "registered": 101340,
+        "signatures": 6587,
+        "voters": 6590,
+        "blank": 4,
+        "null": 10,
+        "expressed": 6576,
+        "pourVotes": 541,
+        "contreVotes": 6035,
+        "yesShare": 0.082269,
+        "noShare": 0.917731,
+        "turnout": 0.065029,
+        "districtCodes": [
+          "75116"
+        ]
+      },
+      {
+        "sector": "17e",
+        "registered": 104954,
+        "signatures": 6801,
+        "voters": 6803,
+        "blank": 10,
+        "null": 18,
+        "expressed": 6775,
+        "pourVotes": 807,
+        "contreVotes": 5968,
+        "yesShare": 0.119114,
+        "noShare": 0.880886,
+        "turnout": 0.064819,
+        "districtCodes": [
+          "75117"
+        ]
+      },
+      {
+        "sector": "18e",
+        "registered": 112388,
+        "signatures": 7623,
+        "voters": 7627,
+        "blank": 19,
+        "null": 20,
+        "expressed": 7588,
+        "pourVotes": 846,
+        "contreVotes": 6742,
+        "yesShare": 0.111492,
+        "noShare": 0.888508,
+        "turnout": 0.067863,
+        "districtCodes": [
+          "75118"
+        ]
+      },
+      {
+        "sector": "19e",
+        "registered": 111467,
+        "signatures": 6533,
+        "voters": 6531,
+        "blank": 12,
+        "null": 34,
+        "expressed": 6485,
+        "pourVotes": 670,
+        "contreVotes": 5815,
+        "yesShare": 0.103315,
+        "noShare": 0.896685,
+        "turnout": 0.058591,
+        "districtCodes": [
+          "75119"
+        ]
+      },
+      {
+        "sector": "20e",
+        "registered": 119479,
+        "signatures": 7603,
+        "voters": 7608,
+        "blank": 6,
+        "null": 36,
+        "expressed": 7566,
+        "pourVotes": 731,
+        "contreVotes": 6835,
+        "yesShare": 0.096616,
+        "noShare": 0.903384,
+        "turnout": 0.063676,
+        "districtCodes": [
+          "75120"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "check": "pour+contre == expressed in every sector",
+        "ok": true,
+        "detail": "Each sector row: Pour + Contre equals suffrages exprimés."
+      },
+      {
+        "check": "sum of sectors: Pour votes == proclaimed",
+        "ok": true,
+        "detail": "11256 vs 11256"
+      },
+      {
+        "check": "sum of sectors: Contre votes == proclaimed",
+        "ok": true,
+        "detail": "91385 vs 91385"
+      },
+      {
+        "check": "sum of sectors: voters == proclaimed",
+        "ok": true,
+        "detail": "103084 vs 103084"
+      },
+      {
+        "check": "sum of sectors: blank+null == proclaimed",
+        "ok": true,
+        "detail": "443 vs 443"
+      },
+      {
+        "check": "sum of sectors: registered == proclaimed (±1)",
+        "ok": true,
+        "detail": "1382322 vs 1382322 (difference +0; open-data file vs paris.fr page)"
+      },
+      {
+        "check": "Pour share == proclaimed (2 decimals)",
+        "ok": true,
+        "detail": "10.9664 % vs 10.97 %"
+      },
+      {
+        "check": "sector Pour % == paris.fr page (2 decimals)",
+        "ok": true,
+        "detail": "largest difference 0.000 percentage points"
+      }
+    ],
+    "pollGap": {
+      "actualMinusPoll": -0.1903,
+      "comparable": true,
+      "note": "Positive = voters were more 'Pour' than the poll. Only meaningful when the poll asked the ballot question (not the case for the SUV vote)."
+    },
+    "turnoutRange": {
+      "lowest": {
+        "sector": "19e",
+        "turnout": 0.058591
+      },
+      "highest": {
+        "sector": "6e",
+        "turnout": 0.113511
+      }
+    }
+  },
+  "paris_suv_2024": {
+    "id": "paris_suv_2024",
+    "voteName": "Votation du 4 février 2024 — tarif de stationnement des voitures lourdes (« Plus ou moins de SUV à Paris ? »)",
+    "titleEn": "Paris citizens' vote on a parking fee for heavy cars (SUVs)",
+    "date": "2024-02-04",
+    "question": "Pour ou contre la création d'un tarif spécifique pour le stationnement des voitures individuelles lourdes, encombrantes, polluantes ?",
+    "campaignTitle": "Plus ou moins de SUV à Paris ?",
+    "ballotOptions": {
+      "pour": "Pour",
+      "contre": "Contre"
+    },
+    "yesMeaning": "'Pour' = create the specific (tripled) visitor parking rate for heavy cars; 'Contre' = keep the normal rate for all cars.",
+    "legalStatus": "Consultative vote under the control of an independent control commission.",
+    "eligibility": {
+      "who": "People registered on the Paris electoral lists on 8 January 2024. EU nationals could vote only if registered on the complementary list for municipal elections.",
+      "euCitizensOnComplementaryList": true,
+      "minimumAge": 18,
+      "registrationDeadline": "2024-01-08",
+      "quote": "« S'agissant des ressortissants communautaires, seuls ceux inscrits sur la liste complémentaire pour les élections municipales pouvaient participer à cette votation. »",
+      "verified": true,
+      "sources": [
+        {
+          "name": "paris.fr — Plus ou moins de SUV ? Résultats de la votation du 4 février 2024",
+          "url": "https://www.paris.fr/pages/plus-ou-moins-de-suv-les-parisiens-et-parisiennes-sont-invites-a-voter-le-4-fevrier-25381"
+        }
+      ]
+    },
+    "modalities": {
+      "hours": "09:00-19:00",
+      "pollingStations": 222,
+      "votingSites": 38,
+      "inPersonOnly": true,
+      "proxyVoting": false,
+      "electronicVoting": false,
+      "notes": [
+        "Five arrondissements asked an extra local question the same day (see localQuestions), which may have raised turnout there."
+      ],
+      "sources": [
+        {
+          "name": "paris.fr — Plus ou moins de SUV ? Résultats de la votation du 4 février 2024",
+          "url": "https://www.paris.fr/pages/plus-ou-moins-de-suv-les-parisiens-et-parisiennes-sont-invites-a-voter-le-4-fevrier-25381"
+        },
+        {
+          "name": "opendata.paris.fr — votation_suv_2024 (by sector) and votation_suv_2024_bv (by polling station)",
+          "url": "https://opendata.paris.fr/explore/dataset/votation_suv_2024/information/"
+        }
+      ]
+    },
+    "rules": {
+      "inForceFrom": "2024-10-01",
+      "who": [
+        "Visitors (non-residents of the zone) parking a heavy car on the street.",
+        "Heavy = petrol, diesel or plug-in hybrid car of 1.6 tonnes or more, or electric car of 2 tonnes or more."
+      ],
+      "weightThresholdsTonnes": {
+        "thermalOrPluginHybrid": 1.6,
+        "electric": 2.0
+      },
+      "visitorRatesEurPerHour": {
+        "arr_1_to_11": {
+          "normal": 6,
+          "heavyCar": 18
+        },
+        "arr_12_to_20": {
+          "normal": 4,
+          "heavyCar": 12
+        }
+      },
+      "sixHourTotalEur": {
+        "arr_1_to_11": {
+          "normal": 75,
+          "heavyCar": 225
+        },
+        "arr_12_to_20": {
+          "normal": 50,
+          "heavyCar": 150
+        }
+      },
+      "billing": "Charged in 15-minute steps; tariff table shows up to 6 hours.",
+      "exempt": [
+        "Paris residents and sedentary professionals parked in their own authorised (residential) zone",
+        "Taxi drivers at dedicated taxi ranks",
+        "Craftspeople (artisans), health professionals and others eligible for the professional rate",
+        "Disabled people (PMR) and holders of the 'carte mobilité inclusion - stationnement'"
+      ],
+      "adopted": "Conseil de Paris, May 2024",
+      "sources": [
+        {
+          "name": "paris.fr — Plus ou moins de SUV ? Résultats de la votation du 4 février 2024",
+          "url": "https://www.paris.fr/pages/plus-ou-moins-de-suv-les-parisiens-et-parisiennes-sont-invites-a-voter-le-4-fevrier-25381"
+        },
+        {
+          "name": "paris.fr — infographie tarif SUV (PDF image: hourly rates by zone)",
+          "url": "https://cdn.paris.fr/paris/2023/12/19/suv_infog_1200x1200_24-7dB3.pdf"
+        },
+        {
+          "name": "paris.fr — Conseil de Paris de mai 2024: entrée en vigueur du tarif SUV",
+          "url": "https://www.paris.fr/pages/les-temps-forts-du-conseil-de-paris-de-mai-2024-27168#l-entree-en-vigueur-de-l-augmentation-du-tarif-du-stationnement-des-suv"
+        }
+      ]
+    },
+    "localQuestions": {
+      "note": "Same-day arrondissement questions (paris.fr). Turnout figures as published.",
+      "rows": [
+        {
+          "sector": "Paris Centre",
+          "topic": "Redesign of Place du Louvre for pedestrians, greenery and public transport",
+          "pourShare": 0.7151,
+          "turnout": 0.0646
+        },
+        {
+          "sector": "8e",
+          "topic": "Faster pedestrianisation/greening of streets incl. parts of rue de Monceau and rue de Liège",
+          "pourShare": 0.4108,
+          "turnout": 0.0869
+        },
+        {
+          "sector": "10e",
+          "topic": "Boulevard de Magenta pavements for pedestrians and safer cycle lanes",
+          "pourShare": 0.7583,
+          "turnout": 0.068
+        },
+        {
+          "sector": "12e",
+          "topic": "New pedestrian areas near municipal facilities used by children",
+          "pourShare": 0.6988,
+          "turnout": 0.062
+        },
+        {
+          "sector": "20e",
+          "topic": "Trial of a solidarity food fund (caisse alimentaire solidaire)",
+          "pourShare": 0.8186,
+          "turnout": 0.0435
+        }
+      ],
+      "sources": [
+        {
+          "name": "paris.fr — Plus ou moins de SUV ? Résultats de la votation du 4 février 2024",
+          "url": "https://www.paris.fr/pages/plus-ou-moins-de-suv-les-parisiens-et-parisiennes-sont-invites-a-voter-le-4-fevrier-25381"
+        }
+      ]
+    },
+    "costEur": {
+      "value": 400000,
+      "note": "About €400,000 according to deputy mayor Emmanuel Grégoire (AFP, secondary).",
+      "verified": false,
+      "sources": [
+        {
+          "name": "L'Info Durable (AFP) — la votation anti-SUV a coûté 400 000 euros (secondary)",
+          "url": "https://www.linfodurable.fr/paris-la-votation-anti-suv-coute-400000-euros-43588"
+        }
+      ]
+    },
+    "poll": {
+      "org": "OpinionWay for Respire and Clean Cities",
+      "date": "2024-01-02/2024-01-09",
+      "n": 1019,
+      "yesShare": 0.61,
+      "url": "https://cleancitiescampaign.org/?p=18051",
+      "note": "NOT the ballot question: 61 % support parking charges based on vehicle weight (70 % if conditions such as reinvesting revenue and exempting residents apply). Commissioned by groups campaigning FOR the measure. Sample of 1,019 people aged 18+, online (CAWI)."
+    },
+    "polls": [
+      {
+        "org": "OpinionWay",
+        "client": "Respire, Clean Cities Campaign (advocates of the measure)",
+        "fieldwork": "2024-01-02/2024-01-09",
+        "published": "2024-01-17",
+        "n": 1019,
+        "population": "Representative sample aged 18+ (as described by the client), online CAWI",
+        "question": "Support for parking charges based on vehicle weight (full questionnaire not published).",
+        "results": {
+          "supportWeightBasedParkingCharges": 0.61,
+          "supportIfConditions": 0.7,
+          "badOpinionOfSUVs": 0.56
+        },
+        "url": "https://cleancitiescampaign.org/?p=18051",
+        "verified": true,
+        "caveat": "No independent voting-intention poll on the exact ballot question was found."
+      }
+    ],
+    "sources": [
+      {
+        "name": "paris.fr — Plus ou moins de SUV ? Résultats de la votation du 4 février 2024",
+        "url": "https://www.paris.fr/pages/plus-ou-moins-de-suv-les-parisiens-et-parisiennes-sont-invites-a-voter-le-4-fevrier-25381"
+      },
+      {
+        "name": "opendata.paris.fr — votation_suv_2024 (by sector) and votation_suv_2024_bv (by polling station)",
+        "url": "https://opendata.paris.fr/explore/dataset/votation_suv_2024/information/"
+      },
+      {
+        "name": "paris.fr — infographie tarif SUV (PDF image: hourly rates by zone)",
+        "url": "https://cdn.paris.fr/paris/2023/12/19/suv_infog_1200x1200_24-7dB3.pdf"
+      },
+      {
+        "name": "Rapport de la commission de contrôle, votation du 4 février 2024 (PDF, scanned)",
+        "url": "https://cdn.paris.fr/paris/2024/03/01/rapport-votation-du-4-fevrier-2024-version-finale-XWBe.pdf"
+      },
+      {
+        "name": "Clean Cities Campaign — New polling shows that Parisians support higher parking charges for SUVs (OpinionWay, 17 Jan 2024)",
+        "url": "https://cleancitiescampaign.org/?p=18051"
+      },
+      {
+        "name": "Maire-info (AFP, 5 Feb 2024) — tarification spéciale SUV approuvée à près de 55 %",
+        "url": "https://www.maire-info.com/transports/paris-la-tarification-du-stationnement-speciale-suv-approuvee-pres-55--article-28273"
+      }
+    ],
+    "result": {
+      "scope": "Paris",
+      "registered": 1374531,
+      "signatures": 78099,
+      "voters": 78121,
+      "blank": 110,
+      "null": 256,
+      "expressed": 77755,
+      "pourVotes": 42415,
+      "contreVotes": 35340,
+      "yesShare": 0.545495,
+      "noShare": 0.454505,
+      "turnout": 0.056835
+    },
+    "bySector": [
+      {
+        "sector": "Paris Centre",
+        "registered": 68255,
+        "signatures": 4538,
+        "voters": 4541,
+        "blank": 8,
+        "null": 25,
+        "expressed": 4508,
+        "pourVotes": 2825,
+        "contreVotes": 1683,
+        "yesShare": 0.626664,
+        "noShare": 0.373336,
+        "turnout": 0.06653,
+        "districtCodes": [
+          "75101",
+          "75102",
+          "75103",
+          "75104"
+        ]
+      },
+      {
+        "sector": "5e",
+        "registered": 38241,
+        "signatures": 2710,
+        "voters": 2711,
+        "blank": 2,
+        "null": 7,
+        "expressed": 2702,
+        "pourVotes": 1626,
+        "contreVotes": 1076,
+        "yesShare": 0.601776,
+        "noShare": 0.398224,
+        "turnout": 0.070892,
+        "districtCodes": [
+          "75105"
+        ]
+      },
+      {
+        "sector": "6e",
+        "registered": 27159,
+        "signatures": 1839,
+        "voters": 1839,
+        "blank": 1,
+        "null": 6,
+        "expressed": 1832,
+        "pourVotes": 868,
+        "contreVotes": 964,
+        "yesShare": 0.473799,
+        "noShare": 0.526201,
+        "turnout": 0.067712,
+        "districtCodes": [
+          "75106"
+        ]
+      },
+      {
+        "sector": "7e",
+        "registered": 33763,
+        "signatures": 2438,
+        "voters": 2440,
+        "blank": 2,
+        "null": 3,
+        "expressed": 2435,
+        "pourVotes": 632,
+        "contreVotes": 1803,
+        "yesShare": 0.259548,
+        "noShare": 0.740452,
+        "turnout": 0.072268,
+        "districtCodes": [
+          "75107"
+        ]
+      },
+      {
+        "sector": "8e",
+        "registered": 25571,
+        "signatures": 2254,
+        "voters": 2256,
+        "blank": 4,
+        "null": 11,
+        "expressed": 2241,
+        "pourVotes": 604,
+        "contreVotes": 1637,
+        "yesShare": 0.269523,
+        "noShare": 0.730477,
+        "turnout": 0.088225,
+        "districtCodes": [
+          "75108"
+        ]
+      },
+      {
+        "sector": "9e",
+        "registered": 40835,
+        "signatures": 2173,
+        "voters": 2174,
+        "blank": 4,
+        "null": 5,
+        "expressed": 2165,
+        "pourVotes": 1328,
+        "contreVotes": 837,
+        "yesShare": 0.613395,
+        "noShare": 0.386605,
+        "turnout": 0.053239,
+        "districtCodes": [
+          "75109"
+        ]
+      },
+      {
+        "sector": "10e",
+        "registered": 57545,
+        "signatures": 3945,
+        "voters": 3948,
+        "blank": 15,
+        "null": 21,
+        "expressed": 3912,
+        "pourVotes": 3004,
+        "contreVotes": 908,
+        "yesShare": 0.767894,
+        "noShare": 0.232106,
+        "turnout": 0.068607,
+        "districtCodes": [
+          "75110"
+        ]
+      },
+      {
+        "sector": "11e",
+        "registered": 95439,
+        "signatures": 5306,
+        "voters": 5308,
+        "blank": 5,
+        "null": 15,
+        "expressed": 5288,
+        "pourVotes": 3783,
+        "contreVotes": 1505,
+        "yesShare": 0.715393,
+        "noShare": 0.284607,
+        "turnout": 0.055617,
+        "districtCodes": [
+          "75111"
+        ]
+      },
+      {
+        "sector": "12e",
+        "registered": 93333,
+        "signatures": 5853,
+        "voters": 5855,
+        "blank": 14,
+        "null": 38,
+        "expressed": 5803,
+        "pourVotes": 3486,
+        "contreVotes": 2317,
+        "yesShare": 0.600724,
+        "noShare": 0.399276,
+        "turnout": 0.062732,
+        "districtCodes": [
+          "75112"
+        ]
+      },
+      {
+        "sector": "13e",
+        "registered": 113743,
+        "signatures": 5425,
+        "voters": 5429,
+        "blank": 7,
+        "null": 14,
+        "expressed": 5408,
+        "pourVotes": 3443,
+        "contreVotes": 1965,
+        "yesShare": 0.636649,
+        "noShare": 0.363351,
+        "turnout": 0.04773,
+        "districtCodes": [
+          "75113"
+        ]
+      },
+      {
+        "sector": "14e",
+        "registered": 86865,
+        "signatures": 4960,
+        "voters": 4959,
+        "blank": 6,
+        "null": 17,
+        "expressed": 4936,
+        "pourVotes": 2922,
+        "contreVotes": 2014,
+        "yesShare": 0.591977,
+        "noShare": 0.408023,
+        "turnout": 0.057089,
+        "districtCodes": [
+          "75114"
+        ]
+      },
+      {
+        "sector": "15e",
+        "registered": 146940,
+        "signatures": 8443,
+        "voters": 8443,
+        "blank": 13,
+        "null": 14,
+        "expressed": 8416,
+        "pourVotes": 3397,
+        "contreVotes": 5019,
+        "yesShare": 0.403636,
+        "noShare": 0.596364,
+        "turnout": 0.057459,
+        "districtCodes": [
+          "75115"
+        ]
+      },
+      {
+        "sector": "16e",
+        "registered": 101021,
+        "signatures": 7060,
+        "voters": 7059,
+        "blank": 3,
+        "null": 13,
+        "expressed": 7043,
+        "pourVotes": 1271,
+        "contreVotes": 5772,
+        "yesShare": 0.180463,
+        "noShare": 0.819537,
+        "turnout": 0.069877,
+        "districtCodes": [
+          "75116"
+        ]
+      },
+      {
+        "sector": "17e",
+        "registered": 104094,
+        "signatures": 6056,
+        "voters": 6059,
+        "blank": 3,
+        "null": 11,
+        "expressed": 6045,
+        "pourVotes": 2275,
+        "contreVotes": 3770,
+        "yesShare": 0.376344,
+        "noShare": 0.623656,
+        "turnout": 0.058207,
+        "districtCodes": [
+          "75117"
+        ]
+      },
+      {
+        "sector": "18e",
+        "registered": 111251,
+        "signatures": 4961,
+        "voters": 4964,
+        "blank": 6,
+        "null": 14,
+        "expressed": 4944,
+        "pourVotes": 3559,
+        "contreVotes": 1385,
+        "yesShare": 0.719862,
+        "noShare": 0.280138,
+        "turnout": 0.04462,
+        "districtCodes": [
+          "75118"
+        ]
+      },
+      {
+        "sector": "19e",
+        "registered": 111388,
+        "signatures": 4760,
+        "voters": 4758,
+        "blank": 5,
+        "null": 14,
+        "expressed": 4739,
+        "pourVotes": 3465,
+        "contreVotes": 1274,
+        "yesShare": 0.731167,
+        "noShare": 0.268833,
+        "turnout": 0.042716,
+        "districtCodes": [
+          "75119"
+        ]
+      },
+      {
+        "sector": "20e",
+        "registered": 119088,
+        "signatures": 5378,
+        "voters": 5378,
+        "blank": 12,
+        "null": 28,
+        "expressed": 5338,
+        "pourVotes": 3927,
+        "contreVotes": 1411,
+        "yesShare": 0.735669,
+        "noShare": 0.264331,
+        "turnout": 0.04516,
+        "districtCodes": [
+          "75120"
+        ]
+      }
+    ],
+    "byArrondissement": [
+      {
+        "arrondissement": "1er",
+        "registered": 11341,
+        "signatures": 781,
+        "voters": 782,
+        "blank": 1,
+        "null": 6,
+        "expressed": 775,
+        "pourVotes": 439,
+        "contreVotes": 336,
+        "yesShare": 0.566452,
+        "noShare": 0.433548,
+        "turnout": 0.068953,
+        "code": "75101",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "2e",
+        "registered": 14142,
+        "signatures": 891,
+        "voters": 891,
+        "blank": 2,
+        "null": 9,
+        "expressed": 880,
+        "pourVotes": 572,
+        "contreVotes": 308,
+        "yesShare": 0.65,
+        "noShare": 0.35,
+        "turnout": 0.063004,
+        "code": "75102",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "3e",
+        "registered": 22812,
+        "signatures": 1650,
+        "voters": 1652,
+        "blank": 1,
+        "null": 4,
+        "expressed": 1647,
+        "pourVotes": 1054,
+        "contreVotes": 593,
+        "yesShare": 0.639951,
+        "noShare": 0.360049,
+        "turnout": 0.072418,
+        "code": "75103",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "4e",
+        "registered": 19960,
+        "signatures": 1216,
+        "voters": 1216,
+        "blank": 4,
+        "null": 6,
+        "expressed": 1206,
+        "pourVotes": 760,
+        "contreVotes": 446,
+        "yesShare": 0.630182,
+        "noShare": 0.369818,
+        "turnout": 0.060922,
+        "code": "75104",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "5e",
+        "registered": 38241,
+        "signatures": 2710,
+        "voters": 2711,
+        "blank": 2,
+        "null": 7,
+        "expressed": 2702,
+        "pourVotes": 1626,
+        "contreVotes": 1076,
+        "yesShare": 0.601776,
+        "noShare": 0.398224,
+        "turnout": 0.070892,
+        "code": "75105",
+        "sector": "5e"
+      },
+      {
+        "arrondissement": "6e",
+        "registered": 27159,
+        "signatures": 1839,
+        "voters": 1839,
+        "blank": 1,
+        "null": 6,
+        "expressed": 1832,
+        "pourVotes": 868,
+        "contreVotes": 964,
+        "yesShare": 0.473799,
+        "noShare": 0.526201,
+        "turnout": 0.067712,
+        "code": "75106",
+        "sector": "6e"
+      },
+      {
+        "arrondissement": "7e",
+        "registered": 33763,
+        "signatures": 2438,
+        "voters": 2440,
+        "blank": 2,
+        "null": 3,
+        "expressed": 2435,
+        "pourVotes": 632,
+        "contreVotes": 1803,
+        "yesShare": 0.259548,
+        "noShare": 0.740452,
+        "turnout": 0.072268,
+        "code": "75107",
+        "sector": "7e"
+      },
+      {
+        "arrondissement": "8e",
+        "registered": 25571,
+        "signatures": 2254,
+        "voters": 2256,
+        "blank": 4,
+        "null": 11,
+        "expressed": 2241,
+        "pourVotes": 604,
+        "contreVotes": 1637,
+        "yesShare": 0.269523,
+        "noShare": 0.730477,
+        "turnout": 0.088225,
+        "code": "75108",
+        "sector": "8e"
+      },
+      {
+        "arrondissement": "9e",
+        "registered": 40835,
+        "signatures": 2173,
+        "voters": 2174,
+        "blank": 4,
+        "null": 5,
+        "expressed": 2165,
+        "pourVotes": 1328,
+        "contreVotes": 837,
+        "yesShare": 0.613395,
+        "noShare": 0.386605,
+        "turnout": 0.053239,
+        "code": "75109",
+        "sector": "9e"
+      },
+      {
+        "arrondissement": "10e",
+        "registered": 57545,
+        "signatures": 3945,
+        "voters": 3948,
+        "blank": 15,
+        "null": 21,
+        "expressed": 3912,
+        "pourVotes": 3004,
+        "contreVotes": 908,
+        "yesShare": 0.767894,
+        "noShare": 0.232106,
+        "turnout": 0.068607,
+        "code": "75110",
+        "sector": "10e"
+      },
+      {
+        "arrondissement": "11e",
+        "registered": 95439,
+        "signatures": 5306,
+        "voters": 5308,
+        "blank": 5,
+        "null": 15,
+        "expressed": 5288,
+        "pourVotes": 3783,
+        "contreVotes": 1505,
+        "yesShare": 0.715393,
+        "noShare": 0.284607,
+        "turnout": 0.055617,
+        "code": "75111",
+        "sector": "11e"
+      },
+      {
+        "arrondissement": "12e",
+        "registered": 93333,
+        "signatures": 5853,
+        "voters": 5855,
+        "blank": 14,
+        "null": 38,
+        "expressed": 5803,
+        "pourVotes": 3486,
+        "contreVotes": 2317,
+        "yesShare": 0.600724,
+        "noShare": 0.399276,
+        "turnout": 0.062732,
+        "code": "75112",
+        "sector": "12e"
+      },
+      {
+        "arrondissement": "13e",
+        "registered": 113743,
+        "signatures": 5425,
+        "voters": 5429,
+        "blank": 7,
+        "null": 14,
+        "expressed": 5408,
+        "pourVotes": 3443,
+        "contreVotes": 1965,
+        "yesShare": 0.636649,
+        "noShare": 0.363351,
+        "turnout": 0.04773,
+        "code": "75113",
+        "sector": "13e"
+      },
+      {
+        "arrondissement": "14e",
+        "registered": 86865,
+        "signatures": 4960,
+        "voters": 4959,
+        "blank": 6,
+        "null": 17,
+        "expressed": 4936,
+        "pourVotes": 2922,
+        "contreVotes": 2014,
+        "yesShare": 0.591977,
+        "noShare": 0.408023,
+        "turnout": 0.057089,
+        "code": "75114",
+        "sector": "14e"
+      },
+      {
+        "arrondissement": "15e",
+        "registered": 146940,
+        "signatures": 8443,
+        "voters": 8443,
+        "blank": 13,
+        "null": 14,
+        "expressed": 8416,
+        "pourVotes": 3397,
+        "contreVotes": 5019,
+        "yesShare": 0.403636,
+        "noShare": 0.596364,
+        "turnout": 0.057459,
+        "code": "75115",
+        "sector": "15e"
+      },
+      {
+        "arrondissement": "16e",
+        "registered": 101021,
+        "signatures": 7060,
+        "voters": 7059,
+        "blank": 3,
+        "null": 13,
+        "expressed": 7043,
+        "pourVotes": 1271,
+        "contreVotes": 5772,
+        "yesShare": 0.180463,
+        "noShare": 0.819537,
+        "turnout": 0.069877,
+        "code": "75116",
+        "sector": "16e"
+      },
+      {
+        "arrondissement": "17e",
+        "registered": 104094,
+        "signatures": 6056,
+        "voters": 6059,
+        "blank": 3,
+        "null": 11,
+        "expressed": 6045,
+        "pourVotes": 2275,
+        "contreVotes": 3770,
+        "yesShare": 0.376344,
+        "noShare": 0.623656,
+        "turnout": 0.058207,
+        "code": "75117",
+        "sector": "17e"
+      },
+      {
+        "arrondissement": "18e",
+        "registered": 111251,
+        "signatures": 4961,
+        "voters": 4964,
+        "blank": 6,
+        "null": 14,
+        "expressed": 4944,
+        "pourVotes": 3559,
+        "contreVotes": 1385,
+        "yesShare": 0.719862,
+        "noShare": 0.280138,
+        "turnout": 0.04462,
+        "code": "75118",
+        "sector": "18e"
+      },
+      {
+        "arrondissement": "19e",
+        "registered": 111388,
+        "signatures": 4760,
+        "voters": 4758,
+        "blank": 5,
+        "null": 14,
+        "expressed": 4739,
+        "pourVotes": 3465,
+        "contreVotes": 1274,
+        "yesShare": 0.731167,
+        "noShare": 0.268833,
+        "turnout": 0.042716,
+        "code": "75119",
+        "sector": "19e"
+      },
+      {
+        "arrondissement": "20e",
+        "registered": 119088,
+        "signatures": 5378,
+        "voters": 5378,
+        "blank": 12,
+        "null": 28,
+        "expressed": 5338,
+        "pourVotes": 3927,
+        "contreVotes": 1411,
+        "yesShare": 0.735669,
+        "noShare": 0.264331,
+        "turnout": 0.04516,
+        "code": "75120",
+        "sector": "20e"
+      }
+    ],
+    "checks": [
+      {
+        "check": "pour+contre == expressed in every sector",
+        "ok": true,
+        "detail": "Each sector row: Pour + Contre equals suffrages exprimés."
+      },
+      {
+        "check": "sum of sectors: Pour votes == proclaimed",
+        "ok": true,
+        "detail": "42415 vs 42415"
+      },
+      {
+        "check": "sum of sectors: Contre votes == proclaimed",
+        "ok": true,
+        "detail": "35340 vs 35340"
+      },
+      {
+        "check": "sum of sectors: voters == proclaimed",
+        "ok": true,
+        "detail": "78121 vs 78121"
+      },
+      {
+        "check": "sum of sectors: blank+null == proclaimed",
+        "ok": true,
+        "detail": "366 vs 366"
+      },
+      {
+        "check": "sum of sectors: registered == proclaimed (±1)",
+        "ok": true,
+        "detail": "1374531 vs 1374532 (difference -1; open-data file vs paris.fr page)"
+      },
+      {
+        "check": "Pour share == proclaimed (2 decimals)",
+        "ok": true,
+        "detail": "54.5495 % vs 54.55 %"
+      },
+      {
+        "check": "sector Pour % == paris.fr page (2 decimals)",
+        "ok": true,
+        "detail": "largest difference 0.000 percentage points"
+      },
+      {
+        "check": "sector file == polling-station file summed",
+        "ok": true,
+        "detail": "Counts identical (registered may differ by 1)."
+      }
+    ],
+    "pollGap": {
+      "actualMinusPoll": -0.0645,
+      "comparable": false,
+      "note": "Positive = voters were more 'Pour' than the poll. Only meaningful when the poll asked the ballot question (not the case for the SUV vote)."
+    },
+    "turnoutRange": {
+      "lowest": {
+        "sector": "19e",
+        "turnout": 0.042716
+      },
+      "highest": {
+        "sector": "8e",
+        "turnout": 0.088225
+      }
+    }
+  },
+  "paris_streets_2025": {
+    "id": "paris_streets_2025",
+    "voteName": "Votation du 23 mars 2025 — végétaliser et rendre piétonnes 500 nouvelles rues",
+    "titleEn": "Paris citizens' vote on greening and pedestrianising 500 more streets",
+    "date": "2025-03-23",
+    "question": "Pour ou contre végétaliser et rendre piétonnes 500 nouvelles rues dans Paris, réparties dans tous les quartiers ?",
+    "ballotOptions": {
+      "pour": "Pour",
+      "contre": "Contre"
+    },
+    "yesMeaning": "'Pour' = speed up greening and pedestrianising 500 streets (5 to 8 per neighbourhood, within ~300 m of voters' homes), chosen with residents from April 2025, about 3 years of works.",
+    "legalStatus": "Consultative vote under the control of an independent control commission (third Paris votation).",
+    "eligibility": {
+      "who": "People registered on the Paris electoral lists by 26 February 2025, including EU nationals on the municipal complementary list and, for the first time, French or EU nationals aged 16 and 17.",
+      "euCitizensOnComplementaryList": true,
+      "minimumAge": 16,
+      "registrationDeadline": "2025-02-26",
+      "note": "Nine EU citizens registered only on the European complementary list were allowed to vote after a decision of the commission; it suggested opening future votations to that list too.",
+      "verified": true,
+      "sources": [
+        {
+          "name": "Rapport de la commission de contrôle, votation du 23 mars 2025 (PDF, juin 2025)",
+          "url": "https://cdn.paris.fr/paris/2025/06/16/20250705-rapport-cc-votation-2025-v3-couv-corrigee-def-HOEi.pdf"
+        }
+      ]
+    },
+    "modalities": {
+      "hours": "09:00-19:00",
+      "pollingStations": 218,
+      "votingSites": 34,
+      "inPersonOnly": true,
+      "proxyVoting": false,
+      "electronicVoting": false,
+      "notes": [
+        "Seven arrondissements asked an extra local question the same day."
+      ],
+      "sources": [
+        {
+          "name": "paris.fr — Votation du 23 mars 2025: 65,96 % des votants pour piétonniser et végétaliser 500 nouvelles rues",
+          "url": "https://www.paris.fr/pages/nouvelle-votation-rendez-vous-aux-urnes-le-23-mars-2025-29900"
+        },
+        {
+          "name": "Rapport de la commission de contrôle, votation du 23 mars 2025 (PDF, juin 2025)",
+          "url": "https://cdn.paris.fr/paris/2025/06/16/20250705-rapport-cc-votation-2025-v3-couv-corrigee-def-HOEi.pdf"
+        }
+      ]
+    },
+    "rules": {
+      "streets": 500,
+      "perNeighbourhood": "5 to 8",
+      "distanceFromHomes": "less than 300 m",
+      "timeline": "Street identification with residents from April 2025, about three years of works",
+      "context": "Since 2020: more than 10,000 outdoor parking spaces removed and 197 streets greened (paris.fr).",
+      "sources": [
+        {
+          "name": "paris.fr — Votation du 23 mars 2025: 65,96 % des votants pour piétonniser et végétaliser 500 nouvelles rues",
+          "url": "https://www.paris.fr/pages/nouvelle-votation-rendez-vous-aux-urnes-le-23-mars-2025-29900"
+        }
+      ]
+    },
+    "localQuestions": {
+      "note": "Same-day arrondissement questions (paris.fr). Turnout as published.",
+      "rows": [
+        {
+          "sector": "Paris Centre",
+          "topic": "Shops, housing and greenery on the Île de la Cité",
+          "pourShare": 0.7043,
+          "turnout": 0.0423
+        },
+        {
+          "sector": "10e",
+          "topic": "Transforming Porte Saint-Martin and Porte Saint-Denis",
+          "pourShare": 0.8385,
+          "turnout": 0.0566
+        },
+        {
+          "sector": "11e",
+          "topic": "At least one pedestrian heart per neighbourhood",
+          "pourShare": 0.8026,
+          "turnout": 0.0464
+        },
+        {
+          "sector": "14e",
+          "topic": "Trial of a solidarity food fund",
+          "pourShare": 0.7208,
+          "turnout": 0.0456
+        },
+        {
+          "sector": "17e",
+          "topic": "Digital technologies for street lighting and maintenance",
+          "pourShare": 0.7684,
+          "turnout": 0.0348
+        },
+        {
+          "sector": "19e",
+          "topic": "Memorial garden for pets",
+          "pourShare": 0.5864,
+          "turnout": 0.0419
+        },
+        {
+          "sector": "20e",
+          "topic": "Children's council with real powers",
+          "pourShare": 0.8159,
+          "turnout": 0.0324
+        }
+      ],
+      "sources": [
+        {
+          "name": "paris.fr — Votation du 23 mars 2025: 65,96 % des votants pour piétonniser et végétaliser 500 nouvelles rues",
+          "url": "https://www.paris.fr/pages/nouvelle-votation-rendez-vous-aux-urnes-le-23-mars-2025-29900"
+        }
+      ]
+    },
+    "poll": {
+      "org": "OpinionWay for Clean Cities",
+      "date": "2025-02-21/2025-02-27",
+      "n": 903,
+      "yesShare": 0.6437,
+      "url": "https://www.commission-des-sondages.fr/notices/files/notices/2025/mars/9907-opinionway-pour-clean-cities-les-parisiens-et-la-pietonnisation-de-la-ville-notice-a-la-commission-des-sondages-mars-2025.pdf",
+      "note": "Same question as the ballot. Among 903 registered voters (of 1,008 Parisians aged 16+): Pour 56 %, Contre 31 %, abstention/blank/null/don't know 13 %. yesShare = 56/(56+31). Commissioned by a group campaigning FOR the measure."
+    },
+    "polls": [
+      {
+        "org": "OpinionWay",
+        "client": "Clean Cities Campaign (advocate of the measure)",
+        "fieldwork": "2025-02-21/2025-02-27",
+        "n": 1008,
+        "nRegistered": 903,
+        "population": "Parisians aged 16+, quotas (sex, age, occupation, arrondissement), online CAWI",
+        "question": "Si la votation avait lieu dimanche prochain, pour laquelle des réponses suivantes y aurait-il le plus de chance que vous votiez ?",
+        "results": {
+          "pour": 0.56,
+          "contre": 0.31,
+          "abstainBlankNullDontKnow": 0.13,
+          "pourShareOfExpressed": 0.6437,
+          "heardOfTheVote": 0.75,
+          "favourPedestrianisingSuitableStreets": 0.74
+        },
+        "url": "https://www.commission-des-sondages.fr/notices/files/notices/2025/mars/9907-opinionway-pour-clean-cities-les-parisiens-et-la-pietonnisation-de-la-ville-notice-a-la-commission-des-sondages-mars-2025.pdf",
+        "verified": true
+      }
+    ],
+    "notes": [
+      "The paris.fr page prints '69,99 % / 31,01 %' for the 12e; the official open data gives 69.99 % / 30.01 % (typo on the page)."
+    ],
+    "sources": [
+      {
+        "name": "paris.fr — Votation du 23 mars 2025: 65,96 % des votants pour piétonniser et végétaliser 500 nouvelles rues",
+        "url": "https://www.paris.fr/pages/nouvelle-votation-rendez-vous-aux-urnes-le-23-mars-2025-29900"
+      },
+      {
+        "name": "opendata.paris.fr — votation mars 2025 (results by polling station)",
+        "url": "https://opendata.paris.fr/explore/dataset/votation-donnees-votation-mars2025-pour-ou-contre-vegetaliser-rues/information/"
+      },
+      {
+        "name": "Rapport de la commission de contrôle, votation du 23 mars 2025 (PDF, juin 2025)",
+        "url": "https://cdn.paris.fr/paris/2025/06/16/20250705-rapport-cc-votation-2025-v3-couv-corrigee-def-HOEi.pdf"
+      },
+      {
+        "name": "Règlement de la votation du 23 mars 2025 (PDF)",
+        "url": "https://cdn.paris.fr/paris/2025/02/06/reglement-de-la-votation-du-23-mars-2025-xV6U.pdf"
+      },
+      {
+        "name": "Commission des sondages — notice OpinionWay pour Clean Cities, mars 2025 (PDF)",
+        "url": "https://www.commission-des-sondages.fr/notices/files/notices/2025/mars/9907-opinionway-pour-clean-cities-les-parisiens-et-la-pietonnisation-de-la-ville-notice-a-la-commission-des-sondages-mars-2025.pdf"
+      },
+      {
+        "name": "Clean Cities Campaign — note Paris (mars 2025, poll section p. 9-11)",
+        "url": "https://cleancitiescampaign.org/wp-content/uploads/2025/03/Paris_leader-sur-les-rues-scolaires-en-retard-sur-la-marche-et-les-espaces-verts.pdf"
+      }
+    ],
+    "result": {
+      "scope": "Paris",
+      "registered": 1391369,
+      "signatures": 56461,
+      "voters": 56489,
+      "blank": 88,
+      "null": 226,
+      "expressed": 56175,
+      "pourVotes": 37054,
+      "contreVotes": 19121,
+      "yesShare": 0.659617,
+      "noShare": 0.340383,
+      "turnout": 0.0406
+    },
+    "bySector": [
+      {
+        "sector": "Paris Centre",
+        "registered": 69175,
+        "signatures": 3005,
+        "voters": 3005,
+        "blank": 8,
+        "null": 23,
+        "expressed": 2974,
+        "pourVotes": 2072,
+        "contreVotes": 902,
+        "yesShare": 0.696705,
+        "noShare": 0.303295,
+        "turnout": 0.043441,
+        "districtCodes": [
+          "75101",
+          "75102",
+          "75103",
+          "75104"
+        ]
+      },
+      {
+        "sector": "5e",
+        "registered": 38610,
+        "signatures": 1690,
+        "voters": 1690,
+        "blank": 1,
+        "null": 3,
+        "expressed": 1686,
+        "pourVotes": 1128,
+        "contreVotes": 558,
+        "yesShare": 0.669039,
+        "noShare": 0.330961,
+        "turnout": 0.043771,
+        "districtCodes": [
+          "75105"
+        ]
+      },
+      {
+        "sector": "6e",
+        "registered": 27236,
+        "signatures": 1285,
+        "voters": 1286,
+        "blank": 1,
+        "null": 4,
+        "expressed": 1281,
+        "pourVotes": 678,
+        "contreVotes": 603,
+        "yesShare": 0.529274,
+        "noShare": 0.470726,
+        "turnout": 0.047217,
+        "districtCodes": [
+          "75106"
+        ]
+      },
+      {
+        "sector": "7e",
+        "registered": 33983,
+        "signatures": 1190,
+        "voters": 1194,
+        "blank": 0,
+        "null": 2,
+        "expressed": 1192,
+        "pourVotes": 402,
+        "contreVotes": 790,
+        "yesShare": 0.337248,
+        "noShare": 0.662752,
+        "turnout": 0.035135,
+        "districtCodes": [
+          "75107"
+        ]
+      },
+      {
+        "sector": "8e",
+        "registered": 25718,
+        "signatures": 1077,
+        "voters": 1077,
+        "blank": 0,
+        "null": 2,
+        "expressed": 1075,
+        "pourVotes": 416,
+        "contreVotes": 659,
+        "yesShare": 0.386977,
+        "noShare": 0.613023,
+        "turnout": 0.041877,
+        "districtCodes": [
+          "75108"
+        ]
+      },
+      {
+        "sector": "9e",
+        "registered": 41180,
+        "signatures": 1586,
+        "voters": 1586,
+        "blank": 0,
+        "null": 1,
+        "expressed": 1585,
+        "pourVotes": 1103,
+        "contreVotes": 482,
+        "yesShare": 0.695899,
+        "noShare": 0.304101,
+        "turnout": 0.038514,
+        "districtCodes": [
+          "75109"
+        ]
+      },
+      {
+        "sector": "10e",
+        "registered": 58409,
+        "signatures": 3324,
+        "voters": 3314,
+        "blank": 10,
+        "null": 13,
+        "expressed": 3291,
+        "pourVotes": 2730,
+        "contreVotes": 561,
+        "yesShare": 0.829535,
+        "noShare": 0.170465,
+        "turnout": 0.056738,
+        "districtCodes": [
+          "75110"
+        ]
+      },
+      {
+        "sector": "11e",
+        "registered": 96936,
+        "signatures": 4489,
+        "voters": 4494,
+        "blank": 9,
+        "null": 20,
+        "expressed": 4465,
+        "pourVotes": 3546,
+        "contreVotes": 919,
+        "yesShare": 0.794177,
+        "noShare": 0.205823,
+        "turnout": 0.04636,
+        "districtCodes": [
+          "75111"
+        ]
+      },
+      {
+        "sector": "12e",
+        "registered": 94627,
+        "signatures": 4125,
+        "voters": 4126,
+        "blank": 5,
+        "null": 9,
+        "expressed": 4112,
+        "pourVotes": 2878,
+        "contreVotes": 1234,
+        "yesShare": 0.699903,
+        "noShare": 0.300097,
+        "turnout": 0.043603,
+        "districtCodes": [
+          "75112"
+        ]
+      },
+      {
+        "sector": "13e",
+        "registered": 115107,
+        "signatures": 4600,
+        "voters": 4600,
+        "blank": 9,
+        "null": 9,
+        "expressed": 4582,
+        "pourVotes": 3187,
+        "contreVotes": 1395,
+        "yesShare": 0.695548,
+        "noShare": 0.304452,
+        "turnout": 0.039963,
+        "districtCodes": [
+          "75113"
+        ]
+      },
+      {
+        "sector": "14e",
+        "registered": 87413,
+        "signatures": 4084,
+        "voters": 4087,
+        "blank": 7,
+        "null": 21,
+        "expressed": 4059,
+        "pourVotes": 2732,
+        "contreVotes": 1327,
+        "yesShare": 0.673072,
+        "noShare": 0.326928,
+        "turnout": 0.046755,
+        "districtCodes": [
+          "75114"
+        ]
+      },
+      {
+        "sector": "15e",
+        "registered": 147479,
+        "signatures": 5208,
+        "voters": 5207,
+        "blank": 8,
+        "null": 23,
+        "expressed": 5176,
+        "pourVotes": 3060,
+        "contreVotes": 2116,
+        "yesShare": 0.59119,
+        "noShare": 0.40881,
+        "turnout": 0.035307,
+        "districtCodes": [
+          "75115"
+        ]
+      },
+      {
+        "sector": "16e",
+        "registered": 102280,
+        "signatures": 3122,
+        "voters": 3126,
+        "blank": 2,
+        "null": 2,
+        "expressed": 3122,
+        "pourVotes": 828,
+        "contreVotes": 2294,
+        "yesShare": 0.265215,
+        "noShare": 0.734785,
+        "turnout": 0.030563,
+        "districtCodes": [
+          "75116"
+        ]
+      },
+      {
+        "sector": "17e",
+        "registered": 105641,
+        "signatures": 3737,
+        "voters": 3744,
+        "blank": 5,
+        "null": 32,
+        "expressed": 3707,
+        "pourVotes": 2053,
+        "contreVotes": 1654,
+        "yesShare": 0.553817,
+        "noShare": 0.446183,
+        "turnout": 0.035441,
+        "districtCodes": [
+          "75117"
+        ]
+      },
+      {
+        "sector": "18e",
+        "registered": 113181,
+        "signatures": 4919,
+        "voters": 4923,
+        "blank": 4,
+        "null": 14,
+        "expressed": 4905,
+        "pourVotes": 3578,
+        "contreVotes": 1327,
+        "yesShare": 0.72946,
+        "noShare": 0.27054,
+        "turnout": 0.043497,
+        "districtCodes": [
+          "75118"
+        ]
+      },
+      {
+        "sector": "19e",
+        "registered": 113642,
+        "signatures": 4919,
+        "voters": 4925,
+        "blank": 8,
+        "null": 24,
+        "expressed": 4893,
+        "pourVotes": 3507,
+        "contreVotes": 1386,
+        "yesShare": 0.716738,
+        "noShare": 0.283262,
+        "turnout": 0.043338,
+        "districtCodes": [
+          "75119"
+        ]
+      },
+      {
+        "sector": "20e",
+        "registered": 120752,
+        "signatures": 4101,
+        "voters": 4105,
+        "blank": 11,
+        "null": 24,
+        "expressed": 4070,
+        "pourVotes": 3156,
+        "contreVotes": 914,
+        "yesShare": 0.77543,
+        "noShare": 0.22457,
+        "turnout": 0.033995,
+        "districtCodes": [
+          "75120"
+        ]
+      }
+    ],
+    "byArrondissement": [
+      {
+        "arrondissement": "1er",
+        "registered": 11374,
+        "signatures": 463,
+        "voters": 463,
+        "blank": 1,
+        "null": 3,
+        "expressed": 459,
+        "pourVotes": 303,
+        "contreVotes": 156,
+        "yesShare": 0.660131,
+        "noShare": 0.339869,
+        "turnout": 0.040707,
+        "code": "75101",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "2e",
+        "registered": 14382,
+        "signatures": 600,
+        "voters": 600,
+        "blank": 1,
+        "null": 5,
+        "expressed": 594,
+        "pourVotes": 453,
+        "contreVotes": 141,
+        "yesShare": 0.762626,
+        "noShare": 0.237374,
+        "turnout": 0.041719,
+        "code": "75102",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "3e",
+        "registered": 23017,
+        "signatures": 1064,
+        "voters": 1064,
+        "blank": 4,
+        "null": 11,
+        "expressed": 1049,
+        "pourVotes": 781,
+        "contreVotes": 268,
+        "yesShare": 0.744519,
+        "noShare": 0.255481,
+        "turnout": 0.046227,
+        "code": "75103",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "4e",
+        "registered": 20402,
+        "signatures": 878,
+        "voters": 878,
+        "blank": 2,
+        "null": 4,
+        "expressed": 872,
+        "pourVotes": 535,
+        "contreVotes": 337,
+        "yesShare": 0.613532,
+        "noShare": 0.386468,
+        "turnout": 0.043035,
+        "code": "75104",
+        "sector": "Paris Centre"
+      },
+      {
+        "arrondissement": "5e",
+        "registered": 38610,
+        "signatures": 1690,
+        "voters": 1690,
+        "blank": 1,
+        "null": 3,
+        "expressed": 1686,
+        "pourVotes": 1128,
+        "contreVotes": 558,
+        "yesShare": 0.669039,
+        "noShare": 0.330961,
+        "turnout": 0.043771,
+        "code": "75105",
+        "sector": "5e"
+      },
+      {
+        "arrondissement": "6e",
+        "registered": 27236,
+        "signatures": 1285,
+        "voters": 1286,
+        "blank": 1,
+        "null": 4,
+        "expressed": 1281,
+        "pourVotes": 678,
+        "contreVotes": 603,
+        "yesShare": 0.529274,
+        "noShare": 0.470726,
+        "turnout": 0.047217,
+        "code": "75106",
+        "sector": "6e"
+      },
+      {
+        "arrondissement": "7e",
+        "registered": 33983,
+        "signatures": 1190,
+        "voters": 1194,
+        "blank": 0,
+        "null": 2,
+        "expressed": 1192,
+        "pourVotes": 402,
+        "contreVotes": 790,
+        "yesShare": 0.337248,
+        "noShare": 0.662752,
+        "turnout": 0.035135,
+        "code": "75107",
+        "sector": "7e"
+      },
+      {
+        "arrondissement": "8e",
+        "registered": 25718,
+        "signatures": 1077,
+        "voters": 1077,
+        "blank": 0,
+        "null": 2,
+        "expressed": 1075,
+        "pourVotes": 416,
+        "contreVotes": 659,
+        "yesShare": 0.386977,
+        "noShare": 0.613023,
+        "turnout": 0.041877,
+        "code": "75108",
+        "sector": "8e"
+      },
+      {
+        "arrondissement": "9e",
+        "registered": 41180,
+        "signatures": 1586,
+        "voters": 1586,
+        "blank": 0,
+        "null": 1,
+        "expressed": 1585,
+        "pourVotes": 1103,
+        "contreVotes": 482,
+        "yesShare": 0.695899,
+        "noShare": 0.304101,
+        "turnout": 0.038514,
+        "code": "75109",
+        "sector": "9e"
+      },
+      {
+        "arrondissement": "10e",
+        "registered": 58409,
+        "signatures": 3324,
+        "voters": 3314,
+        "blank": 10,
+        "null": 13,
+        "expressed": 3291,
+        "pourVotes": 2730,
+        "contreVotes": 561,
+        "yesShare": 0.829535,
+        "noShare": 0.170465,
+        "turnout": 0.056738,
+        "code": "75110",
+        "sector": "10e"
+      },
+      {
+        "arrondissement": "11e",
+        "registered": 96936,
+        "signatures": 4489,
+        "voters": 4494,
+        "blank": 9,
+        "null": 20,
+        "expressed": 4465,
+        "pourVotes": 3546,
+        "contreVotes": 919,
+        "yesShare": 0.794177,
+        "noShare": 0.205823,
+        "turnout": 0.04636,
+        "code": "75111",
+        "sector": "11e"
+      },
+      {
+        "arrondissement": "12e",
+        "registered": 94627,
+        "signatures": 4125,
+        "voters": 4126,
+        "blank": 5,
+        "null": 9,
+        "expressed": 4112,
+        "pourVotes": 2878,
+        "contreVotes": 1234,
+        "yesShare": 0.699903,
+        "noShare": 0.300097,
+        "turnout": 0.043603,
+        "code": "75112",
+        "sector": "12e"
+      },
+      {
+        "arrondissement": "13e",
+        "registered": 115107,
+        "signatures": 4600,
+        "voters": 4600,
+        "blank": 9,
+        "null": 9,
+        "expressed": 4582,
+        "pourVotes": 3187,
+        "contreVotes": 1395,
+        "yesShare": 0.695548,
+        "noShare": 0.304452,
+        "turnout": 0.039963,
+        "code": "75113",
+        "sector": "13e"
+      },
+      {
+        "arrondissement": "14e",
+        "registered": 87413,
+        "signatures": 4084,
+        "voters": 4087,
+        "blank": 7,
+        "null": 21,
+        "expressed": 4059,
+        "pourVotes": 2732,
+        "contreVotes": 1327,
+        "yesShare": 0.673072,
+        "noShare": 0.326928,
+        "turnout": 0.046755,
+        "code": "75114",
+        "sector": "14e"
+      },
+      {
+        "arrondissement": "15e",
+        "registered": 147479,
+        "signatures": 5208,
+        "voters": 5207,
+        "blank": 8,
+        "null": 23,
+        "expressed": 5176,
+        "pourVotes": 3060,
+        "contreVotes": 2116,
+        "yesShare": 0.59119,
+        "noShare": 0.40881,
+        "turnout": 0.035307,
+        "code": "75115",
+        "sector": "15e"
+      },
+      {
+        "arrondissement": "16e",
+        "registered": 102280,
+        "signatures": 3122,
+        "voters": 3126,
+        "blank": 2,
+        "null": 2,
+        "expressed": 3122,
+        "pourVotes": 828,
+        "contreVotes": 2294,
+        "yesShare": 0.265215,
+        "noShare": 0.734785,
+        "turnout": 0.030563,
+        "code": "75116",
+        "sector": "16e"
+      },
+      {
+        "arrondissement": "17e",
+        "registered": 105641,
+        "signatures": 3737,
+        "voters": 3744,
+        "blank": 5,
+        "null": 32,
+        "expressed": 3707,
+        "pourVotes": 2053,
+        "contreVotes": 1654,
+        "yesShare": 0.553817,
+        "noShare": 0.446183,
+        "turnout": 0.035441,
+        "code": "75117",
+        "sector": "17e"
+      },
+      {
+        "arrondissement": "18e",
+        "registered": 113181,
+        "signatures": 4919,
+        "voters": 4923,
+        "blank": 4,
+        "null": 14,
+        "expressed": 4905,
+        "pourVotes": 3578,
+        "contreVotes": 1327,
+        "yesShare": 0.72946,
+        "noShare": 0.27054,
+        "turnout": 0.043497,
+        "code": "75118",
+        "sector": "18e"
+      },
+      {
+        "arrondissement": "19e",
+        "registered": 113642,
+        "signatures": 4919,
+        "voters": 4925,
+        "blank": 8,
+        "null": 24,
+        "expressed": 4893,
+        "pourVotes": 3507,
+        "contreVotes": 1386,
+        "yesShare": 0.716738,
+        "noShare": 0.283262,
+        "turnout": 0.043338,
+        "code": "75119",
+        "sector": "19e"
+      },
+      {
+        "arrondissement": "20e",
+        "registered": 120752,
+        "signatures": 4101,
+        "voters": 4105,
+        "blank": 11,
+        "null": 24,
+        "expressed": 4070,
+        "pourVotes": 3156,
+        "contreVotes": 914,
+        "yesShare": 0.77543,
+        "noShare": 0.22457,
+        "turnout": 0.033995,
+        "code": "75120",
+        "sector": "20e"
+      }
+    ],
+    "checks": [
+      {
+        "check": "pour+contre == expressed in every sector",
+        "ok": true,
+        "detail": "Each sector row: Pour + Contre equals suffrages exprimés."
+      },
+      {
+        "check": "sum of sectors: Pour votes == proclaimed",
+        "ok": true,
+        "detail": "37054 vs 37054"
+      },
+      {
+        "check": "sum of sectors: Contre votes == proclaimed",
+        "ok": true,
+        "detail": "19121 vs 19121"
+      },
+      {
+        "check": "sum of sectors: voters == proclaimed",
+        "ok": true,
+        "detail": "56489 vs 56489"
+      },
+      {
+        "check": "sum of sectors: blank+null == proclaimed",
+        "ok": true,
+        "detail": "314 vs 314"
+      },
+      {
+        "check": "sum of sectors: registered == proclaimed (±1)",
+        "ok": true,
+        "detail": "1391369 vs 1391369 (difference +0; open-data file vs paris.fr page)"
+      },
+      {
+        "check": "Pour share == proclaimed (2 decimals)",
+        "ok": true,
+        "detail": "65.9617 % vs 65.96 %"
+      },
+      {
+        "check": "turnout == proclaimed (2 decimals)",
+        "ok": true,
+        "detail": "4.0600 % vs 4.06 %"
+      },
+      {
+        "check": "sector Pour % == paris.fr page (2 decimals)",
+        "ok": true,
+        "detail": "largest difference 0.000 percentage points"
+      }
+    ],
+    "pollGap": {
+      "actualMinusPoll": 0.0159,
+      "comparable": true,
+      "note": "Positive = voters were more 'Pour' than the poll. Only meaningful when the poll asked the ballot question (not the case for the SUV vote)."
+    },
+    "turnoutRange": {
+      "lowest": {
+        "sector": "16e",
+        "turnout": 0.030563
+      },
+      "highest": {
+        "sector": "10e",
+        "turnout": 0.056738
+      }
+    }
+  }
+}

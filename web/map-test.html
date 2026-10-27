@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Town renderer test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      html, body { margin: 0; height: 100%; background: #2f3a3a; overflow: hidden; font-family: 'Pixelify Sans', ui-monospace, monospace; }
+      #map { position: fixed; inset: 0; }
+      #panel { position: fixed; left: 8px; top: 8px; max-width: 560px; background: rgba(43, 32, 40, 0.82); color: #fbf3e2; padding: 6px 8px; border-radius: 6px; font-size: 12px; }
+      #panel .row { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 3px 0; }
+      #panel .row > span { width: 58px; opacity: 0.7; }
+      #panel button { font: inherit; font-size: 11px; background: #f3e6c4; color: #3a2a35; border: 1px solid #5b4352; border-radius: 3px; padding: 1px 6px; cursor: pointer; }
+      #status { position: fixed; left: 8px; bottom: 8px; color: #fbf3e2; background: rgba(43, 32, 40, 0.7); padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+      #log { position: fixed; right: 8px; bottom: 8px; color: #fbf3e2; background: rgba(43, 32, 40, 0.7); padding: 3px 8px; border-radius: 4px; font-size: 11px; max-height: 120px; overflow: hidden; width: 260px; }
+      #portrait { position: fixed; right: 8px; top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="panel"></div>
+    <div id="status">loading...</div>
+    <div id="log"></div>
+    <div id="portrait"></div>
+    <script type="module" src="/src/map/dev/harness.ts"></script>
+  </body>
+</html>

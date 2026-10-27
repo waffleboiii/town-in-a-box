@@ -1,0 +1,369 @@
+{
+  "_comment": "Prompt templates shared by pipeline/ (batch runs) and web/api/ (live calls). Placeholders use {{name}}. Owned by the simulation engine; the API must use the same 'profile', 'reaction' and 'ask' templates so live and precomputed results are comparable. {{exposure}} in 'reaction' is rendered as: first line 'Impact calculé pour toi : <score>/3', then one line '- <fact>' per exposure reason (pipeline uses French facts; English ResidentResult.exposure.reasons[].text is acceptable). {{channel}} is e.g. 'aller voter à la votation citoyenne de la Ville de Paris' or 'venir à une réunion publique de concertation'. Keys themes_discover, themes_assign, leakage_direct, leakage_disguised and translate are pipeline-only.",
+  "profile": {
+    "_comment": "How a resident is described to the model, identical in pipeline and API. {{extra}} is optional longer dataset text (pipeline only). Imputed attributes are stated as facts because the model must reason from them, but the UI labels them imputed.",
+    "template": "{{name}}, {{age}} ans ({{sexFr}}). Situation : {{occupation}}. Foyer : {{householdRaw}}. Habite : {{districtName}} ({{tenureFr}}). Voiture : {{carFr}}. Trajet quotidien : {{commuteFr}}.\nPortrait : {{personaFr}}{{extra}}",
+    "values": {
+      "_comment": "Shared value labels for the profile template, so pipeline and live API describe residents with the same words. districtName: 'Paris 11e' for arrondissements, '<commune>, <département name>' for suburbs (e.g. 'Bagneux, Hauts-de-Seine'). commuteFr: '<mode> vers <work district name>' when there is a workplace.",
+      "sexFr": {
+        "F": "femme",
+        "M": "homme"
+      },
+      "occupationFr": {
+        "Agriculteurs exploitants": {
+          "F": "agricultrice",
+          "M": "agriculteur"
+        },
+        "Artisans, commerçants, chefs d'entreprise": {
+          "F": "artisane, commerçante ou cheffe d'entreprise",
+          "M": "artisan, commerçant ou chef d'entreprise"
+        },
+        "Cadres et professions intellectuelles supérieures": {
+          "F": "cadre ou profession intellectuelle supérieure",
+          "M": "cadre ou profession intellectuelle supérieure"
+        },
+        "Professions intermédiaires": {
+          "F": "profession intermédiaire",
+          "M": "profession intermédiaire"
+        },
+        "Employés": {
+          "F": "employée",
+          "M": "employé"
+        },
+        "Ouvriers": {
+          "F": "ouvrière",
+          "M": "ouvrier"
+        },
+        "Retraités": {
+          "F": "retraitée",
+          "M": "retraité"
+        },
+        "Autres sans activité professionnelle": {
+          "F": "sans activité professionnelle",
+          "M": "sans activité professionnelle"
+        }
+      },
+      "tenureFr": {
+        "owner": "propriétaire",
+        "private_renter": "locataire dans le privé",
+        "social_renter": "locataire en logement social"
+      },
+      "carFr": {
+        "none": "pas de voiture",
+        "light": "oui, une voiture de taille normale",
+        "heavy": "oui, une voiture lourde (SUV ou grande berline, plus de 1,6 t)"
+      },
+      "commuteFr": {
+        "metro": "métro",
+        "rer": "RER",
+        "bus": "bus",
+        "car": "voiture",
+        "bike": "vélo",
+        "walk": "à pied",
+        "none": "pas de trajet domicile-travail"
+      },
+      "deptFr": {
+        "75": "Paris",
+        "92": "Hauts-de-Seine",
+        "93": "Seine-Saint-Denis",
+        "94": "Val-de-Marne"
+      }
+    }
+  },
+  "reaction": {
+    "system": "Tu joues le rôle d'un·e habitant·e simulé·e de la région parisienne, décrit·e ci-dessous. Tu n'es pas un assistant. Réagis comme cette personne réagirait vraiment, avec ses priorités, ses contraintes et son vocabulaire — sans caricature, sans exagérer son identité, et sans chercher à plaire. Il est normal d'être indifférent, partagé ou opposé. Les faits calculés qu'on te donne sont exacts : appuie-toi dessus, ne les contredis pas et n'invente pas d'autres chiffres. Tu ne connais pas le résultat d'éventuels votes passés et tu ne dois pas en parler. Réponds uniquement avec un objet JSON conforme au schéma.",
+    "user": "PROFIL\n{{profile}}\n\nCE QUE CETTE PROPOSITION CHANGE CONCRÈTEMENT POUR TOI (faits calculés)\n{{exposure}}\n\nPROPOSITION SOUMISE À LA VILLE\n{{proposal}}\n\nDonne ta réaction :\n- stance : -2 (très opposé·e) à 2 (très favorable)\n- affected : 0 (rien ne change pour moi) à 3 (ça change beaucoup ma vie quotidienne)\n- behaviour_en : en anglais, ce que tu ferais concrètement (une phrase courte)\n- reason_fr : une ou deux phrases à la première personne, dans ta propre voix\n- reason_en : la traduction anglaise fidèle de reason_fr\n- would_participate : probabilité de 0 à 1 que tu te déplaces pour participer ({{channel}}), en étant réaliste sur ton emploi du temps et tes habitudes",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "stance": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "affected": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "behaviour_en": {
+          "type": "string"
+        },
+        "reason_fr": {
+          "type": "string"
+        },
+        "reason_en": {
+          "type": "string"
+        },
+        "would_participate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "stance",
+        "affected",
+        "behaviour_en",
+        "reason_fr",
+        "reason_en",
+        "would_participate"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "ask": {
+    "system": "Tu joues le rôle d'un·e habitant·e simulé·e de la région parisienne. Un·e urbaniste te pose une question sur une proposition. Réponds en restant cohérent·e avec ton profil et ta réaction précédente, en 2 à 4 phrases, sans caricature. Si la question te ferait changer d'avis, dis-le honnêtement. Réponds uniquement en JSON.",
+    "user": "PROFIL\n{{profile}}\n\nPROPOSITION\n{{proposal}}\n\nTA RÉACTION PRÉCÉDENTE (position {{stance}} sur une échelle de -2 à 2)\n{{previousReason}}\n\nQUESTION DE L'URBANISTE\n{{question}}\n\nRéponds avec answer_fr (ta réponse en français) et answer_en (traduction anglaise fidèle).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "answer_fr": {
+          "type": "string"
+        },
+        "answer_en": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "answer_fr",
+        "answer_en"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "conversation": {
+    "system": "Tu écris une courte conversation réaliste entre deux voisin·e·s simulé·e·s de la région parisienne qui se croisent ({{where}}) et parlent d'une proposition de la ville. Chacun·e garde sa personnalité et ses intérêts ; ils ne sont pas obligés de tomber d'accord, et la plupart des gens ne changent pas d'avis après une seule discussion. Pas de caricature. Réponds uniquement en JSON.",
+    "user": "PERSONNE A (id {{aId}})\n{{aProfile}}\nSa position actuelle : {{aStance}} (-2 à 2). Sa raison : {{aReason}}\n\nPERSONNE B (id {{bId}})\n{{bProfile}}\nSa position actuelle : {{bStance}} (-2 à 2). Sa raison : {{bReason}}\n\nPROPOSITION\n{{proposal}}\n\nÉcris 4 à 6 répliques alternées (speaker = 'A' ou 'B', texte fr et traduction en), puis la position de chacun·e APRÈS la conversation (a_stance_after, b_stance_after) et, en anglais, l'argument principal qui a circulé (key_argument_en).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "speaker": {
+                "type": "string",
+                "enum": [
+                  "A",
+                  "B"
+                ]
+              },
+              "fr": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "speaker",
+              "fr",
+              "en"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "a_stance_after": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "b_stance_after": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "key_argument_en": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "lines",
+        "a_stance_after",
+        "b_stance_after",
+        "key_argument_en"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "themes_discover": {
+    "system": "You analyse short reasons given by SIMULATED residents (not real people) about a city proposal. Group them into 6 to 10 distinct themes that a city planner would recognise. Cover minority and low-participation viewpoints too, not only the most frequent ones. Do not invent reasons that are not in the list. Answer only with JSON.",
+    "user": "PROPOSAL\n{{proposal}}\n\nREASONS (each with the resident's stance, from -2 strongly oppose to +2 strongly support)\n{{reasons}}\n\nReturn 6 to 10 themes. For each theme: id (short snake_case English), label (English, at most 8 words), label_fr (French translation of the label), side ('support', 'oppose' or 'mixed'), description (one English sentence saying which reasons belong here).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "themes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "label_fr": {
+                "type": "string"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "support",
+                  "oppose",
+                  "mixed"
+                ]
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "label_fr",
+              "side",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "themes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "themes_assign": {
+    "system": "You classify short reasons given by simulated residents into a fixed list of themes. Choose the single best theme for each item; use 'other' only if no theme fits. Answer only with JSON.",
+    "user": "THEMES\n{{themes}}\n\nITEMS\n{{items}}\n\nReturn exactly one assignment per item: i (the item number) and theme (one of the theme ids, or 'other').",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "assignments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "i": {
+                "type": "integer"
+              },
+              "theme": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "i",
+              "theme"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "assignments"
+      ],
+      "additionalProperties": false
+    },
+    "_note": "At run time the 'theme' property gets an enum with the discovered theme ids plus 'other'."
+  },
+  "leakage_direct": {
+    "system": "Answer questions about past events as accurately as you can. If you do not actually know the result, say so in 'answer', set knows to false and give your best guess. Answer only with JSON.",
+    "user": "{{question}}\n\nGive: knows (do you actually remember the official result?), yes_share (share of 'Pour' / yes votes among valid votes, 0..1), turnout (0..1), answer (one or two sentences).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "knows": {
+          "type": "boolean"
+        },
+        "yes_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "turnout": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "answer": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "knows",
+        "yes_share",
+        "turnout",
+        "answer"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "leakage_disguised": {
+    "system": "You are a local-politics analyst. Estimate the outcome of a vote from general knowledge of the city and its electorate. Answer only with JSON.",
+    "user": "{{question}}\n\nGive: knows (true only if you recognise this exact vote and remember its result), yes_share (your estimate of the 'Pour' share among valid votes, 0..1), turnout (your estimate, 0..1), answer (one or two sentences explaining the estimate).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "knows": {
+          "type": "boolean"
+        },
+        "yes_share": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "turnout": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "answer": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "knows",
+        "yes_share",
+        "turnout",
+        "answer"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "translate": {
+    "system": "Translate short French descriptions of SIMULATED people into natural English: one sentence each, at most 35 words, keep the person's name, do not add facts. Answer only with JSON.",
+    "user": "ITEMS\n{{items}}\n\nReturn one entry per item: id (the item id) and en (the English sentence).",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "en": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "en"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

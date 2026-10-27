@@ -1,0 +1,178 @@
+{
+  "_about": "Training-data cutoffs of the Nemotron 3 models (official Hugging Face model cards) compared with the vote dates.",
+  "checkedOn": "2026-10-26",
+  "models": [
+    {
+      "family": "Nemotron 3 Nano",
+      "hfId": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+      "tokenFactoryIdInConfig": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "role": "reactions",
+      "pretrainingCutoff": "2025-06-25",
+      "postTrainingCutoff": "2025-11-28",
+      "released": "2025-12-15",
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16",
+      "quote": "The pre-training data has a cutoff date of June 25, 2025. The post-training data has a cutoff date of November 28, 2025."
+    },
+    {
+      "family": "Nemotron 3 Super",
+      "hfId": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "tokenFactoryIdInConfig": "nvidia/nemotron-3-super-120b-a12b",
+      "role": "conversations",
+      "pretrainingCutoff": "2025-06",
+      "postTrainingCutoff": "2026-02",
+      "released": "2026-03-11",
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "quote": "The pre-training data has a cutoff date of June 2025. The post-training data has a cutoff date of February 2026."
+    },
+    {
+      "family": "Nemotron 3 Ultra",
+      "hfId": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "tokenFactoryIdInConfig": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "role": "synthesis",
+      "pretrainingCutoff": "2025-09",
+      "postTrainingCutoff": "2026-05",
+      "released": "2026-06-04",
+      "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "quote": "The pre-training data has a cutoff date of September 2025. The post-training data has a cutoff date of May 2026."
+    }
+  ],
+  "modelIdNote": "Token Factory model IDs in web/shared/config.json come from a third-party listing; confirm with GET /v1/models once the API key exists. Cutoffs are from the matching Hugging Face BF16 model cards.",
+  "votes": {
+    "paris_scooters_2023": {
+      "date": "2023-04-02",
+      "models": {
+        "Nemotron 3 Nano": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Super": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Ultra": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        }
+      },
+      "summary": "All three Nemotron 3 models were pre-trained on data up to at least June 2025, after this vote: treat the backtest as possibly contaminated and run the leakage probe."
+    },
+    "paris_suv_2024": {
+      "date": "2024-02-04",
+      "models": {
+        "Nemotron 3 Nano": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Super": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Ultra": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        }
+      },
+      "summary": "All three Nemotron 3 models were pre-trained on data up to at least June 2025, after this vote: treat the backtest as possibly contaminated and run the leakage probe."
+    },
+    "paris_streets_2025": {
+      "date": "2025-03-23",
+      "models": {
+        "Nemotron 3 Nano": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Super": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        },
+        "Nemotron 3 Ultra": {
+          "beforePretrainingCutoff": true,
+          "beforePostTrainingCutoff": true,
+          "verdict": "in-sample (the model may have read the result)"
+        }
+      },
+      "summary": "All three Nemotron 3 models were pre-trained on data up to at least June 2025, after this vote: treat the backtest as possibly contaminated and run the leakage probe."
+    }
+  },
+  "conclusion": "Every backtest vote (2023, 2024 and the optional 2025 vote) predates all three pre-training cutoffs, so a good backtest score could partly reflect memorised results. A leakage probe (ask the bare model the result, directly and disguised) must be run and shown next to the backtest.",
+  "probePrompts": {
+    "paris_streets_2025": {
+      "direct": "What was the official result of the Paris 'votation' held on 23 March 2025 on greening and pedestrianising 500 more streets? What share of valid votes was 'Pour', and what was the turnout?",
+      "disguised": "Imagine Paris asks registered voters (aged 16+), in a Sunday vote with no other election, 'Pour ou contre végétaliser et rendre piétonnes 500 nouvelles rues dans Paris, réparties dans tous les quartiers ?'. Estimate the 'Pour' share among valid votes and the turnout.",
+      "actual": {
+        "yesShare": 0.6596,
+        "turnout": 0.0406
+      }
+    },
+    "note": "Prompts for the 2023 and 2024 votes live in pipeline/leakage_probe.py (owned by another engineer)."
+  },
+  "outOfSampleCandidates": [
+    {
+      "what": "Paris municipal elections, 15 and 22 March 2026 (results by arrondissement on paris.fr)",
+      "date": "2026-03-22",
+      "outOfSampleFor": [
+        "Nemotron 3 Nano (pre- and post-training)",
+        "Nemotron 3 Super (pre- and post-training)",
+        "Nemotron 3 Ultra pre-training only (its post-training data runs to May 2026)"
+      ],
+      "comparability": "Low-medium: a candidate election, not a yes/no measure. It can test the sim's political geography (e.g. does simulated support for 'green streets' measures track the left-list vote by sector?).",
+      "reported": "Emmanuel Grégoire (left union) elected mayor; reported 50.52 % in the second round (press; not checked against official files).",
+      "sources": [
+        {
+          "name": "paris.fr — Élections municipales 2026: tous les résultats en cartes",
+          "url": "https://www.paris.fr/pages/elections-municipales-2026-tous-les-resultats-en-cartes-34272"
+        },
+        {
+          "name": "Public Sénat — Emmanuel Grégoire élu maire de Paris",
+          "url": "https://www.publicsenat.fr/actualites/politique/municipales-2026-a-paris-emmanuel-gregoire-elu-largement-face-a-rachida-dati-selon-nos-estimations"
+        }
+      ],
+      "verified": "partial"
+    },
+    {
+      "what": "Le Bourget data-centre controversy (petition, public inquiry, permit withdrawn)",
+      "date": "2025-10 to 2026-07",
+      "outOfSampleFor": [
+        "Nemotron 3 Nano and Super pre-training (both end June 2025)"
+      ],
+      "comparability": "Qualitative only (no vote): checks whether simulated objections to the hypothetical data centre match the arguments real residents raised after the cutoff — fire/battery risk, generators and air pollution, noise, heat island, grid use, PFAS refrigerant, few jobs.",
+      "sources": [
+        {
+          "name": "France 3 Paris IDF (27 Nov 2025) — Des habitants s'élèvent contre le projet d'un nouveau data center en Seine-Saint-Denis",
+          "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/des-habitants-s-elevent-contre-le-projet-d-un-nouveau-data-center-en-seine-saint-denis-3257029.html"
+        },
+        {
+          "name": "Banque des Territoires (28 Jul 2026) — Datacenters: les projets dans la Drôme et au Bourget contestés",
+          "url": "https://www.banquedesterritoires.fr/datacenters-les-projets-dimplantation-dans-la-drome-et-au-bourget-contestes"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "what": "Paris votations after June 2025",
+      "date": null,
+      "result": "None found (searches on 2026-10-26). The 23 March 2025 votation is the latest; it is in-sample.",
+      "verified": true
+    },
+    {
+      "what": "Paris issue polls after June 2025",
+      "result": "Pre-election polls (e.g. Elabe for BFMTV / La Tribune Dimanche, 2-9 Jan 2026, n=1,100) rank priorities but ask no yes/no question comparable to our backtests.",
+      "sources": [
+        {
+          "name": "Elabe — Municipales 2026 Paris (Jan 2026, PDF)",
+          "url": "https://elabe.fr/wp-content/uploads/2026/01/10012026_elabe_bfmtv_la-tribune-dimanche_municipales-2026-paris.pdf"
+        }
+      ],
+      "verified": true
+    }
+  ],
+  "generatedAt": "2026-10-26T19:34:58Z"
+}

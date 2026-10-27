@@ -1,0 +1,34 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+pipeline/.venv/
+__pycache__/
+*.pyc
+
+# raw downloads and caches (regenerable)
+pipeline/data/raw/
+pipeline/out/cache/
+pipeline/out/*.parquet
+
+# node
+web/node_modules/
+web/dist/
+.vercel/
+
+# ide
+.idea/
+*.iml
+
+# temporary build/test output
+web/dist-apitest/
+web/dist-map-test/
+*.log
+
+# development fixtures written by test runs (regenerable: simulate.py --dev, place_residents.py)
+pipeline/out/dev/scenarios/
+pipeline/out/dev/scenarios_subsample/
+pipeline/out/dev/population/
+pipeline/out/run_stats_*_dev.json

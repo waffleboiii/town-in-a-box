@@ -1,0 +1,211 @@
+{
+  "_comment": "DEV FIXTURE. City-wide figures are the official ones; per-sector numbers are INVENTED.",
+  "votations": [
+    {
+      "id": "paris_scooters_2023",
+      "date": "2023-04-02",
+      "question": "Pour ou contre les trottinettes en libre-service ?",
+      "result": {
+        "yesShare": 0.1097,
+        "turnout": 0.0746
+      },
+      "bySector": [
+        {
+          "sector": "Paris Centre",
+          "yesShare": 0.1062,
+          "turnout": 0.068
+        },
+        {
+          "sector": "5e",
+          "yesShare": 0.1439,
+          "turnout": 0.0633
+        },
+        {
+          "sector": "6e",
+          "yesShare": 0.1106,
+          "turnout": 0.0694
+        },
+        {
+          "sector": "7e",
+          "yesShare": 0.0848,
+          "turnout": 0.0656
+        },
+        {
+          "sector": "8e",
+          "yesShare": 0.1204,
+          "turnout": 0.0796
+        },
+        {
+          "sector": "9e",
+          "yesShare": 0.0775,
+          "turnout": 0.0552
+        },
+        {
+          "sector": "10e",
+          "yesShare": 0.0773,
+          "turnout": 0.0805
+        },
+        {
+          "sector": "11e",
+          "yesShare": 0.1255,
+          "turnout": 0.0421
+        },
+        {
+          "sector": "12e",
+          "yesShare": 0.1486,
+          "turnout": 0.0882
+        },
+        {
+          "sector": "13e",
+          "yesShare": 0.1223,
+          "turnout": 0.0708
+        },
+        {
+          "sector": "14e",
+          "yesShare": 0.0826,
+          "turnout": 0.0408
+        },
+        {
+          "sector": "15e",
+          "yesShare": 0.1123,
+          "turnout": 0.043
+        },
+        {
+          "sector": "16e",
+          "yesShare": 0.0852,
+          "turnout": 0.0521
+        },
+        {
+          "sector": "17e",
+          "yesShare": 0.0724,
+          "turnout": 0.0632
+        },
+        {
+          "sector": "18e",
+          "yesShare": 0.1052,
+          "turnout": 0.0821
+        },
+        {
+          "sector": "19e",
+          "yesShare": 0.1115,
+          "turnout": 0.072
+        },
+        {
+          "sector": "20e",
+          "yesShare": 0.11,
+          "turnout": 0.0731
+        }
+      ],
+      "fixture": true,
+      "sources": [
+        {
+          "name": "DEV FIXTURE",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "id": "paris_suv_2024",
+      "date": "2024-02-04",
+      "question": "Pour ou contre la création d'un tarif spécifique pour le stationnement des voitures individuelles lourdes, encombrantes, polluantes ?",
+      "result": {
+        "yesShare": 0.5455,
+        "turnout": 0.0568
+      },
+      "bySector": [
+        {
+          "sector": "Paris Centre",
+          "yesShare": 0.5398,
+          "turnout": 0.0539
+        },
+        {
+          "sector": "5e",
+          "yesShare": 0.6694,
+          "turnout": 0.0898
+        },
+        {
+          "sector": "6e",
+          "yesShare": 0.6317,
+          "turnout": 0.0754
+        },
+        {
+          "sector": "7e",
+          "yesShare": 0.5057,
+          "turnout": 0.0515
+        },
+        {
+          "sector": "8e",
+          "yesShare": 0.4994,
+          "turnout": 0.0435
+        },
+        {
+          "sector": "9e",
+          "yesShare": 0.6139,
+          "turnout": 0.06
+        },
+        {
+          "sector": "10e",
+          "yesShare": 0.6332,
+          "turnout": 0.0593
+        },
+        {
+          "sector": "11e",
+          "yesShare": 0.6599,
+          "turnout": 0.0824
+        },
+        {
+          "sector": "12e",
+          "yesShare": 0.4301,
+          "turnout": 0.0505
+        },
+        {
+          "sector": "13e",
+          "yesShare": 0.6485,
+          "turnout": 0.0635
+        },
+        {
+          "sector": "14e",
+          "yesShare": 0.6653,
+          "turnout": 0.0599
+        },
+        {
+          "sector": "15e",
+          "yesShare": 0.4475,
+          "turnout": 0.0715
+        },
+        {
+          "sector": "16e",
+          "yesShare": 0.6168,
+          "turnout": 0.0535
+        },
+        {
+          "sector": "17e",
+          "yesShare": 0.4509,
+          "turnout": 0.0566
+        },
+        {
+          "sector": "18e",
+          "yesShare": 0.6614,
+          "turnout": 0.0779
+        },
+        {
+          "sector": "19e",
+          "yesShare": 0.4583,
+          "turnout": 0.0523
+        },
+        {
+          "sector": "20e",
+          "yesShare": 0.4543,
+          "turnout": 0.043
+        }
+      ],
+      "fixture": true,
+      "sources": [
+        {
+          "name": "DEV FIXTURE",
+          "url": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "saint_denis_datacenter",
+    "title": "An AI data centre in Seine-Saint-Denis",
+    "subtitle": "Hypothetical · public consultation · La Courneuve",
+    "kind": "hypothetical",
+    "icon": "datacenter",
+    "mock": true
+  },
+  {
+    "id": "paris_suv_2024",
+    "title": "Parking fee for heavy cars (SUVs)",
+    "subtitle": "Backtest · Paris votation, 4 Feb 2024",
+    "kind": "backtest",
+    "icon": "car",
+    "date": "2024-02-04",
+    "mock": true
+  },
+  {
+    "id": "paris_scooters_2023",
+    "title": "Rental e-scooters: keep or remove?",
+    "subtitle": "Backtest · Paris votation, 2 Apr 2023",
+    "kind": "backtest",
+    "icon": "scooter",
+    "date": "2023-04-02",
+    "mock": true
+  }
+]

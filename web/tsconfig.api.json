@@ -1,0 +1,28 @@
+// Typecheck for the SERVER side: Vercel functions (api/, plain JavaScript with JSDoc types),
+// the dev middleware (server/) and vite.config.ts.
+// Run from web/:  npx tsc -p tsconfig.api.json
+// - checkJs: the .js files in api/ are type-checked exactly like TypeScript.
+// - module "nodenext": enforces what native Node.js ES modules need on Vercel at runtime
+//   (for example ".js" extensions on relative imports).
+// - lib has no "DOM": server code must not use browser-only APIs (Request/Response/fetch come from Node).
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["api/**/*.js", "server/**/*.ts", "vite.config.ts", "src/types.ts", "shared/*.json"]
+}

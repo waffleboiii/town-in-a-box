@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-10-26T18:09:47.965637+00:00",
+  "mock": true,
+  "probed": false,
+  "votes": {
+    "paris_suv_2024": {
+      "actualYes": 0.5455,
+      "probes": [
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.465,
+          "turnout": 0.081,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.581,
+          "turnout": 0.192,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.353,
+          "turnout": 0.267,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.471,
+          "turnout": 0.079,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.356,
+          "turnout": 0.217,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.346,
+          "turnout": 0.264,
+          "answer": "[demo] Mock answer — no model was called."
+        }
+      ],
+      "verdict": "unclear",
+      "notes": "No model recalled the result directly, but NVIDIA-Nemotron-3-Nano-30B-A3B estimated within 5 points of 55% from the disguised question (general knowledge or partial leakage).",
+      "bareModel": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "yesShare": 0.581
+      },
+      "bareModelAnswer": "NVIDIA-Nemotron-3-Nano-30B-A3B (disguised, no persona): 58% 'Pour', turnout 19% — [demo] Mock answer — no model was called."
+    },
+    "paris_scooters_2023": {
+      "actualYes": 0.1097,
+      "probes": [
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.22,
+          "turnout": 0.218,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.534,
+          "turnout": 0.294,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.221,
+          "turnout": 0.129,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.245,
+          "turnout": 0.259,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.594,
+          "turnout": 0.265,
+          "answer": "[demo] Mock answer — no model was called."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.555,
+          "turnout": 0.09,
+          "answer": "[demo] Mock answer — no model was called."
+        }
+      ],
+      "verdict": "no evidence of memorisation",
+      "notes": "No model recalled or estimated the result within 5 points of the official 11%.",
+      "bareModel": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "yesShare": 0.534
+      },
+      "bareModelAnswer": "NVIDIA-Nemotron-3-Nano-30B-A3B (disguised, no persona): 53% 'Pour', turnout 29% — [demo] Mock answer — no model was called."
+    }
+  },
+  "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/Nemotron-3-Ultra-550b-a55b"
+  ],
+  "costUsd": 0.0
+}

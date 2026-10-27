@@ -1,0 +1,45 @@
+{
+  "_comment": "Single source of truth shared by the Python pipeline and the web app. Do not change grid/bbox without regenerating all data.",
+  "bbox": { "lonMin": 2.17, "lonMax": 2.53, "latMin": 48.77, "latMax": 48.95 },
+  "tileMeters": 100,
+  "gridWidth": 264,
+  "gridHeight": 200,
+  "tilePx": 16,
+  "tileTypes": [
+    "outside",
+    "water",
+    "grass",
+    "park",
+    "forest",
+    "plaza",
+    "haussmann",
+    "suburb_house",
+    "suburb_tower",
+    "industrial",
+    "ring_road",
+    "rail",
+    "street"
+  ],
+  "departements": {
+    "75": "Paris",
+    "92": "Hauts-de-Seine",
+    "93": "Seine-Saint-Denis",
+    "94": "Val-de-Marne"
+  },
+  "landmarks": [
+    { "id": "eiffel", "name": "Iron tower", "nameFr": "Tour Eiffel", "lon": 2.2945, "lat": 48.8584, "kind": "tower" },
+    { "id": "notre_dame", "name": "Cathedral", "nameFr": "Notre-Dame", "lon": 2.3499, "lat": 48.853, "kind": "cathedral" },
+    { "id": "arc", "name": "Triumphal arch", "nameFr": "Arc de Triomphe", "lon": 2.295, "lat": 48.8738, "kind": "arc" },
+    { "id": "sacre_coeur", "name": "Basilica on the hill", "nameFr": "Sacré-Cœur", "lon": 2.3431, "lat": 48.8867, "kind": "basilica" },
+    { "id": "stade", "name": "National stadium", "nameFr": "Stade de France", "lon": 2.3601, "lat": 48.9245, "kind": "stadium" },
+    { "id": "defense", "name": "Business district", "nameFr": "La Défense", "lon": 2.2389, "lat": 48.8918, "kind": "towers" },
+    { "id": "hotel_de_ville", "name": "City hall", "nameFr": "Hôtel de Ville", "lon": 2.3522, "lat": 48.8566, "kind": "cityhall" }
+  ],
+  "llmDefaults": {
+    "baseUrl": "https://api.tokenfactory.nebius.com/v1",
+    "modelReaction": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "modelConversation": "nvidia/nemotron-3-super-120b-a12b",
+    "modelSynthesis": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "_note": "Model IDs come from a third-party price listing (Oct 2026); verify with GET /v1/models once an API key exists. Override via .env."
+  }
+}

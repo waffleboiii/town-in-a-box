@@ -1,0 +1,726 @@
+{
+  "_about": "Real, sourced context for a HYPOTHETICAL scenario: a large AI data-centre campus in Seine-Saint-Denis. Everything under 'site', 'facts' and 'hypothetical' is invented for the simulation (plausible, based on the cited comparables). Everything under 'context' and 'realProjects' is real and sourced.",
+  "label": "HYPOTHETICAL SCENARIO — not a real project",
+  "site": {
+    "lon": 2.4125,
+    "lat": 48.9265,
+    "label": "Hypothetical site — Rateau industrial zone, La Courneuve",
+    "placeFr": "dans la zone industrielle Rateau, à La Courneuve",
+    "commune": "La Courneuve",
+    "communeCode": "93027",
+    "dept": "93",
+    "hypothetical": true,
+    "rationale": [
+      "Existing industrial land (OSM landuse=industrial, 'Zone Industrielle Rateau', way 47028132, about 28 ha), which fits the regional rule (SDRIF-E OR 126) that data centres go first to existing business sites.",
+      "Next to Europe's densest data-centre cluster (Plaine Commune / La Courneuve), with fibre and 225 kV substations nearby, so it is the kind of place a real developer would look at.",
+      "Close to dense housing, schools and the A86 motorway, so the consultation questions (noise, heat, generators, grid works, jobs, district heating) are realistic and touch different groups of residents.",
+      "Inside the map bbox and about 4 km from the Stade de France landmark, so it is visible on the map."
+    ],
+    "caveats": [
+      "Indicative point only: no parcel-level study was done; the zone today hosts warehouses, municipal and road-authority depots and active industry (e.g. a Safran Electronics & Defense building a few hundred metres away in OSM).",
+      "This is NOT a real project. Real projects nearby (Paris Digital Park in La Courneuve, Dugny Digital Hub, the Segro project in Le Bourget) are listed in 'realProjects' and are separate."
+    ],
+    "osmEvidence": {
+      "polygon": {
+        "osm": "way/47028132",
+        "tags": {
+          "landuse": "industrial",
+          "name": "Zone Industrielle Rateau"
+        },
+        "areaHa": 28.4
+      },
+      "nearby": [
+        {
+          "what": "Motorway 'A 86' (DIRIF)",
+          "distanceM": 180
+        },
+        {
+          "what": "School 'École primaire Paul Doumer'",
+          "distanceM": 470
+        },
+        {
+          "what": "Nursery / crèche 'Crèche Départementale Jean Jaurès'",
+          "distanceM": 660
+        },
+        {
+          "what": "Construction site 'Chantier Grand Paris Express Lignes 16/17 - Entonnement Ouest - Rue de Verdun'",
+          "distanceM": 390
+        },
+        {
+          "what": "RTE substation 'Poste électrique Avenir' (225000/20000/15000 V)",
+          "distanceM": 1190
+        },
+        {
+          "what": "RTE substation 'Poste électrique de la Courneuve' (225000/63000 V)",
+          "distanceM": 1660
+        },
+        {
+          "what": "RTE substation 'Poste électrique du Bourget' (225000/20000 V)",
+          "distanceM": 2080
+        },
+        {
+          "what": "Nearest mapped data centre 'Interxion PAR7' (Interxion)",
+          "distanceM": 770
+        }
+      ],
+      "note": "Distances are straight-line, rounded to 10 m, from OSM objects.",
+      "sources": [
+        {
+          "name": "OpenStreetMap contributors (ODbL), queried via Overpass API on 2026-10-26",
+          "url": "https://www.openstreetmap.org/way/47028132"
+        }
+      ]
+    },
+    "x": 177.83,
+    "y": 26.11,
+    "osmCheck": {
+      "ran": true,
+      "insideIndustrialLand": true,
+      "containingPolygons": [
+        {
+          "osm": "way/47028132",
+          "landuse": "industrial",
+          "name": "Zone Industrielle Rateau",
+          "areaHa": 28.4
+        }
+      ],
+      "nearby": [
+        {
+          "what": "Motorway 'A 86' (DIRIF)",
+          "distanceM": 180
+        },
+        {
+          "what": "School 'École primaire Paul Doumer'",
+          "distanceM": 470
+        },
+        {
+          "what": "Nursery / crèche 'Crèche Départementale Jean Jaurès'",
+          "distanceM": 660
+        },
+        {
+          "what": "Construction site 'Chantier Grand Paris Express Lignes 16/17 - Entonnement Ouest - Rue de Verdun'",
+          "distanceM": 390
+        },
+        {
+          "what": "RTE substation 'Poste électrique Avenir' (225000/20000/15000 V)",
+          "distanceM": 1190
+        },
+        {
+          "what": "RTE substation 'Poste électrique de la Courneuve' (225000/63000 V)",
+          "distanceM": 1660
+        },
+        {
+          "what": "RTE substation 'Poste électrique du Bourget' (225000/20000 V)",
+          "distanceM": 2080
+        },
+        {
+          "what": "Nearest mapped data centre 'Interxion PAR7' (Interxion)",
+          "distanceM": 770
+        }
+      ],
+      "osmDataCentreObjectsInBbox": 88,
+      "osmDataCentreObjectsBySeineSaintDenisCommune": {
+        "Aubervilliers": 10,
+        "Saint-Denis": 8,
+        "La Courneuve": 6,
+        "Pantin": 2,
+        "Bobigny": 2,
+        "Les Lilas": 1,
+        "Saint-Ouen-sur-Seine": 1,
+        "Bagnolet": 1,
+        "Rosny-sous-Bois": 1
+      },
+      "nearestMappedDataCentres": [
+        {
+          "distanceM": 766,
+          "name": "Interxion PAR7",
+          "operator": "Interxion"
+        },
+        {
+          "distanceM": 960,
+          "name": "",
+          "operator": ""
+        },
+        {
+          "distanceM": 1008,
+          "name": "Paris Digital Park",
+          "operator": ""
+        }
+      ],
+      "note": "OSM objects tagged telecom=data_center or building=data_center; several objects can belong to one campus."
+    }
+  },
+  "facts": {
+    "powerMW": 200,
+    "areaHa": 8,
+    "constructionYears": 4,
+    "jobsConstruction": 600,
+    "jobsPermanent": 120,
+    "heatMW": 15,
+    "homesHeated": 5000,
+    "generators": 100,
+    "waterM3PerYear": 5000,
+    "annualElectricityGWh": 1050,
+    "localTaxEurPerYear": "6-9 million"
+  },
+  "hypothetical": {
+    "hypothetical": true,
+    "inspiredBy": "Inspired by real campuses in Seine-Saint-Denis (Dugny Digital Hub, Paris Digital Park, Le Bourget project); not a real project.",
+    "parameters": {
+      "gridConnectionMW": {
+        "value": 200,
+        "basis": "Same order as Dugny Digital Hub (200 MW, 176 MW IT) — Ae 2024-08 / France 3."
+      },
+      "itLoadMW": {
+        "value": 160,
+        "basis": "Assumption (~80 % of connection)."
+      },
+      "siteAreaHa": {
+        "value": 8,
+        "basis": "Dugny: 9.5 ha site for 3 buildings; Le Bourget: 3.7 ha for 75 MW."
+      },
+      "buildingFootprintM2": {
+        "value": 35000,
+        "basis": "Dugny: 41,500 m² footprint for 200 MW."
+      },
+      "buildings": {
+        "value": 3,
+        "basis": "Dugny and Le Bourget both have three buildings."
+      },
+      "maxHeightM": {
+        "value": 28,
+        "basis": "Dugny: 27.4 m buildings, chimneys up to 32.4 m."
+      },
+      "constructionYears": {
+        "value": 4,
+        "basis": "Dugny: three phases from late 2024 to early 2030; we assume 4 years in 3 phases."
+      },
+      "constructionJobsPeak": {
+        "value": 600,
+        "basis": "ASSUMPTION (no published figure for comparable sites was found)."
+      },
+      "permanentJobsOnSite": {
+        "value": 120,
+        "basis": "Dugny: ~110 people per day on site; Paris Digital Park: 80-90 staff plus ~300 client staff."
+      },
+      "annualElectricityGWh": {
+        "value": 1050,
+        "basis": "200 MW × 8,760 h × 60 % average load (Digital Realty sites average 50-70 % of capacity, Ae 2024-08)."
+      },
+      "backupGenerators": {
+        "value": 100,
+        "basis": "Dugny: 108 HVO generators for 200 MW; tested monthly in small groups."
+      },
+      "waterM3PerYear": {
+        "value": 5000,
+        "basis": "Dugny: 5,090 m³/yr with closed-loop cooling (humidifiers + sanitary)."
+      },
+      "cooling": "Closed-loop dry coolers and air-cooled chillers, direct liquid cooling for AI racks; no evaporative towers.",
+      "heatRecoveryMWth": {
+        "value": 15,
+        "basis": "Commitment level assumed: Le Bourget planned 12 MW of 75 MW (Oct-Apr); Equinix PA10 delivers up to 6.6 MW."
+      },
+      "heatRecoveryGWhPerYear": {
+        "value": 50,
+        "basis": "Assumption: 15 MW over a ~3,300-hour heating season."
+      },
+      "homesHeated": {
+        "value": 5000,
+        "basis": "≈ 50 GWh ÷ ~9.4 MWh per housing-equivalent (Coriance network: 85 GWh for 9,000 housing-equivalents, Ae 2024-08)."
+      },
+      "localTaxEurPerYear": {
+        "value": "6-9 million",
+        "basis": "ROUGH: ~€900 M of buildings/infrastructure × €2-3 M per €300 M tranche (Choose Paris Region 2022, after the 2022 halving of property tax on such sites)."
+      },
+      "investmentEur": {
+        "value": "about 2 billion",
+        "basis": "Dugny: €2 billion (France 3); Paris Digital Park: €1.15 billion (CD93)."
+      },
+      "gridWorks": "New on-site 225 kV substation and 2 underground 225 kV lines to existing RTE 225 kV substations 1.2-2.1 km away (Avenir, La Courneuve, Le Bourget; street trenching for several months).",
+      "otherwiseOnTheLand": "Warehouses, light industry and municipal/road depots; the regional plan protects such land for productive activities."
+    },
+    "proposalFr": "PROJET HYPOTHÉTIQUE — avis de concertation préalable (exercice de simulation). Un opérateur propose de construire un campus de calcul pour l'intelligence artificielle dans la zone industrielle Rateau, à La Courneuve. Le site d'environ 8 hectares, aujourd'hui occupé par des entrepôts et ateliers, accueillerait trois bâtiments de 28 m de haut au maximum, pour une puissance électrique de 200 mégawatts. Le chantier durerait environ quatre ans, en trois phases, avec un poste électrique sur le site et deux lignes souterraines de 225 000 volts creusées sous la voirie jusqu'aux postes voisins. Le refroidissement fonctionnerait en circuit fermé (environ 5 000 m³ d'eau par an). Une centaine de groupes électrogènes de secours seraient testés chaque mois. L'opérateur s'engagerait à livrer jusqu'à 15 MW de chaleur au réseau de chauffage urbain, soit l'équivalent d'environ 5 000 logements. Il annonce environ 600 emplois au pic du chantier et 120 emplois permanents sur le site. Les recettes fiscales locales sont estimées entre 6 et 9 millions d'euros par an. Votre avis est sollicité.",
+    "proposalEn": "HYPOTHETICAL PROJECT — notice of prior public consultation (simulation exercise). An operator proposes to build an artificial-intelligence computing campus in the Rateau industrial zone in La Courneuve. The site of about 8 hectares, now used by warehouses and workshops, would host three buildings up to 28 m high, drawing 200 megawatts of electricity. Construction would take about four years in three phases, with an on-site substation and two underground 225,000-volt lines dug under the streets to nearby substations. Cooling would run in a closed loop (about 5,000 m³ of water a year). Around a hundred backup generators would be tested every month. The operator would commit to supply up to 15 MW of heat to the district-heating network, roughly the needs of 5,000 homes. It announces about 600 jobs at the peak of construction and 120 permanent jobs on site. Local tax revenue is estimated at 6 to 9 million euros a year. Your opinion is invited."
+  },
+  "context": {
+    "concentration": [
+      {
+        "fact": "Île-de-France hosts 44 % of the 322 data centres counted in France at 31 Dec 2024, and about 65-70 % of installed power.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "fact": "Seine-Saint-Denis data centres consumed 0.8 TWh of electricity in 2024 — the highest of any French département (Seine-et-Marne and Hauts-de-Seine 0.3 TWh each).",
+        "caveat": "Enedis figure; very large sites connected directly to RTE may not be fully included.",
+        "sources": [
+          {
+            "name": "Enedis, Observatoire de la transition écologique (29 Oct 2025) — La France attractive pour les data centers",
+            "url": "https://observatoire.enedis.fr/article/la-france-attractive-pour-les-data-centers-2"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "fact": "The département counts 23 data centres in operation (July 2024).",
+        "sources": [
+          {
+            "name": "Département de la Seine-Saint-Denis (5 Jul 2024) — Le plus grand data center de France",
+            "url": "https://seinesaintdenis.fr/actualite/emploi-entrepreneuriat/Le-plus-grand-data-center-de-France/"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "fact": "Between 2000 and 2015 Plaine Commune received about fifteen large data centres (about one a year), then more than half of all Île-de-France sites (quote of Saint-Denis mayor Mathieu Hanotin).",
+        "sources": [
+          {
+            "name": "Choose Paris Region — Datacenters en Île-de-France (2022 guide; promotional agency, PDF)",
+            "url": "https://www.chooseparisregion.org/sites/default/files/pdf/datacenters/Datacenters-Paris-Region-2022.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "fact": "Operators with sites in Saint-Denis / Aubervilliers / La Courneuve include Equinix (PA2-PA10), Digital Realty (ex-Interxion; PAR2-PAR9, Paris Digital Park), plus Orange, Atos, Completel, Bouygues Télécom technical sites (OpenStreetMap; counts per commune are in site.osmCheck).",
+        "sources": [
+          {
+            "name": "OpenStreetMap contributors (ODbL), queried via Overpass API on 2026-10-26",
+            "url": "https://www.openstreetmap.org/way/47028132"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "fact": "Île-de-France has more than 170 data centres and 64 % of the national data-centre electricity use (4-6 TWh in 2023), according to an MP's written question.",
+        "sources": [
+          {
+            "name": "Assemblée nationale — question écrite n° 14126 (J. Guedj), answer JO 15 Sep 2026 (PDF)",
+            "url": "https://questions.assemblee-nationale.fr/dyn/17/questions/QANR5L17QE14126.pdf"
+          }
+        ],
+        "verified": true
+      }
+    ],
+    "concerns": [
+      {
+        "theme": "Electricity grid capacity and queues",
+        "fact": "Grid connection is now the main limiting factor, with growing RTE queues; the Region warns that capacity taken by data centres can crowd out industry, mobility and housing projects and backs RTE's 2026 move from 'first come, first served' to 'first ready, first served'.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Electricity grid capacity and queues",
+        "fact": "Researcher Cécile Diguet warns of congestion risks on the distribution network of La Plaine Saint-Denis.",
+        "sources": [
+          {
+            "name": "Novethic — Data centers: ces monstres discrets qui débarquent en ville (grid congestion in La Plaine, C. Diguet)",
+            "url": "https://grandformat.novethic.fr/data-centers/"
+          }
+        ]
+      },
+      {
+        "theme": "Who pays for grid works",
+        "fact": "Much of the reinforcement cost is shared by all consumers through the TURPE network tariff; the Region asks that data centres pay the full network costs they cause.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Land use",
+        "fact": "Risk that data centres take scarce industrial land and, through new substations and lines, exert a 'double land pressure'.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Heat island",
+        "fact": "Most waste heat is released to the air; the environmental authority asked Dugny's developer to analyse the urban-heat-island effect.",
+        "sources": [
+          {
+            "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+            "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+          },
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Air pollution from backup generators",
+        "fact": "Generators are tested at least 1 hour a month and in large groups once a year, emitting fine particles and NO2 (Region); Dugny would have 108 generators (814 MWth).",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          },
+          {
+            "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+            "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Noise",
+        "fact": "Dugny site in 50-60 dB(A) Lden zone; Ae asked for better noise monitoring. Residents cite noise near homes.",
+        "sources": [
+          {
+            "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+            "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+          },
+          {
+            "name": "France 3 Paris IDF (20 May 2025) — Pourquoi le plus grand data center de France bientôt installé à Dugny inquiète les riverains",
+            "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/pourquoi-le-plus-grand-data-center-de-france-bientot-installe-a-dugny-inquiete-les-riverains-3157335.html"
+          }
+        ]
+      },
+      {
+        "theme": "Water",
+        "fact": "Water-based cooling is more energy-efficient but uses more water in heatwaves; most French sites use closed loops (government answer). Since May 2026 a permit can be refused where water resources are under structural stress.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          },
+          {
+            "name": "Assemblée nationale — question écrite n° 14126 (J. Guedj), answer JO 15 Sep 2026 (PDF)",
+            "url": "https://questions.assemblee-nationale.fr/dyn/17/questions/QANR5L17QE14126.pdf"
+          },
+          {
+            "name": "Cabinet Gossement Avocats — Data centers: ce que change la loi n° 2026-403 du 26 mai 2026 (commentary)",
+            "url": "https://www.gossement-avocats.com/blog/centres-de-donnees-data-centers-ce-que-change-la-loi-de-simplification-de-la-vie-economique/"
+          }
+        ]
+      },
+      {
+        "theme": "Few local jobs",
+        "fact": "Opponents in Dugny call the 120-150 on-site jobs mostly low-skilled; Choose Paris Region gives about 12 jobs per 1,000 m² of building.",
+        "sources": [
+          {
+            "name": "France 3 Paris IDF (20 May 2025) — Pourquoi le plus grand data center de France bientôt installé à Dugny inquiète les riverains",
+            "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/pourquoi-le-plus-grand-data-center-de-france-bientot-installe-a-dugny-inquiete-les-riverains-3157335.html"
+          },
+          {
+            "name": "Choose Paris Region — Datacenters en Île-de-France (2022 guide; promotional agency, PDF)",
+            "url": "https://www.chooseparisregion.org/sites/default/files/pdf/datacenters/Datacenters-Paris-Region-2022.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Safety and chemicals",
+        "fact": "Le Bourget residents fear fire (lithium batteries, fuel), generators and ~300 kg of refrigerant containing 'forever chemicals' (PFAS).",
+        "sources": [
+          {
+            "name": "France 3 Paris IDF (27 Nov 2025) — Des habitants s'élèvent contre le projet d'un nouveau data center en Seine-Saint-Denis",
+            "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/des-habitants-s-elevent-contre-le-projet-d-un-nouveau-data-center-en-seine-saint-denis-3257029.html"
+          }
+        ]
+      },
+      {
+        "theme": "Cumulative effect",
+        "fact": "Opponents count more than 200 backup generators across the large La Courneuve and Dugny sites.",
+        "sources": [
+          {
+            "name": "France 3 Paris IDF (27 Nov 2025) — Des habitants s'élèvent contre le projet d'un nouveau data center en Seine-Saint-Denis",
+            "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/des-habitants-s-elevent-contre-le-projet-d-un-nouveau-data-center-en-seine-saint-denis-3257029.html"
+          }
+        ]
+      }
+    ],
+    "benefits": [
+      {
+        "theme": "Local tax revenue",
+        "fact": "Equinix PA8 (14 MW, 10,000 m², Pantin/Bobigny) generated €2.4 M of local taxes in 3 years (€1.4 M property tax, €870 k CFE, €130 k office tax). After 2022, about €2-3 M per year per €300 M of investment.",
+        "caveat": "Promotional source (regional attractiveness agency).",
+        "sources": [
+          {
+            "name": "Choose Paris Region — Datacenters en Île-de-France (2022 guide; promotional agency, PDF)",
+            "url": "https://www.chooseparisregion.org/sites/default/files/pdf/datacenters/Datacenters-Paris-Region-2022.pdf"
+          }
+        ]
+      },
+      {
+        "theme": "Waste heat for district heating",
+        "fact": "Equinix PA10 (Saint-Denis) recovers water at 28 °C and supplies up to 6.6 MW of heat (about 10,800 MWh/yr) to the Plaine Commune Énergie / SMIREC network serving the ZAC Plaine Saulnier and the Olympic Aquatics Centre; heat given free for 15 years; €4.3 M project with a 2,610 m network extension; commissioned June 2024.",
+        "caveat": "MW/MWh/€ figures from ENGIE press releases read via secondary summaries (PDF blocked from our machine); network extension length confirmed on the Region's page.",
+        "sources": [
+          {
+            "name": "ENGIE Solutions press release (21 Jun 2024) — mise en service de la sous-station Equinix (PDF; blocked 403 from our machine, figures via secondary summaries)",
+            "url": "https://engie-solutions.com/sites/default/files/assets/2024-06/cp_mise_en_service_officielle_de_la_sous-station_equinix_vdef_v2.pdf"
+          },
+          {
+            "name": "ENGIE Solutions press release (Sep/Oct 2022) — convention de raccordement PCE-SMIREC-Equinix (PDF)",
+            "url": "https://www.engie-solutions.com/sites/default/files/assets/2022-10/cp_-_signature_convention_de_raccordement_pce-smirec-equinix-mgp_0.pdf"
+          },
+          {
+            "name": "Région Île-de-France — Récupération de chaleur fatale du data center Equinix et extension du réseau Plaine Commune Énergie (CP2024-180)",
+            "url": "https://www.iledefrance.fr/tous-les-services/ma-region-pres-de-chez-moi/environnement/energie/184193-recuperation-de-chaleur-fatale-du-data-center-equinix-et-extension-du-reseau-de-chaleur-plaine-commune-energie"
+          }
+        ],
+        "verified": "partial"
+      },
+      {
+        "theme": "Waste heat for district heating",
+        "fact": "The Region co-funded three data-centre heat-recovery projects, heating among others the Olympic Aquatics Centre in Saint-Denis and residential/office districts in Saint-Denis and La Courneuve.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "theme": "Waste heat (limits)",
+        "fact": "At Dugny about 100 MWth of heat is recoverable but only ~9,140 MWh/yr (~1 %) was planned for the local network in the first ten years; at Le Bourget 12 MW of 75 MW, October-April only.",
+        "sources": [
+          {
+            "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+            "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+          },
+          {
+            "name": "MRAe Île-de-France — avis APJIF-2025-056 du 30 juin 2025, centre de données au Bourget (PDF)",
+            "url": "https://www.mrae.developpement-durable.gouv.fr/IMG/pdf/2025_06_30_bourget_centre_de_donnees_segro_avis_signe.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "theme": "Conditions imposed locally",
+        "fact": "Plaine Commune asks developers for a local-hiring 'Charte Grand Chantier', a grid diagnosis with the network operator, connection to the district-heating network at the operator's cost and more greenery.",
+        "sources": [
+          {
+            "name": "Choose Paris Region — Datacenters en Île-de-France (2022 guide; promotional agency, PDF)",
+            "url": "https://www.chooseparisregion.org/sites/default/files/pdf/datacenters/Datacenters-Paris-Region-2022.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "theme": "Sovereignty / AI",
+        "fact": "The Region frames well-regulated data centres as a lever for digital sovereignty, attractiveness and decarbonisation (heat).",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ]
+      }
+    ]
+  },
+  "realProjects": [
+    {
+      "name": "Paris Digital Park (Digital Realty)",
+      "commune": "La Courneuve",
+      "status": "operating",
+      "facts": {
+        "powerMW": "about 130",
+        "serverHallsM2": 40000,
+        "investmentEur": 1150000000,
+        "staff": "80-90 operator/sub-contractor staff plus about 300 client staff",
+        "heat": "Heat offered free, no network connection yet in July 2024 (talks with SMIREC)",
+        "formerUse": "Former Eurocopter factory site"
+      },
+      "sources": [
+        {
+          "name": "Département de la Seine-Saint-Denis (5 Jul 2024) — Le plus grand data center de France",
+          "url": "https://seinesaintdenis.fr/actualite/emploi-entrepreneuriat/Le-plus-grand-data-center-de-France/"
+        }
+      ]
+    },
+    {
+      "name": "Equinix PA10",
+      "commune": "Saint-Denis",
+      "status": "operating; heat recovery since June 2024",
+      "facts": {
+        "heatMW": 6.6,
+        "heatMWhPerYear": 10800,
+        "recipients": "ZAC Plaine Saulnier, Olympic Aquatics Centre"
+      },
+      "sources": [
+        {
+          "name": "ENGIE Solutions press release (21 Jun 2024) — mise en service de la sous-station Equinix (PDF; blocked 403 from our machine, figures via secondary summaries)",
+          "url": "https://engie-solutions.com/sites/default/files/assets/2024-06/cp_mise_en_service_officielle_de_la_sous-station_equinix_vdef_v2.pdf"
+        },
+        {
+          "name": "Région Île-de-France — Récupération de chaleur fatale du data center Equinix et extension du réseau Plaine Commune Énergie (CP2024-180)",
+          "url": "https://www.iledefrance.fr/tous-les-services/ma-region-pres-de-chez-moi/environnement/energie/184193-recuperation-de-chaleur-fatale-du-data-center-equinix-et-extension-du-reseau-de-chaleur-plaine-commune-energie"
+        }
+      ]
+    },
+    {
+      "name": "Dugny Digital Hub (Digital Realty, PAR15-17)",
+      "commune": "Dugny",
+      "status": "under construction (works planned late 2024 - early 2030)",
+      "facts": {
+        "buildings": 3,
+        "footprintM2": 41500,
+        "siteHa": 9.5,
+        "formerUse": "former military land next to Le Bourget airport",
+        "generators": 108,
+        "generatorsMWth": 814,
+        "batteriesMW": 283,
+        "electricityGWhFullLoad": 1930,
+        "dugnyCommuneGWh2019": 161,
+        "recoverableHeatMWth": 100,
+        "plannedHeatMWhPerYear": 9140,
+        "waterM3PerYear": 5090,
+        "peoplePerDayOnSite": 110,
+        "indirectJobsClaimed": 450,
+        "pueTarget": 1.3,
+        "gridConnection": "two 225 kV underground lines, 28 km in total, to Villiers-le-Bel and Le Plessis-Gassot",
+        "powerMW": 200,
+        "investmentEur": "about 2 billion",
+        "distanceToHomes": "about 100 m (homes and a crèche)"
+      },
+      "sources": [
+        {
+          "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+          "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+        },
+        {
+          "name": "France 3 Paris IDF (20 May 2025) — Pourquoi le plus grand data center de France bientôt installé à Dugny inquiète les riverains",
+          "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/pourquoi-le-plus-grand-data-center-de-france-bientot-installe-a-dugny-inquiete-les-riverains-3157335.html"
+        }
+      ]
+    },
+    {
+      "name": "Le Bourget data centre (Segro)",
+      "commune": "Le Bourget",
+      "status": "contested: permit withdrawn 12 Jun 2026, withdrawal upheld by Montreuil administrative court (référé) 28 Jul 2026",
+      "facts": {
+        "siteHa": 3.7,
+        "floorAreaM2": 25300,
+        "connectionMW": 75,
+        "electricityGWhPerYear": 526,
+        "communeGWh2019": 236,
+        "pue": "1.35 average, max 1.5",
+        "generators": 33,
+        "heatRecoveryMW": 12,
+        "heatSeason": "October-April",
+        "formerUse": "former H&M logistics site (industrial brownfield)",
+        "petition": "more than 18,000 signatures (town of ~16,000 inhabitants)",
+        "timeline": [
+          "MRAe opinion 30 Jun 2025",
+          "petition from late Oct 2025",
+          "permit granted 13 Mar 2026 (two days before the municipal first round)",
+          "new mayor Mehdi Nezzar withdrew it 12 Jun 2026",
+          "administrative court upheld the withdrawal 28 Jul 2026 (height rules)"
+        ]
+      },
+      "sources": [
+        {
+          "name": "MRAe Île-de-France — avis APJIF-2025-056 du 30 juin 2025, centre de données au Bourget (PDF)",
+          "url": "https://www.mrae.developpement-durable.gouv.fr/IMG/pdf/2025_06_30_bourget_centre_de_donnees_segro_avis_signe.pdf"
+        },
+        {
+          "name": "France 3 Paris IDF (27 Nov 2025) — Des habitants s'élèvent contre le projet d'un nouveau data center en Seine-Saint-Denis",
+          "url": "https://france3-regions.franceinfo.fr/paris-ile-de-france/seine-saint-denis/des-habitants-s-elevent-contre-le-projet-d-un-nouveau-data-center-en-seine-saint-denis-3257029.html"
+        },
+        {
+          "name": "Hellowatt (updated 13 Jan 2026) — Le Bourget: ce futur data center consommerait deux fois plus d'énergie que la ville",
+          "url": "https://www.hellowatt.fr/blog/bourget-data-center-petition/"
+        },
+        {
+          "name": "Banque des Territoires (28 Jul 2026) — Datacenters: les projets dans la Drôme et au Bourget contestés",
+          "url": "https://www.banquedesterritoires.fr/datacenters-les-projets-dimplantation-dans-la-drome-et-au-bourget-contestes"
+        }
+      ]
+    },
+    {
+      "name": "Brétigny-sur-Orge project (Essonne)",
+      "commune": "Brétigny-sur-Orge (outside the map)",
+      "status": "refused by the regional prefect",
+      "facts": {
+        "reason": "No recovery of waste heat"
+      },
+      "sources": [
+        {
+          "name": "Assemblée nationale — question écrite n° 14126 (J. Guedj), answer JO 15 Sep 2026 (PDF)",
+          "url": "https://questions.assemblee-nationale.fr/dyn/17/questions/QANR5L17QE14126.pdf"
+        }
+      ]
+    }
+  ],
+  "participationProcedure": {
+    "summary": "A large data-centre campus in France typically goes through: (1) possible CNDP public debate or prior consultation, (2) an environmental assessment with an opinion of the environmental authority (Ae/IGEDD or MRAe), (3) an environmental authorisation (classified installation: generators, refrigerants) with a public consultation run by a commissaire enquêteur, (4) a building permit, and in Île-de-France (5) a prior State approval for large business premises (urban-planning code L.510-1).",
+    "steps": [
+      {
+        "step": "CNDP (Commission nationale du débat public)",
+        "detail": "Industrial facilities whose buildings and infrastructure cost more than €300 M must be referred to the CNDP, which decides between a public debate (3-6 months) and a prior consultation with a guarantor; €150-300 M: publicity and optional referral (Code de l'environnement R.121-2 thresholds as described in parliamentary answers). Equipment (e.g. servers) does not count towards the cost. 2025-2026 simplification laws targeted the CNDP's scope — check the current text on Légifrance.",
+        "verified": "partial"
+      },
+      {
+        "step": "Environmental authority opinion",
+        "detail": "Ae (IGEDD) for Dugny (2024-08), MRAe Île-de-France for Le Bourget (APJIF-2025-056). Not for or against the project; the developer must answer it in writing before the public consultation.",
+        "sources": [
+          {
+            "name": "Autorité environnementale (IGEDD) — avis n° 2024-08 du 11 avril 2024, Dugny Digital Hub (PDF)",
+            "url": "https://www.igedd.developpement-durable.gouv.fr/IMG/pdf/240411_centre_donnees_dugny_digital_hub_93_debattu_corrige_cle565e1b.pdf"
+          },
+          {
+            "name": "MRAe Île-de-France — avis APJIF-2025-056 du 30 juin 2025, centre de données au Bourget (PDF)",
+            "url": "https://www.mrae.developpement-durable.gouv.fr/IMG/pdf/2025_06_30_bourget_centre_de_donnees_segro_avis_signe.pdf"
+          }
+        ],
+        "verified": true
+      },
+      {
+        "step": "Environmental authorisation and public consultation",
+        "detail": "Since the 'industrie verte' law (no. 2023-973, 23 Oct 2023) and decree no. 2024-742 (6 Jul 2024), the public consultation for an environmental authorisation runs in parallel with the review (Code de l'environnement L.181-10-1), led by a commissaire enquêteur. Le Bourget: inquiry Oct-Nov 2025 then a supplementary consultation until Jan 2026 (press).",
+        "verified": "partial"
+      },
+      {
+        "step": "Building permit and PINM",
+        "detail": "Since law no. 2026-403 of 26 May 2026 (art. 35), a data centre can be declared a 'projet d'intérêt national majeur' by decree: the prefect then issues the building permit and local height rules can be set aside; a permit can be refused for water stress; the energy minister can ask RTE to reserve grid capacity.",
+        "sources": [
+          {
+            "name": "Cabinet Gossement Avocats — Data centers: ce que change la loi n° 2026-403 du 26 mai 2026 (commentary)",
+            "url": "https://www.gossement-avocats.com/blog/centres-de-donnees-data-centers-ce-que-change-la-loi-de-simplification-de-la-vie-economique/"
+          }
+        ],
+        "verified": "partial (law-firm commentary)"
+      },
+      {
+        "step": "Regional planning rule",
+        "detail": "SDRIF-E (approved 10 Jun 2025) OR 126: data centres first on existing business sites, limit environmental impacts, account for local grid capacity, recover waste heat, fit into the urban landscape.",
+        "sources": [
+          {
+            "name": "Région Île-de-France — Stratégie régionale d'implantation des centres de données, rapport CR 2026-039 (juin 2026, PDF)",
+            "url": "https://www.iledefrance.fr/sites/default/files/2026-06/cr2026-039.pdf"
+          }
+        ],
+        "verified": true
+      }
+    ]
+  },
+  "typicalParameters": {
+    "note": "Ranges from real Île-de-France projects (sources in realProjects).",
+    "gridConnectionMW": "75 (Le Bourget) - 200 (Dugny)",
+    "siteHa": "3.7 - 9.5",
+    "buildingFootprintM2": "≈25,000 - 41,500",
+    "annualElectricityGWh": "526 (Le Bourget, 75 MW) - 1,930 at full load (Dugny, 200 MW)",
+    "pue": "1.3 - 1.35 targets (French average 1.57 in 2022, Uptime Institute via MRAe)",
+    "backupGenerators": "33 (75 MW) - 108 (200 MW)",
+    "waterM3PerYear": "≈5,000 with closed-loop cooling (Dugny)",
+    "permanentJobs": "≈80-150 on site; operators claim more indirect jobs",
+    "constructionDuration": "phased over 4-6 years (Dugny: late 2024 - early 2030)",
+    "heatRecovered": "1 % (Dugny, first 10 years) - 16 % (Le Bourget, winter only) of the heat; PA10 up to 6.6 MW"
+  },
+  "generatedAt": "2026-10-26T19:34:58Z"
+}
