@@ -12,6 +12,8 @@ export class ApiError extends Error {
   constructor(
     message: string,
     public retryable: boolean,
+    /** Set on a 429: how long the server asked us to wait (Retry-After). */
+    public retryAfterMs?: number,
   ) {
     super(message);
     this.name = 'ApiError';
@@ -48,7 +50,9 @@ async function postJson<T>(url: string, body: unknown, timeoutMs: number, signal
     if (!res.ok) {
       const body = data as { error?: unknown } | null;
       const msg = typeof body?.error === 'string' && body.error ? body.error : `Server answered ${res.status}`;
-      throw new ApiError(msg, res.status === 429 || res.status >= 500);
+      const retryAfterSec = Number(res.headers.get('retry-after'));
+      const retryAfterMs = res.status === 429 && retryAfterSec > 0 ? retryAfterSec * 1000 : undefined;
+      throw new ApiError(msg, res.status === 429 || res.status >= 500, retryAfterMs);
     }
     return data as T;
   } catch (err) {
@@ -82,9 +86,34 @@ export async function askResident(req: AskRequest, signal?: AbortSignal): Promis
   return out;
 }
 
-/** One batch (max 5 residents). Retries once on a timeout / rate limit / server error. */
+/** Longest we wait in total for the server's rate limit before giving up on a batch. */
+const MAX_RATE_WAIT_MS = 120_000;
+
+/** Wait `ms`, or stop early (and throw) if the run is cancelled. */
+function pause(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted) return reject(new ApiError('Cancelled', false));
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(new ApiError('Cancelled', false));
+    };
+    const timer = setTimeout(() => {
+      signal?.removeEventListener('abort', onAbort);
+      resolve();
+    }, ms);
+    signal?.addEventListener('abort', onAbort, { once: true });
+  });
+}
+
+/**
+ * One batch (max 5 residents). On a rate limit (429) it waits as long as the server asks
+ * and tries again, for up to 2 minutes: the server paces live calls under the account limit.
+ * Retries once on a timeout or server error.
+ */
 export async function reactBatch(req: ReactRequest, signal?: AbortSignal): Promise<ReactResponse> {
-  for (let attempt = 0; ; attempt++) {
+  let errorRetries = 0;
+  let waited = 0;
+  for (;;) {
     try {
       const out = await postJson<ReactResponse>('/api/react', req, 60_000, signal);
       if (out === 'offline') {
@@ -93,11 +122,17 @@ export async function reactBatch(req: ReactRequest, signal?: AbortSignal): Promi
       }
       return out;
     } catch (err) {
-      if (err instanceof ApiError && err.retryable && attempt === 0) {
-        await new Promise((r) => setTimeout(r, 1500));
+      if (!(err instanceof ApiError) || !err.retryable) throw err;
+      if (err.retryAfterMs !== undefined) {
+        // A little jitter so parallel batches do not all come back at the same moment.
+        const ms = clamp(err.retryAfterMs, 1000, 30_000) + Math.random() * 400;
+        if (waited + ms > MAX_RATE_WAIT_MS) throw err;
+        waited += ms;
+        await pause(ms, signal);
         continue;
       }
-      throw err;
+      if (errorRetries++ > 0) throw err;
+      await pause(1500, signal);
     }
   }
 }

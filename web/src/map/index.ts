@@ -9,7 +9,7 @@
  * Screen-space layers on top: signposts/labels, speech bubbles.
  */
 import { Application, Container, Sprite, type Texture } from 'pixi.js';
-import type { ITownMap, Overlay, TownMapEvents } from '../mapApi';
+import type { ITownMap, Overlay, TownMapEvents, ViewInsets } from '../mapApi';
 import type { Conversation, MapFile, PopulationFile, Resident, ResidentResult, Scenario, ViewMode } from '../types';
 import config from '../../shared/config.json';
 import { Camera } from './camera';
@@ -749,6 +749,28 @@ class TownMap implements ITownMap {
     if (!this.whenReady(() => this.fitAll())) return;
     this.cam.follow(null);
     this.cam.flyTo((this.map.width * TS) / 2, (this.map.height * TS) / 2, this.cam.fitZoom());
+  }
+
+  setViewportInsets(insets: ViewInsets): void {
+    if (!this.whenReady(() => this.setViewportInsets(insets))) return;
+    this.cam.setInsets(insets);
+  }
+
+  frame(x: number | null, y: number | null, zoom: number | 'cover', animate = true): void {
+    if (!this.whenReady(() => this.frame(x, y, zoom, false))) return;
+    // Never further out than 'cover', so no empty band shows.
+    const z = Math.max(this.cam.coverZoom(), zoom === 'cover' ? 0 : zoom);
+    const W = this.map.width * TS;
+    const H = this.map.height * TS;
+    // Near the edge of the map, move the point off-centre rather than show what lies beyond the map.
+    const v = this.cam.visibleSize();
+    const hw = v.w / 2 / z;
+    const hh = v.h / 2 / z;
+    const wx = hw * 2 >= W ? W / 2 : clamp(x === null ? W / 2 : x * TS + 8, hw, W - hw);
+    const wy = hh * 2 >= H ? H / 2 : clamp(y === null ? H / 2 : y * TS + 8, hh, H - hh);
+    const c = this.cam.centreFor(wx, wy, z);
+    this.cam.follow(null);
+    this.cam.flyTo(c.x, c.y, z, animate);
   }
 
   // =========================================================== custom proposals

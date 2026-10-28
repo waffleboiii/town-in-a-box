@@ -3,7 +3,7 @@
  * Used only while the real PixiJS renderer (web/src/map) is not available, or with ?map=stub.
  * Coloured tiles + dots: enough to develop and test the UI, not the final look.
  */
-import type { ITownMap, Overlay, TownMapEvents } from '../../mapApi';
+import type { ITownMap, Overlay, TownMapEvents, ViewInsets } from '../../mapApi';
 import type { Conversation, MapFile, PopulationFile, ResidentResult, Scenario, ViewMode } from '../../types';
 
 const TILE_COLORS: Record<string, string> = {
@@ -238,6 +238,16 @@ export class StubTownMap implements ITownMap {
     const { w, h } = this.size();
     const z = Math.min(w / this.map.width, h / this.map.height) * 1.05;
     this.focus(this.map.width / 2, this.map.height / 2, z / (this.map.tilePx || 16), false);
+  }
+
+  setViewportInsets(_insets: ViewInsets): void {
+    // The stub always uses the whole canvas.
+  }
+
+  frame(x: number | null, y: number | null, zoom: number | 'cover', animate = true): void {
+    const { w, h } = this.size();
+    const z = zoom === 'cover' ? Math.max(w / this.map.width, h / this.map.height) / (this.map.tilePx || 16) : zoom;
+    this.focus(x ?? this.map.width / 2, y ?? this.map.height / 2, z, animate);
   }
 
   setPickMode(mode: 'none' | 'districts' | 'site'): void {

@@ -211,16 +211,57 @@ export default function App() {
     map.setAmbientConversations(Boolean(scenario?.conversations.length));
   }, [map, scenario]);
 
+  // Phones: the top bar and the bottom chalkboard cover part of the map. Tell the camera, so it
+  // frames scenarios in the part that stays visible and lets you pan the whole town into it.
+  const hasData = data !== null;
+  const syncInsets = useCallback(() => {
+    if (!map) return;
+    if (!narrow) {
+      map.setViewportInsets({ top: 0, right: 0, bottom: 0, left: 0 });
+      return;
+    }
+    const board = document.querySelector('.dock')?.getBoundingClientRect();
+    // The board is hidden while a sheet or a resident card covers the map: keep the last insets.
+    if (board && board.height === 0) return;
+    map.setViewportInsets({
+      top: document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0,
+      right: 0,
+      bottom: board ? Math.max(0, window.innerHeight - board.top) : 0,
+      left: 0,
+    });
+  }, [map, narrow]);
+  useEffect(() => {
+    if (!hasData) return;
+    syncInsets();
+    const ro = new ResizeObserver(syncInsets);
+    for (const sel of ['.topbar', '.dock']) {
+      const el = document.querySelector(sel);
+      if (el) ro.observe(el);
+    }
+    window.addEventListener('resize', syncInsets);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', syncInsets);
+    };
+  }, [syncInsets, hasData]);
+
   // A scenario with a site (the data centre) opens on that site, so its rings are not hidden
-  // under the top bar. The point is shifted a little south so the site sits in the visible
-  // middle of the map, between the top bar and the bottom chalkboard.
+  // under the top bar. On wide screens the point is shifted a little south so the site sits in
+  // the visible middle of the map, between the top bar and the bottom chalkboard. On phones the
+  // map fills the visible part, centred on the site or on Paris (also before a custom run).
   const framedScenario = useRef<string | null>(null);
   useEffect(() => {
-    if (!map || !scenario || narrow) return;
-    if (framedScenario.current === scenario.id) return;
-    framedScenario.current = scenario.id;
-    if (scenario.site && scenario.kind !== 'custom') map.focus(scenario.site.x, scenario.site.y + 8, 0.62, true);
-  }, [map, scenario, narrow]);
+    if (!map || !hasData) return;
+    if (!scenario && activeId !== 'custom') return; // still loading
+    const key = scenario?.id ?? 'custom';
+    if (framedScenario.current === key) return;
+    framedScenario.current = key;
+    const site = scenario?.site && scenario.kind !== 'custom' ? scenario.site : null;
+    if (narrow) {
+      syncInsets(); // the board may have just changed size
+      map.frame(site?.x ?? null, site?.y ?? null, site ? 0.36 : 'cover');
+    } else if (site) map.focus(site.x, site.y + 8, 0.62, true);
+  }, [map, hasData, scenario, activeId, narrow, syncInsets]);
   useEffect(() => map?.setViewMode(view), [map, view, scenario]);
   useEffect(() => map?.setAfterTalk(talkOn), [map, talkOn, scenario]);
   useEffect(() => map?.highlightGroup(group), [map, group, scenario]);
@@ -295,7 +336,7 @@ export default function App() {
     setProposalCollapsed(false);
     if (id === 'custom') setEditing(!custom);
     framedScenario.current = null;
-    map?.fitAll();
+    if (!narrow) map?.fitAll(); // phones: the framing effect fills the visible part instead
   };
 
   const finishOnboarding = useCallback(() => {

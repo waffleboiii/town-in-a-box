@@ -23,6 +23,8 @@ export class Camera {
   maxZoom = 4;
   /** True while the camera moved this frame (used to throttle label layout). */
   moved = true;
+  /** Screen pixels covered by UI on each side (phones: top bar and bottom board). */
+  insets = { top: 0, right: 0, bottom: 0, left: 0 };
 
   private targetZoom = 1;
   private anchor: { sx: number; sy: number; wx: number; wy: number } | null = null;
@@ -58,6 +60,29 @@ export class Camera {
   /** Zoom at which the whole map fits on screen. */
   fitZoom(): number {
     return Math.min(this.viewW / this.worldW, this.viewH / this.worldH);
+  }
+
+  setInsets(insets: { top: number; right: number; bottom: number; left: number }): void {
+    this.insets = { ...insets };
+    this.moved = true;
+  }
+
+  /** Size of the part of the screen the UI leaves visible, in screen pixels. */
+  visibleSize(): { w: number; h: number } {
+    const { top, right, bottom, left } = this.insets;
+    return { w: Math.max(1, this.viewW - left - right), h: Math.max(1, this.viewH - top - bottom) };
+  }
+
+  /** Smallest zoom at which the map fills the visible part of the screen (no empty band). */
+  coverZoom(): number {
+    const v = this.visibleSize();
+    return Math.max(v.w / this.worldW, v.h / this.worldH);
+  }
+
+  /** Camera centre that puts world point (wx, wy) in the middle of the visible part, at `zoom`. */
+  centreFor(wx: number, wy: number, zoom: number): { x: number; y: number } {
+    const { top, right, bottom, left } = this.insets;
+    return { x: wx - (left - right) / 2 / zoom, y: wy - (top - bottom) / 2 / zoom };
   }
 
   screenToWorld(sx: number, sy: number): { x: number; y: number } {
@@ -165,15 +190,23 @@ export class Camera {
     this.moved = Math.abs(before.x - this.x) > 0.01 || Math.abs(before.y - this.y) > 0.01 || Math.abs(before.z - this.zoom) > 1e-4;
   }
 
+  /** Keep the map in the visible part of the screen (the whole screen when there are no insets). */
   private clampToMap(): void {
-    const hw = this.viewW / 2 / this.zoom;
-    const hh = this.viewH / 2 / this.zoom;
+    const v = this.visibleSize();
+    const hw = v.w / 2 / this.zoom;
+    const hh = v.h / 2 / this.zoom;
+    // Centre of the visible part, in world pixels.
+    const off = this.centreFor(0, 0, this.zoom);
+    let cx = this.x - off.x;
+    let cy = this.y - off.y;
     const marginX = hw * 0.25;
     const marginY = hh * 0.25;
-    if (hw * 2 >= this.worldW) this.x = this.worldW / 2;
-    else this.x = clamp(this.x, hw - marginX, this.worldW - hw + marginX);
-    if (hh * 2 >= this.worldH) this.y = this.worldH / 2;
-    else this.y = clamp(this.y, hh - marginY, this.worldH - hh + marginY);
+    if (hw * 2 >= this.worldW) cx = this.worldW / 2;
+    else cx = clamp(cx, hw - marginX, this.worldW - hw + marginX);
+    if (hh * 2 >= this.worldH) cy = this.worldH / 2;
+    else cy = clamp(cy, hh - marginY, this.worldH - hh + marginY);
+    this.x = cx + off.x;
+    this.y = cy + off.y;
   }
 
   // ------------------------------------------------------------ input

@@ -20,7 +20,11 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
       <div className="dock-inner">
         <div className="gapboard gapboard-empty">
           <span className="gb-title">Who gets heard?</span>
-          <p className="gb-sentence">Describe your proposal and run it: you will see who a consultation would hear, and who it would miss.</p>
+          <p className="gb-sentence">
+            {mobile
+              ? 'Tap Proposal to describe your idea and pick where it happens. You will see who a consultation would hear, and who it would miss.'
+              : 'Describe your proposal and run it: you will see who a consultation would hear, and who it would miss.'}
+          </p>
         </div>
         {mobile}
       </div>
@@ -65,7 +69,16 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
             </div>
           </div>
           <div className="gb-cell">
-            <div className="gb-label">Everyone</div>
+            <div className="gb-label">
+              {scope === 'paris_eligible' ? (
+                <>
+                  <span className="lbl-long">Everyone, Paris and suburbs</span>
+                  <span className="lbl-short">Everyone</span>
+                </>
+              ) : (
+                'Everyone'
+              )}
+            </div>
             <div className="gb-value">
               <Num value={views.everyone.yesShare} format={(n) => pct(n)} />
               <small>support</small>

@@ -2728,9 +2728,14 @@ div + div > .conv-row {
     display: none;
   }
 
-  /* compact chalkboard so the map stays visible */
+  /* compact chalkboard so the map stays visible (the empty board keeps its one instruction) */
   .gb-sentence {
     display: none;
+  }
+
+  .gapboard-empty .gb-sentence {
+    display: block;
+    font-size: 14px;
   }
 
   .gb-label {

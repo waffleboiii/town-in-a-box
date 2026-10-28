@@ -14,6 +14,13 @@ export type Overlay =
   | 'backtest_sim' // district tint by simulated vote share (needs data)
   | 'districts'; // show district borders + labels only
 
+export interface ViewInsets {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
 export interface TownMapEvents {
   residentClick: (id: number) => void;
   districtClick: (districtIdx: number) => void;
@@ -49,6 +56,12 @@ export interface ITownMap {
   focus(x: number, y: number, zoom?: number, animate?: boolean): void;
   focusDistrict(districtIdx: number): void;
   fitAll(): void;
+  /** Screen pixels the UI covers on each side. The camera then keeps the map in the part that stays visible. */
+  setViewportInsets(insets: ViewInsets): void;
+  /** Centre tile (x, y), or the whole map when null, in the visible part of the screen.
+   *  zoom 'cover' = the smallest zoom that fills the visible part with map (no empty band);
+   *  a number is used as is, but never further out than 'cover'. */
+  frame(x: number | null, y: number | null, zoom: number | 'cover', animate?: boolean): void;
 
   /** Custom proposals: let the user click districts (toggle) or place a site. */
   setPickMode(mode: 'none' | 'districts' | 'site'): void;

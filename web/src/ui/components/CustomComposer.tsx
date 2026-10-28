@@ -47,7 +47,7 @@ export function CustomComposer({
           </div>
           <h2 id="custom-title">Test your own idea</h2>
           <p className="panel-sub">
-            {int(SAMPLE_SIZE)} residents react live, most of them in or near your area.
+            {int(SAMPLE_SIZE)} residents react live, most of them in or near your area. It takes 2 to 3 minutes.
           </p>
         </div>
       </div>

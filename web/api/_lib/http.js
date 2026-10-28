@@ -17,12 +17,14 @@ export class HttpError extends Error {
   /**
    * @param {number} status HTTP status code
    * @param {string} publicMessage short, generic text for the browser
+   * @param {number} [retryAfterSec] for a 429: seconds until a retry can succeed (Retry-After header)
    */
-  constructor(status, publicMessage) {
+  constructor(status, publicMessage, retryAfterSec) {
     super(publicMessage);
     this.name = 'HttpError';
     this.status = status;
     this.publicMessage = publicMessage;
+    this.retryAfterSec = retryAfterSec;
   }
 }
 
@@ -166,7 +168,7 @@ export async function handle(request, methods, run) {
     return await run();
   } catch (err) {
     if (err instanceof HttpError) {
-      return errorJson(err.status, err.publicMessage, err.status === 429 ? { 'retry-after': '30' } : {});
+      return errorJson(err.status, err.publicMessage, err.status === 429 ? { 'retry-after': String(err.retryAfterSec ?? 30) } : {});
     }
     const e = err instanceof Error ? err : new Error(String(err));
     console.error(`[api] unexpected error on ${new URL(request.url).pathname}: ${e.name}: ${e.message}`);

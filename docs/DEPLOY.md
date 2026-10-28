@@ -90,9 +90,11 @@ Before committing, run `git status` and make sure `.env` is not listed.
 | `DISABLE_LIVE` | `0` | optional kill-switch (see step 5) |
 
    Fine-tuning knobs, all optional: `MODEL_ASK` (model for "ask a resident", default = `MODEL_REACTION`),
-   `RATE_LIMIT_PER_MIN` (default 20 AI calls per visitor per minute), `LLM_RPM` (default 60 AI calls per
-   minute in total), `LIVE_DAILY_CALLS` (default 250 AI calls per day per server instance, roughly
-   $0.05–0.20; after that the site answers with `[demo]` texts until midnight UTC), `LLM_TIMEOUT_MS` (default 25000), `LLM_DISABLE_THINKING` (default 1 = quick direct
+   `RATE_LIMIT_BURST` / `RATE_LIMIT_PER_MIN` (default 320 AI calls per visitor at once, refilled at 32 per
+   minute: two "Test your own idea" runs back to back), `LLM_BURST` / `LLM_RPM` (default 20 at once, then
+   80 per minute in total, which keeps the site under the account's 100 requests per minute for Nano),
+   `LIVE_DAILY_CALLS` (default 1000 AI calls per day per server instance, about $0.10; after that the site
+   answers with `[demo]` texts until midnight UTC), `LLM_TIMEOUT_MS` (default 25000), `LLM_DISABLE_THINKING` (default 1 = quick direct
    answers), `LIVE_FALLBACK_TO_MOCK` (default 1 = if the AI fails, show a `[demo]` answer instead of an
    error), `ALLOWED_ORIGINS` (only needed for a custom domain behind a proxy).
 
@@ -175,7 +177,7 @@ Checks for the developer (run from `web/`):
 | `/api/health` shows the web page or "404" | **Root Directory** is not `web`: **Settings → Build and Deployment → Root Directory** → `web` → Save → Redeploy. |
 | `"mock":true` although you added the key | Key saved for the wrong environment, or no redeploy yet, or `DISABLE_LIVE=1`. |
 | Answers start with `[demo]` but `/api/health` says `"mock":false` | Live calls are failing and the app falls back to demo answers. Open the project's **Logs** tab and search for `[llm]`. `HTTP 401` means a wrong key, `HTTP 404` a wrong model ID (use `?check=1`), `timeout` means Token Factory is slow (try again, or raise `LLM_TIMEOUT_MS`). |
-| "Too many requests" message | The per-visitor limit (20 AI calls per minute by default). Wait a minute, or raise `RATE_LIMIT_PER_MIN`. |
+| "Too many requests" message | The per-visitor limit (320 AI calls, refilled at 32 per minute). Wait a few minutes, or raise `RATE_LIMIT_BURST`. |
 | Build fails with "Could not resolve ./App" or similar | The website code itself is incomplete or broken. This is not a deployment setting; fix the code and push again. |
 
 ---

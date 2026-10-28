@@ -75,7 +75,7 @@ export function BacktestTab() {
         </div>
         {bt.poll ? (
           <p className="section-note">
-            Poll vs vote: {pts(bt.actual.yesShare - bt.poll.yesShare)}. Simulation, likely voters vs everyone: {pts(sim.attendeesYes - sim.everyoneYes)}.{' '}
+            Poll vs vote: {pts(bt.actual.yesShare - bt.poll.yesShare)}. Simulation, likely voters vs all Paris residents: {pts(sim.attendeesYes - sim.everyoneYes)}.{' '}
             {bt.metrics.gapSignCorrect === undefined ? '' : bt.metrics.gapSignCorrect ? 'Same direction: the turnout model explains part of the gap.' : 'Opposite direction.'}
             {bt.poll.note ? ` ${bt.poll.note}` : ''}
           </p>
