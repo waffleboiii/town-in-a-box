@@ -86,6 +86,19 @@ export function ResidentCard({
 
   const conversation = useMemo(() => scenario?.conversations.find((c) => c.a === residentId || c.b === residentId) ?? null, [scenario, residentId]);
 
+  // Another resident: start at the top (their reaction). A new question or answer: bring it into view.
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const newestRef = useRef<HTMLDivElement>(null);
+  const newest = asks[asks.length - 1];
+  const newestKey = newest ? `${newest.id}:${newest.pending ? 'wait' : 'done'}` : '';
+  const shown = useRef({ residentId, newestKey });
+  useEffect(() => {
+    const prev = shown.current;
+    shown.current = { residentId, newestKey };
+    if (prev.residentId !== residentId) bodyRef.current?.scrollTo({ top: 0 });
+    else if (newestKey && prev.newestKey !== newestKey) newestRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [residentId, newestKey]);
+
   if (!resident) return null;
 
   const step = (dir: 1 | -1) => {
@@ -133,8 +146,67 @@ export function ResidentCard({
         </button>
       </div>
 
-      <div className="panel-body">
+      <div className="panel-body" ref={bodyRef}>
+        {result ? (
+          <>
+            <div className="section">
+              <SectionHead aside={<LangToggle lang={lang} onChange={setLang} />}>Their reaction</SectionHead>
+              <div className="voice" data-side={result.stance > 0 ? 'support' : result.stance < 0 ? 'oppose' : 'neutral'}>
+                <StanceFace stance={result.stance} size={36} />
+                <div>
+                  <div className="voice-head">
+                    <b>{stanceLabel(result.stance)}</b>
+                    <VoiceChip />
+                  </div>
+                  <blockquote lang={lang}>“{lang === 'en' ? result.reasonEn : result.reasonFr}”</blockquote>
+                  {result.behaviourEn ? (
+                    <p className="small voice-do">
+                      <b>What they would do:</b> {result.behaviourEn}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              <p className="section-note">
+                They feel affected {result.affectedLLM}/3 (the AI’s own estimate); computed: {result.exposure.score}/3.
+                {result.runStances && result.runStances.length > 1 ? ` Across ${result.runStances.length} runs: ${result.runStances.map((s) => (s > 0 ? `+${s}` : `${s}`)).join(', ')}.` : ''}
+              </p>
+            </div>
+
+            <div className="section">
+              <SectionHead aside={<ComputedChip />}>What changes for them</SectionHead>
+              <div className="touched">
+                <Pips value={result.exposure.score} label={`Exposure ${result.exposure.score} of 3`} />
+                <b>Touched: {EXPOSURE_LEVEL[result.exposure.score].toLowerCase()}</b>
+              </div>
+              {result.exposure.reasons.map((r) => (
+                <div key={r.code + r.text} className="reason">
+                  <span className="r-icon">
+                    <Icon name={r.icon} size={18} />
+                  </span>
+                  <span>
+                    {r.text}
+                    {r.at?.length ? (
+                      <button type="button" className="link-btn r-at" onClick={() => map?.focus(r.at![0][0] + 0.5, r.at![0][1] + 0.5, 2.2, true)}>
+                        Show on map
+                      </button>
+                    ) : null}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="section">
+            <div className="callout">
+              {scenario?.kind === 'custom'
+                ? 'This resident was not in the live sample of your proposal. Pick a coloured resident, or use Next.'
+                : 'No reaction for this resident in this scenario.'}
+            </div>
+          </div>
+        )}
+
         <div className="section">
+          <SectionHead>About them</SectionHead>
           <dl className="facts">
             <dt>Household</dt>
             <dd>{HOUSEHOLD_LABEL[resident.household] ?? resident.householdRaw}</dd>
@@ -162,62 +234,8 @@ export function ResidentCard({
           </p>
         </div>
 
-        {!result ? (
-          <div className="section">
-            <div className="callout">
-              {scenario?.kind === 'custom'
-                ? 'This resident was not in the live sample of your proposal. Pick a coloured resident, or use Next.'
-                : 'No reaction for this resident in this scenario.'}
-            </div>
-          </div>
-        ) : (
+        {result ? (
           <>
-            <div className="section">
-              <SectionHead aside={<ComputedChip />}>What changes for them</SectionHead>
-              <div className="touched">
-                <Pips value={result.exposure.score} label={`Exposure ${result.exposure.score} of 3`} />
-                <b>Touched: {EXPOSURE_LEVEL[result.exposure.score].toLowerCase()}</b>
-              </div>
-              {result.exposure.reasons.map((r) => (
-                <div key={r.code + r.text} className="reason">
-                  <span className="r-icon">
-                    <Icon name={r.icon} size={18} />
-                  </span>
-                  <span>
-                    {r.text}
-                    {r.at?.length ? (
-                      <button type="button" className="link-btn r-at" onClick={() => map?.focus(r.at![0][0] + 0.5, r.at![0][1] + 0.5, 2.2, true)}>
-                        Show on map
-                      </button>
-                    ) : null}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="section">
-              <SectionHead aside={<LangToggle lang={lang} onChange={setLang} />}>Their reaction</SectionHead>
-              <div className="voice" data-side={result.stance > 0 ? 'support' : result.stance < 0 ? 'oppose' : 'neutral'}>
-                <StanceFace stance={result.stance} size={36} />
-                <div>
-                  <div className="voice-head">
-                    <b>{stanceLabel(result.stance)}</b>
-                    <VoiceChip />
-                  </div>
-                  <blockquote lang={lang}>“{lang === 'en' ? result.reasonEn : result.reasonFr}”</blockquote>
-                  {result.behaviourEn ? (
-                    <p className="small voice-do">
-                      <b>What they would do:</b> {result.behaviourEn}
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-              <p className="section-note">
-                They feel affected {result.affectedLLM}/3 (the AI’s own estimate); computed: {result.exposure.score}/3.
-                {result.runStances && result.runStances.length > 1 ? ` Across ${result.runStances.length} runs: ${result.runStances.map((s) => (s > 0 ? `+${s}` : `${s}`)).join(', ')}.` : ''}
-              </p>
-            </div>
-
             <div className="section">
               <SectionHead
                 aside={
@@ -241,7 +259,7 @@ export function ResidentCard({
               <div className="section">
                 <SectionHead>Heard from a neighbour</SectionHead>
                 <div className="transcript">
-                  {conversation.lines.slice(0, 3).map((l, i) => (
+                  {conversation.lines.map((l, i) => (
                     <div key={i} className="line done" lang={lang}>
                       <b>{residentsById.get(l.speaker)?.name.split(' ')[0]}:</b> {lang === 'en' ? l.en : l.fr}
                     </div>
@@ -307,8 +325,8 @@ export function ResidentCard({
               {asks
                 .slice()
                 .reverse()
-                .map((a) => (
-                  <div key={a.id} className="answer" aria-live="polite">
+                .map((a, i) => (
+                  <div key={a.id} ref={i === 0 ? newestRef : undefined} className="answer" aria-live="polite">
                     <div className="q">You: {a.q}</div>
                     {a.pending ? (
                       <div className="muted">Thinking…</div>
@@ -324,7 +342,7 @@ export function ResidentCard({
                 ))}
             </div>
           </>
-        )}
+        ) : null}
         {resident.groupIds.length ? (
           <div className="section chips">
             <span className="small muted">Meet another:</span>

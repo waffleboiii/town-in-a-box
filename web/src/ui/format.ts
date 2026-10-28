@@ -50,11 +50,26 @@ export function niceDate(iso: string | undefined): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 }
 
-/** First sentence of a text, cut to `max` characters (for speech bubbles). */
+// Where a long sentence can stop and still read as a finished thought (EN and FR).
+const CLAUSE_BREAK = /(?:[,;:]| [–—-]) | (?=(?:and|but|because|especially|which|although|while|et|mais|car|parce|surtout|notamment|donc|qui) )/g;
+// Small words a cut sentence should not end on ("…character of…", "…zone de La…").
+const DANGLING =
+  /\s+(?:of|the|a|an|to|in|for|with|from|into|than|as|if|when|on|at|by|and|or|my|our|their|its|this|that|those|who|de|du|des|la|le|les|à|au|aux|en|pour|avec|sur|par|dans|chez|vers|sans|entre|comme|si|quand|et|ou|mon|ma|mes|notre|nos|leur|leurs|ce|cette|ceux|celles|un|une|qui|que)$/i;
+
+/** First sentence of a text for a speech bubble. Longer than `max` characters: cut at the last
+ *  clause break that keeps most of it (else the last whole word) and end with "…".
+ *  The resident card always shows the full text. */
 export function firstSentence(text: string, max = 90): string {
-  const t = text.trim();
+  const t = text.trim().replace(/\s+/g, ' ');
   const m = t.match(/^(.+?[.!?])(\s|$)/);
-  let s = m ? m[1] : t;
-  if (s.length > max) s = `${s.slice(0, max - 1).trimEnd()}…`;
-  return s;
+  const s = m ? m[1] : t;
+  if (s.length <= max) return s;
+  const head = s.slice(0, max);
+  let cut = -1;
+  for (const b of head.matchAll(CLAUSE_BREAK)) if (b.index >= max * 0.45) cut = b.index;
+  if (cut < 0) cut = head.lastIndexOf(' ');
+  if (cut < max * 0.3) cut = max - 1; // one very long word
+  let out = s.slice(0, cut).replace(/[\s,;:–—-]+$/, '');
+  for (let k = 0; k < 3 && DANGLING.test(out); k++) out = out.replace(DANGLING, '');
+  return `${out}…`;
 }

@@ -25,6 +25,8 @@ export interface TownMapEvents {
   residentClick: (id: number) => void;
   districtClick: (districtIdx: number) => void;
   tileClick: (x: number, y: number) => void;
+  /** A click or tap that hit no resident, outside pick modes (the UI closes the resident card). */
+  backgroundClick: () => void;
 }
 
 export interface ITownMap {

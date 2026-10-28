@@ -304,6 +304,7 @@ export default function App() {
   // ---------- actions ----------
   const openCard = useCallback((id: number | null, fromMap = false) => {
     setSelected(id);
+    if (id !== null) setSheet(null); // phones: the card replaces an open sheet instead of opening behind it
     if (id !== null && fromMap) {
       setInsightsCollapsed((c) => {
         if (!c) autoCollapsed.current = true;
@@ -363,9 +364,13 @@ export default function App() {
         if (!s.pickActive || s.draft.areaKind !== 'site') return;
         setDraft((d) => ({ ...d, site: { x, y } }));
       }),
+      // Clicking empty map lets go of the selected resident.
+      map.on('backgroundClick', () => {
+        if (!live.current.pickActive) closeCard();
+      }),
     ];
     return () => offs.forEach((off) => off());
-  }, [map, live, openCard]);
+  }, [map, live, openCard, closeCard]);
 
   // Esc closes the top-most thing.
   useEffect(() => {
@@ -486,7 +491,14 @@ export default function App() {
   ) : null;
   const sheetClose = narrow ? (
     <div className="mobile-sheet-btns">
-      <button type="button" className="btn btn-small" onClick={() => setSheet(null)}>
+      <button
+        type="button"
+        className="btn btn-small"
+        onClick={() => {
+          setSheet(null);
+          closeCard();
+        }}
+      >
         <Icon name="map" size={14} /> Back to the map
       </button>
     </div>

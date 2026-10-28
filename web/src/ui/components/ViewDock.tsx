@@ -3,7 +3,7 @@
  * view toggle: Everyone · Can vote · Likely to show up, plus the "after neighbours talked" switch.
  */
 import type { ReactNode } from 'react';
-import type { ViewMode } from '../../types';
+import type { Scenario, ViewMode } from '../../types';
 import { useApp } from '../context';
 import { int, pct, pct2, pts } from '../format';
 import { Icon } from '../icons';
@@ -11,6 +11,19 @@ import { viewLabel } from '../labels';
 import { Num } from './common';
 
 const VIEW_ICON: Record<ViewMode, string> = { everyone: 'people', eligible: 'ballot', attendees: 'walk' };
+
+/** Hover text for a view button: who is in the group, and why its count is weighted. */
+function viewTitle(v: ViewMode, scenario: Scenario, weighted: number): string {
+  const drawn = scenario.results.filter((r) => (v === 'everyone' ? true : v === 'eligible' ? r.eligible : r.attendee)).length;
+  const counts = drawn === weighted ? '' : ` ${int(drawn)} simulated residents, weighted to the real population: they count as ${int(weighted)}.`;
+  if (v === 'everyone') return `Every simulated adult, in Paris and the inner suburbs.${counts}`;
+  if (v === 'eligible') {
+    return scenario.voterScope === 'paris_eligible'
+      ? `Lives in Paris (not the suburbs), is a French or EU citizen and is on the electoral roll.${counts}`
+      : 'Every adult resident can take part in this channel.';
+  }
+  return `The residents most likely to take part, up to the expected turnout (${pct(scenario.turnoutTarget, 1)} of those who can take part).${counts}`;
+}
 
 export function ViewDock({ mobile }: { mobile?: ReactNode }) {
   const { scenario, views, view, setView, afterTalk, setAfterTalk, isLiveSample } = useApp();
@@ -101,7 +114,7 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
         <div className="view-toggle" role="group" aria-label="Whose voices to count">
           <div className="vt-group">
             {(['everyone', 'eligible', 'attendees'] as ViewMode[]).map((v) => (
-              <button key={v} type="button" className="vt-btn" aria-pressed={view === v} onClick={() => setView(v)}>
+              <button key={v} type="button" className="vt-btn" aria-pressed={view === v} onClick={() => setView(v)} title={viewTitle(v, scenario, views[v].n)}>
                 <Icon name={VIEW_ICON[v]} size={20} />
                 <span className="vt-text">
                   <span>{viewLabel(v, scope)}</span>

@@ -80,7 +80,7 @@ export class StubTownMap implements ITownMap {
   private picked = new Set<number>();
   private customSite: { x: number; y: number; ringsTiles: number[]; label?: string } | null = null;
   private talking = new Set<number>();
-  private listeners: Listener = { residentClick: new Set(), districtClick: new Set(), tileClick: new Set() };
+  private listeners: Listener = { residentClick: new Set(), districtClick: new Set(), tileClick: new Set(), backgroundClick: new Set() };
   private cam = { x: 132, y: 100, z: 4 };
   private camAnim: { from: { x: number; y: number; z: number }; to: { x: number; y: number; z: number }; t0: number; ms: number } | null = null;
   private fade = { from: new Map<number, number>(), t0: 0 };
@@ -411,6 +411,7 @@ export class StubTownMap implements ITownMap {
         for (const cb of this.listeners.residentClick) cb(best);
         return;
       }
+      for (const cb of this.listeners.backgroundClick) cb();
     }
     if (x >= 0 && y >= 0 && x < this.map.width && y < this.map.height) {
       const d = this.map.districts[y * this.map.width + x];

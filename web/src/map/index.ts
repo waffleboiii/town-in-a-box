@@ -59,7 +59,7 @@ class TownMap implements ITownMap {
   private shimmerTex: Texture[][] = [];
   private shimmerFrame = 0;
   private shimmerClock = 0;
-  private listeners: Listeners = { residentClick: new Set(), districtClick: new Set(), tileClick: new Set() };
+  private listeners: Listeners = { residentClick: new Set(), districtClick: new Set(), tileClick: new Set(), backgroundClick: new Set() };
   private residentById = new Map<number, Resident>();
   private scenario: Scenario | null = null;
   private results = new Map<number, ResidentResult>();
@@ -355,7 +355,10 @@ class TownMap implements ITownMap {
     if (!this.ready) return;
     const t = this.tileAtScreen(sx, sy);
     const inMap = t.x >= 0 && t.y >= 0 && t.x < this.map.width && t.y < this.map.height;
-    if (!inMap) return;
+    if (!inMap) {
+      if (this.pickMode === 'none') this.emit('backgroundClick');
+      return;
+    }
     const d = this.grid.at(t.x, t.y);
     if (this.pickMode === 'site') {
       this.setCustomSite({ x: t.x, y: t.y, ringsTiles: [5, 10, 20] });
@@ -377,6 +380,7 @@ class TownMap implements ITownMap {
       this.emit('residentClick', this.residents.ids[i]);
       return;
     }
+    this.emit('backgroundClick');
     this.emit('tileClick', t.x, t.y);
     if (d) this.emit('districtClick', d);
   }

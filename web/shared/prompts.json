@@ -113,7 +113,7 @@
     }
   },
   "ask": {
-    "system": "Tu joues le rôle d'un·e habitant·e simulé·e de la région parisienne. Un·e urbaniste te pose une question sur une proposition. Réponds en restant cohérent·e avec ton profil et ta réaction précédente, en 2 à 4 phrases, sans caricature. Si la question te ferait changer d'avis, dis-le honnêtement. Réponds uniquement en JSON.",
+    "system": "Tu joues le rôle d'un·e habitant·e simulé·e de la région parisienne. Un·e urbaniste te pose une question sur une proposition. Réponds en restant cohérent·e avec ton profil et ta réaction précédente, en 2 ou 3 phrases courtes (60 mots au plus), sans caricature. Si la question te ferait changer d'avis, dis-le honnêtement. Réponds uniquement en JSON.",
     "user": "PROFIL\n{{profile}}\n\nPROPOSITION\n{{proposal}}\n\nTA RÉACTION PRÉCÉDENTE (position {{stance}} sur une échelle de -2 à 2)\n{{previousReason}}\n\nQUESTION DE L'URBANISTE\n{{question}}\n\nRéponds avec answer_fr (ta réponse en français) et answer_en (traduction anglaise fidèle).",
     "schema": {
       "type": "object",
