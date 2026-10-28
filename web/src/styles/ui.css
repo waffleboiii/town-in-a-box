@@ -862,6 +862,15 @@ a {
 .notice-foot {
   margin-top: 6px;
   font-size: 14px;
+  gap: 12px;
+}
+
+.notice-foot .link-btn {
+  white-space: nowrap;
+}
+
+.notice-foot .note {
+  text-align: right;
 }
 
 .note {
@@ -2602,6 +2611,15 @@ div + div > .conv-row {
     height: 28px;
   }
 
+  /* The house icon alone keeps the brand; the room goes to the four scenario cards. */
+  .brand h1 {
+    display: none;
+  }
+
+  .brand {
+    padding-right: 10px;
+  }
+
   .dock {
     left: var(--gutter);
     right: var(--gutter);
@@ -2623,14 +2641,6 @@ div + div > .conv-row {
 }
 
 @media (max-width: 1000px) {
-  .brand h1 {
-    display: none;
-  }
-
-  .brand {
-    padding-right: 10px;
-  }
-
   .demo-pill {
     display: none;
   }

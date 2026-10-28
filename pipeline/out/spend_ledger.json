@@ -1,0 +1,11 @@
+{
+  "spent_usd": 2.778494,
+  "requests": 12170,
+  "by_model": {
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 0.841948,
+    "nvidia/nemotron-3-super-120b-a12b": 1.891682,
+    "nvidia/Nemotron-3-Ultra-550b-a55b": 0.04486
+  },
+  "updated": "2026-10-28 10:44:45",
+  "note": "Estimated from token counts and the prices in llm.py; the Token Factory console is the real balance."
+}

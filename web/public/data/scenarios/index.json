@@ -5,7 +5,7 @@
     "subtitle": "Hypothetical · public consultation · La Courneuve",
     "kind": "hypothetical",
     "icon": "datacenter",
-    "mock": true
+    "mock": false
   },
   {
     "id": "paris_suv_2024",
@@ -14,7 +14,7 @@
     "kind": "backtest",
     "icon": "car",
     "date": "2024-02-04",
-    "mock": true
+    "mock": false
   },
   {
     "id": "paris_scooters_2023",
@@ -23,6 +23,6 @@
     "kind": "backtest",
     "icon": "scooter",
     "date": "2023-04-02",
-    "mock": true
+    "mock": false
   }
 ]

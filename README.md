@@ -46,7 +46,7 @@ Three ready scenarios:
 | **Nemotron 3 Ultra** (`Nemotron-3-Ultra-550b-a55b`) | Theme discovery across all reasons, with low-participation voices weighted double. |
 | **Nebius Token Factory** | All calls go to its OpenAI-compatible endpoint, from the Python pipeline (batch) and from the Vercel functions (live). Structured JSON output (strict `json_schema`, with automatic `json_object` fallback) and thinking switched off for short answers. |
 
-**Where Token Factory speeds up the work:** about 3,900 calls per scenario run concurrently through one async client, with an RPM/TPM limiter, retries and a disk cache. Interrupted runs resume for free, and three model sizes are matched to three jobs (Nano for volume, Super for dialogue, Ultra for one synthesis call). Our estimate at the default 60 requests per minute is about 65 minutes and about $1.10 per scenario (prices unverified). *Measured throughput, latency and cost: pending live run* (written to `pipeline/out/run_stats_<id>.json`).
+**Where Token Factory speeds up the work:** about 3,900 calls per scenario run concurrently through one async client, with an RPM/TPM limiter, retries and a disk cache. Interrupted runs resume for free, and three model sizes are matched to three jobs (Nano for volume, Super for dialogue, Ultra for one synthesis call). **Measured (28 Oct 2026):** each scenario took about 3,900 calls in about 41 minutes at 95 requests per minute (the account's Nano limit is 100), with a mean latency of 1.6–1.7 s for Nano and 2.1–2.3 s for Super, 0 failed calls and 9 retries out of 11,694. Cost: $0.87–0.91 per scenario, $2.65 for all three, $2.78 including tests, the leakage probe and the persona translations. The pipeline keeps a spending ledger with a hard cap (`LLM_BUDGET_USD`); its total matched the Token Factory balance within $0.05. Per-scenario numbers: `pipeline/out/run_stats_<id>.json`.
 
 ## Architecture
 
@@ -94,24 +94,37 @@ The data contract between Python and TypeScript is `web/src/types.ts`. `validate
 
 ## Results
 
-All published scenario files are currently **mock** (`mock: true`): no API key existed while building, so stances and texts come from a deterministic heuristic and are marked "[demo]" in the app. The numbers below that need the LLM are **pending live run**.
+All published scenario files are live Nemotron runs on Nebius Token Factory (2,000 residents each, 28 Oct 2026).
 
 | | SUV fee (4 Feb 2024) | E-scooters (2 Apr 2023) |
 |---|---|---|
 | Official result ("pour") / turnout | 54.55% / 5.68% | 10.97% / 7.46% |
 | Pre-vote poll | OpinionWay 61% (different question; not comparable) | Ifop-Fiducial 30% (same question) |
-| Simulated, everyone in Paris | *pending live run* | *pending live run* |
-| Simulated, likely voters | *pending live run* | *pending live run* |
-| Sector MAE / Pearson r (likely voters) | *pending live run* | *pending live run* |
-| Gap sign correct (poll vs vote) | n/a (poll not comparable) | *pending live run* |
-| After neighbour talk: MAE | *pending live run* | *pending live run* |
+| Simulated, everyone in Paris | 25.6% | 33.1% |
+| Simulated, likely voters | 27.4% | 28.5% |
+| Sector MAE / Pearson r (likely voters) | 27.9 pts / +0.09 | 17.2 pts / −0.27 |
+| Gap sign correct (poll vs vote) | n/a (poll not comparable) | yes |
+| After neighbour talk: MAE | 28.8 pts | 15.8 pts |
 | Baseline: uniform poll, sector MAE | n/a | 18.8 pts |
+| Baseline: bare model (Nano, no personas) | 55.0%, MAE 15.5 pts | 55.0%, MAE 43.8 pts |
 | Baseline: demographic rule without LLM, sector MAE | 12.1 pts | 1.3 pts* |
-| Leakage probe verdict | *pending live run* | *pending live run* |
+| Leakage probe verdict | possible leakage | possible leakage |
 
 \*The demographic-rule coefficients were fixed by someone who knew the city-wide results (though not the sector results), so this baseline is optimistic. It is the bar the simulation has to beat.
 
-Data-centre scenario: everyone vs likely participants, top "who to consult" groups and the themes the meeting would miss are *pending live run*. In mock mode the pipeline already finds that renters within 2 km of the site carry about 10% of the computed impact but would be about 4% of the people at the meeting. Both shares come from computed exposure and the calibrated turnout model; the model's own "would you take part" answer only nudges the second one.
+**What this says.** The simulation does **not** beat the demographic baseline on either vote. On the scooters it gets the direction of the turnout effect right (likely voters are less favourable than everyone, as in reality: 30% poll, 11% vote), beats the uniform poll and the bare model, and talking helps a little (MAE 17.2 → 15.8). But the level is far off: Nano, answering without "thinking", leans mildly against every proposal. The leakage probe found that Super and Ultra recall both results when asked directly; Nano, which writes the reactions, answered 55% for both votes, so it does not seem to recall them.
+
+**How the settings were chosen (in the open).** Two choices were made after a 60-resident test on the **SUV** vote: (1) a bug fix, so the model writes its reason before its stance and "it doesn't affect me" means 0 rather than −2, and (2) keeping thinking off, as planned. Thinking on moved the same 60 residents from 32% to 100% in favour, so model settings matter more than personas, and we did not pick the setting that matched the result. The **scooter** vote was never used for any choice, so it is the cleaner test.
+
+**Data centre (hypothetical).** 14.7% of residents in favour (range 9–64% across 3 paraphrases × 2 models), 15.4% among likely participants: on the yes/no question, the people likely to come think much like the town as a whole. The gap is in who carries the impact:
+
+| Group | Share of computed impact | Share of likely participants |
+|---|---|---|
+| Young renters (18–34) | 28.1% | 9.1% |
+| Neighbours within 2 km of the site | 14.4% | 7.5% |
+| Renters within 2 km of the site | 10.1% | 3.9% |
+
+The arguments that came up most were the strain on the power grid (34% of reasons) and construction nuisances (22%). Both shares above come from computed exposure and the calibrated turnout model, not from the LLM's stance; the model's own "would you take part" answer only nudges the second column.
 
 ## Limitations and responsible use
 
@@ -119,6 +132,7 @@ Data-centre scenario: everyone vs likely participants, top "who to consult" grou
 - **Imputed attributes.** Car, tenure, nationality, registration and commute are not in the dataset. They are imputed to match INSEE shares at district level, so an individual's combination can be implausible. Nationality is never inferred from names or cultural background.
 - **Dataset issues.** We found and documented several (`docs/DATASET_FEEDBACK.md`): Paris is double-sampled, arrondissements are invented in persona texts, and occupation is flat across départements.
 - **Small suburban samples.** Suburban communes have 1–40 residents each; département totals are calibrated but single communes are noisy.
+- **The reaction model leans.** Nano with thinking off is mildly sceptical of every proposal, and its stance barely varies with computed exposure (people next to the data-centre site are no more opposed than people far away). Treat the yes/no shares as weak; the impact-versus-voice comparison does not depend on them.
 - **Leakage.** Both backtest votes predate the models' pre-training cutoff, so the backtest may be contaminated. The probe and the bare-model baseline make that visible; an out-of-sample check is future work.
 - **Exposure rules are simplified** and documented in `pipeline/exposure.py`. For example, the scooter-usage probability, the 2 km heat-network radius and the unknown 225 kV route are assumptions.
 - **Hypothetical site.** The data-centre site is hypothetical, only inspired by real projects, and labelled so everywhere.

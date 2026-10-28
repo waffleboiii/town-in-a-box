@@ -16,8 +16,9 @@ Total time is about 3.5 hours at 60 requests per minute (less if your account al
 
 1. Open the file `.env` in the repo root (`notepad .env`).
 2. Paste your key after `TOKEN_FACTORY_API_KEY=`, with no spaces and no quotes.
-3. From your Token Factory console, copy your rate limits into `LLM_RPM` (requests per minute) and `LLM_TPM` (tokens per minute). For `LLM_CONCURRENCY`, start with `8`.
-4. Save the file.
+3. From your Token Factory console, copy your rate limits into `LLM_RPM` (requests per minute) and `LLM_TPM` (tokens per minute). For `LLM_CONCURRENCY`, start with `8`. (`verify_models.py --ping` also prints the limits the API reports.)
+4. Optional: `LLM_BUDGET_USD` (default 12) is a hard cap over all runs. Every billed answer is added to `pipeline\out\spend_ledger.json`, and no request is sent that could cross the cap. Keep it below your balance.
+5. Save the file.
 
 Never paste the key anywhere else: not in code, not in a chat, and never in a variable whose name starts with `VITE_`. `.env` is git-ignored.
 

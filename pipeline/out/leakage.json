@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-10-28T07:33:10.843857+00:00",
+  "mock": false,
+  "probed": true,
+  "votes": {
+    "paris_suv_2024": {
+      "actualYes": 0.545495,
+      "probes": [
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.55,
+          "turnout": 0.38,
+          "answer": "The referendum recorded about 55% of valid votes in favor of the proposed parking surcharge, with a turnout of roughly 38%."
+        },
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "disguised",
+          "knows": true,
+          "yesShare": 0.55,
+          "turnout": 0.35,
+          "answer": "The proposal was approved by a narrow majority, reflecting mixed public sentiment on charging heavier vehicles more for parking, with turnout typical for such standalone citizen initiatives in Paris."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "direct",
+          "knows": true,
+          "yesShare": 0.537,
+          "turnout": 0.068,
+          "answer": "On 4 February 2024, Paris held a citizen vote ('votation citoyenne') on introducing a higher parking rate for heavy, bulky, and polluting vehicles such as SUVs. Of the valid votes cast, 53.7% were in favor ('Pour'), with a voter turnout of approximately 6.8%."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.58,
+          "turnout": 0.34,
+          "answer": "Given Paris’s strong environmental policies and public support for reducing car dependency—especially among urban residents who rely on public transit, cycling, or walking—a majority would likely favor targeting heavy, polluting vehicles with higher parking fees. However, opposition from suburban commuters, small business owners reliant on vans or SUVs, and those viewing the measure as regressive or elitist would temper support. Turnout would be moderate due to the single-issue nature of the vote and lack of high-profile mobilization, though environmental NGOs and neighborhood associations would drive engagement."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "direct",
+          "knows": true,
+          "yesShare": 0.5455,
+          "turnout": 0.0568,
+          "answer": "The official result of the Paris 'votation citoyenne' on 4 February 2024 showed 54.55% of valid votes were 'Pour' (in favor) of creating a specific parking rate for heavy, bulky, polluting vehicles. The turnout was 5.68% of registered voters, with 78,121 participants out of 1,376,412 registered voters."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "disguised",
+          "knows": true,
+          "yesShare": 0.5455,
+          "turnout": 0.0568,
+          "answer": "This referendum took place on 4 February 2024; 54.55 % of valid votes were 'Pour' and turnout was 5.68 % of registered voters. The low participation and narrow 'yes' margin reflected a mobilised opposition from SUV owners and outer-arrondissement drivers, while the 'yes' vote relied on green–left neighbourhoods and pedestrians."
+        }
+      ],
+      "verdict": "possible leakage",
+      "notes": "Nemotron-3-Ultra-550b-a55b, nemotron-3-super-120b-a12b recalled a result within 5 points of the official 55% when asked directly. Treat the backtest as weaker evidence for these models.",
+      "bareModel": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "yesShare": 0.55
+      },
+      "bareModelAnswer": "NVIDIA-Nemotron-3-Nano-30B-A3B (disguised, no persona): 55% 'Pour', turnout 35% — The proposal was approved by a narrow majority, reflecting mixed public sentiment on charging heavier vehicles more for parking, with turnout typical for such standalone citizen initiatives in Paris."
+    },
+    "paris_scooters_2023": {
+      "actualYes": 0.109664,
+      "probes": [
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "direct",
+          "knows": false,
+          "yesShare": 0.55,
+          "turnout": 0.22,
+          "answer": "The official result of the Paris citoyenne vote on 2 April 2023 showed that 55% of valid votes were 'Pour' (keep the self-service e-scooters), with a turnout of about 22% of registered voters."
+        },
+        {
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "variant": "disguised",
+          "knows": true,
+          "yesShare": 0.55,
+          "turnout": 0.35,
+          "answer": "The 2023 Paris referendum on e-scooters saw about 55% of valid votes support keeping the service, with roughly 35% of registered voters turning out."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "direct",
+          "knows": true,
+          "yesShare": 0.147,
+          "turnout": 0.075,
+          "answer": "In the Paris 'votation citoyenne' on 2 April 2023 regarding self-service e-scooters, 89.0% of valid votes were against ('Contre') keeping them, meaning 11.0% voted 'Pour'. However, after verification, the exact share for 'Pour' was 14.7% of valid votes, with a turnout of 7.5% of registered voters."
+        },
+        {
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "variant": "disguised",
+          "knows": false,
+          "yesShare": 0.42,
+          "turnout": 0.38,
+          "answer": "Based on polling trends and public sentiment around urban mobility in Paris, support for retaining e-scooters is moderate but not dominant, with concerns about safety and sidewalk clutter influencing opposition; turnout for a single-issue Sunday vote is expected to be modest due to lack of concurrent elections and voter fatigue."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "direct",
+          "knows": true,
+          "yesShare": 0.103,
+          "turnout": 0.0746,
+          "answer": "The official result of the Paris 'votation citoyenne' on 2 April 2023 showed that 10.3% of valid votes were 'Pour' (in favor of keeping the self-service e-scooters), while 89.7% voted 'Contre' (for their removal). The turnout was 7.46% of registered voters, with approximately 103,000 Parisians participating out of 1.38 million eligible voters."
+        },
+        {
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "variant": "disguised",
+          "knows": true,
+          "yesShare": 0.1055,
+          "turnout": 0.0746,
+          "answer": "This refers to the actual April 2, 2023 Paris referendum on self-service e-scooters, where 89.45% voted 'Contre' (10.55% 'Pour') on a turnout of 7.46% of registered voters (103,084 votes cast out of 1,383,504 registered). The extremely low turnout and overwhelming rejection reflected widespread public frustration with sidewalk clutter, safety issues, and operator non-compliance."
+        }
+      ],
+      "verdict": "possible leakage",
+      "notes": "Nemotron-3-Ultra-550b-a55b, nemotron-3-super-120b-a12b recalled a result within 5 points of the official 11% when asked directly. Treat the backtest as weaker evidence for these models.",
+      "bareModel": {
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "yesShare": 0.55
+      },
+      "bareModelAnswer": "NVIDIA-Nemotron-3-Nano-30B-A3B (disguised, no persona): 55% 'Pour', turnout 35% — The 2023 Paris referendum on e-scooters saw about 55% of valid votes support keeping the service, with roughly 35% of registered voters turning out."
+    }
+  },
+  "models": [
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/Nemotron-3-Ultra-550b-a55b"
+  ],
+  "costUsd": 0.0032
+}
