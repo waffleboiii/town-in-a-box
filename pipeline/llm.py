@@ -40,6 +40,14 @@ CACHE_DIR = Path(env("LLM_CACHE_DIR", str(OUT / "cache" / "llm")))
 # listing; check the Token Factory pricing page. Override with LLM_PRICES in .env, e.g.
 # LLM_PRICES={"nano": [0.06, 0.24], "super": [0.30, 0.90], "ultra": [1.0, 3.0]}
 DEFAULT_PRICES = {"nano": (0.06, 0.24), "super": (0.30, 0.90), "ultra": (1.0, 3.0)}
+# A model that matches no price above is assumed to be expensive, so the spending cap still holds.
+UNKNOWN_PRICE = (1.0, 3.0)
+
+# Hard spending cap over ALL runs, because the account has a fixed prepaid balance.
+# Every billed answer is added to the ledger; a request is only sent if its worst case
+# (prompt + max_tokens of output) still fits under LLM_BUDGET_USD.
+LEDGER = OUT / "spend_ledger.json"
+DEFAULT_BUDGET_USD = 12.0
 
 MOCK_FR = "[démo] "
 MOCK_EN = "[demo] "
@@ -107,7 +115,69 @@ def price_for(model: str, prices: dict) -> tuple[float, float]:
     for k, v in prices.items():
         if k in m:
             return float(v[0]), float(v[1])
-    return 0.0, 0.0
+    return UNKNOWN_PRICE
+
+
+# ---------------------------------------------------------------------------
+# Spending ledger (pipeline/out/spend_ledger.json), shared by every script and every run
+# ---------------------------------------------------------------------------
+
+class BudgetExceeded(RuntimeError):
+    pass
+
+
+def ledger_read() -> dict:
+    try:
+        d = json.loads(LEDGER.read_text(encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def ledger_spent() -> float:
+    return float(ledger_read().get("spent_usd", 0.0))
+
+
+def ledger_add(model: str, usage: dict, prices: dict) -> float:
+    """Record one billed answer. Re-reads the file first, so two scripts never erase each other's spending."""
+    pin, pout = price_for(model, prices)
+    cost = (int(usage.get("prompt_tokens") or 0) * pin + int(usage.get("completion_tokens") or 0) * pout) / 1e6
+    d = ledger_read()
+    d["spent_usd"] = round(float(d.get("spent_usd", 0.0)) + cost, 6)
+    d["requests"] = int(d.get("requests", 0)) + 1
+    by_model = d.setdefault("by_model", {})
+    by_model[model] = round(float(by_model.get(model, 0.0)) + cost, 6)
+    d["updated"] = time.strftime("%Y-%m-%d %H:%M:%S")
+    d["note"] = "Estimated from token counts and the prices in llm.py; the Token Factory console is the real balance."
+    write_json(LEDGER, d, compact=False)
+    return cost
+
+
+def budget_usd() -> float:
+    try:
+        return float(env("LLM_BUDGET_USD", str(DEFAULT_BUDGET_USD)))
+    except ValueError:
+        return DEFAULT_BUDGET_USD
+
+
+_RESERVED = [0.0]  # worst-case cost of the requests in flight in this process
+
+
+def reserve(model: str, prompt_tokens: int, max_tokens: int, prices: dict) -> float:
+    """Reserve the worst case of one request, or raise BudgetExceeded. Call release() afterwards."""
+    pin, pout = price_for(model, prices)
+    worst = (prompt_tokens * pin + max_tokens * pout) / 1e6
+    cap = budget_usd()
+    spent = ledger_spent()
+    if spent + _RESERVED[0] + worst > cap:
+        raise BudgetExceeded(f"spending cap reached: ${spent:.2f} spent of the ${cap:.2f} cap (LLM_BUDGET_USD). "
+                             "Nothing was sent. Raise the cap only if the Token Factory balance allows it.")
+    _RESERVED[0] += worst
+    return worst
+
+
+def release(worst: float) -> None:
+    _RESERVED[0] = max(0.0, _RESERVED[0] - worst)
 
 
 # ---------------------------------------------------------------------------
@@ -431,12 +501,25 @@ class LLMClient:
                 # learned that this model rejects json_schema or the extra body.
                 mode = self.schema_mode.get(model, "json_schema")
                 body = self._body(model, messages, schema, schema_name, temperature, max_tokens, seed, extra, mode)
+                worst = reserve(model, est_tokens - max_tokens, max_tokens, self.settings.prices)
                 t0 = time.monotonic()
                 transport_error = None
+                payload = None
                 try:
                     r = await self.http.post("/chat/completions", json=body)
+                    if r.status_code == 200:
+                        # Billed: record it before the reservation is released.
+                        try:
+                            payload = r.json()
+                        except ValueError:
+                            payload = None
+                        usage = (payload or {}).get("usage") or {"prompt_tokens": est_tokens - max_tokens,
+                                                                 "completion_tokens": max_tokens}
+                        ledger_add(model, usage, self.settings.prices)
                 except (httpx.TimeoutException, httpx.TransportError) as e:
                     transport_error = e
+                finally:
+                    release(worst)
                 latency = time.monotonic() - t0
             if transport_error is not None:  # back off outside the semaphore so other requests can go
                 last_err = transport_error
@@ -472,7 +555,10 @@ class LLMClient:
                 stats.errors += 1
                 raise LLMError(f"HTTP {r.status_code} for {model}")
 
-            payload = r.json()
+            if not isinstance(payload, dict):
+                last_err = LLMError("answer was not JSON")
+                stats.retries += 1
+                continue
             usage = payload.get("usage") or {}
             ev[1] = int(usage.get("total_tokens") or ev[1])  # correct the limiter with real usage
             stats.calls += 1
@@ -579,4 +665,9 @@ async def gather_progress(coros: list, label: str, every: float = 0.1) -> list:
                     print(f"    {label}: {done}/{n} ({time.time() - t0:.0f}s)", flush=True)
                 next_mark += every
 
-    return await asyncio.gather(*(wrap(c) for c in coros), return_exceptions=True)
+    results = await asyncio.gather(*(wrap(c) for c in coros), return_exceptions=True)
+    # The spending cap stops the whole run (nothing half-finished gets written); the cache keeps what was paid for.
+    for res in results:
+        if isinstance(res, BudgetExceeded):
+            raise res
+    return results

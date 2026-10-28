@@ -29,7 +29,7 @@ from pathlib import Path
 from aggregate import (by_district, by_group, compute_views, consult_recs, scenario_groups, uncertainty_ranges,
                        with_scenario_groups)
 from backtest import compute_backtest, compute_backtest_after_talk
-from common import OUT, SHARED, WEB_DATA, read_json, write_json
+from common import OUT, SHARED, WEB_DATA, env, read_json, write_json
 from conversations import DEFAULT_PAIRS, conversation_summary, run_conversations
 from exposure import GeoContext, compute_exposure, exposure_prompt_text, place, public_exposure, template_words
 from llm import LLMClient, fill, gather_progress, load_settings, stable_seed
@@ -40,7 +40,7 @@ from themes import assign_themes, discover_themes, theme_stats
 DEV = OUT / "dev"
 ORDER = ["saint_denis_datacenter", "paris_suv_2024", "paris_scooters_2023"]
 REACTION_TEMPERATURE = 0.8
-REACTION_MAX_TOKENS = 500
+REACTION_MAX_TOKENS = int(env("REACTION_MAX_TOKENS", "500"))  # raise it when the model thinks first
 UNCERTAINTY_K = 3  # proposal paraphrases
 DISCLAIMER = ("Every text is a simulated voice generated for a synthetic resident, never a real person. Results are "
               "hypotheses to test, not evidence of public opinion.")

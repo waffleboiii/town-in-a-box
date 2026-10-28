@@ -15,6 +15,7 @@
  * Settings (env vars, optional):
  *   RATE_LIMIT_PER_MIN  tokens per IP per minute (default 20)
  *   LLM_RPM             live LLM calls per minute for the whole instance (default 60)
+ *   LIVE_DAILY_CALLS    live LLM calls per instance per day (default 250, see takeDailyLive)
  */
 import { envNumber } from './env.js';
 import { HttpError, clientIp } from './http.js';
@@ -25,6 +26,25 @@ import { HttpError, clientIp } from './http.js';
 const perIp = new Map();
 /** @type {Bucket | null} */
 let globalBucket = null;
+/** Live calls made today (UTC) by this instance. */
+const daily = { day: '', used: 0 };
+
+/**
+ * Daily allowance of live LLM calls, so a public demo cannot drain a small prepaid balance.
+ * 250 Nano calls cost roughly $0.05-0.20. Returns false when today's allowance is used up:
+ * the caller then answers with a clearly flagged mock answer instead of calling the model.
+ * @param {number} llmCalls
+ */
+export function takeDailyLive(llmCalls) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (daily.day !== today) {
+    daily.day = today;
+    daily.used = 0;
+  }
+  if (daily.used + llmCalls > envNumber('LIVE_DAILY_CALLS', 250)) return false;
+  daily.used += llmCalls;
+  return true;
+}
 
 /**
  * Refill a bucket for the time that passed, then try to spend `cost` tokens.

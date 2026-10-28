@@ -15,7 +15,7 @@ import { handle, json, readJsonBody } from './_lib/http.js';
 import { asText, callJson } from './_lib/llm.js';
 import { MOCK_MODEL, mockAnswer } from './_lib/mock.js';
 import { buildProfileFr, fillTemplate } from './_lib/profile.js';
-import { rateLimit } from './_lib/rateLimit.js';
+import { rateLimit, takeDailyLive } from './_lib/rateLimit.js';
 import { prompts } from './_lib/shared.js';
 import { parseAskRequest } from './_lib/validate.js';
 
@@ -54,8 +54,12 @@ export default {
   async fetch(request) {
     return handle(request, ['POST'], async () => {
       const req = parseAskRequest(await readJsonBody(request));
-      const live = !isMockMode();
+      let live = !isMockMode();
       rateLimit(request, live ? 1 : 0);
+      if (live && !takeDailyLive(1)) {
+        console.warn('[ask] daily live allowance used up: answering with demo text');
+        live = false;
+      }
 
       if (live) {
         const model = models().ask;

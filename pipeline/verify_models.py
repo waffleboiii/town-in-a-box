@@ -14,7 +14,7 @@ import time
 
 import httpx
 
-from llm import LLMClient, load_settings
+from llm import LLMClient, ledger_add, load_settings, reserve, release
 
 PING_SCHEMA = {"type": "object", "properties": {"ok": {"type": "boolean"}, "word": {"type": "string"}},
                "required": ["ok", "word"], "additionalProperties": False}
@@ -39,17 +39,25 @@ def raw_probe(s, model: str, json_schema: bool, extra: bool) -> str:
     if extra:
         body.update(s.extra_body)
     t0 = time.time()
-    r = httpx.post(f"{s.base_url}/chat/completions", json=body, timeout=120,
-                   headers={"Authorization": f"Bearer {s.api_key}"})
+    worst = reserve(model, 200, body["max_tokens"], s.prices)  # stays under the spending cap
+    try:
+        r = httpx.post(f"{s.base_url}/chat/completions", json=body, timeout=120,
+                       headers={"Authorization": f"Bearer {s.api_key}"})
+    finally:
+        release(worst)
     if r.status_code != 200:
         return f"HTTP {r.status_code}: {r.text[:160]}"
     p = r.json()
+    ledger_add(model, p.get("usage") or {"prompt_tokens": 200, "completion_tokens": body["max_tokens"]}, s.prices)
     ch = p["choices"][0]
     msg = ch.get("message", {})
     content = msg.get("content") or ""
     reasoning = msg.get("reasoning_content") or msg.get("reasoning") or ""
     thinks = bool(reasoning) or "<think>" in content
     u = p.get("usage", {})
+    limits = {k: v for k, v in r.headers.items() if "ratelimit" in k.lower()}  # e.g. x-ratelimit-limit-requests
+    if limits:
+        print(f"     rate-limit headers: {limits}")
     return (f"OK {time.time() - t0:.1f}s, finish={ch.get('finish_reason')}, tokens {u.get('prompt_tokens')}+"
             f"{u.get('completion_tokens')}, thinking={'YES' if thinks else 'no'}, content={content[:70]!r}")
 

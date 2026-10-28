@@ -1,0 +1,6 @@
+# Not uploaded by `vercel deploy` (Vercel installs the packages and builds the site itself).
+node_modules
+dist
+dist-*
+*.log
+.env*

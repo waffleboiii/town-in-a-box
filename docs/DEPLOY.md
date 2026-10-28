@@ -91,7 +91,8 @@ Before committing, run `git status` and make sure `.env` is not listed.
 
    Fine-tuning knobs, all optional: `MODEL_ASK` (model for "ask a resident", default = `MODEL_REACTION`),
    `RATE_LIMIT_PER_MIN` (default 20 AI calls per visitor per minute), `LLM_RPM` (default 60 AI calls per
-   minute in total), `LLM_TIMEOUT_MS` (default 25000), `LLM_DISABLE_THINKING` (default 1 = quick direct
+   minute in total), `LIVE_DAILY_CALLS` (default 250 AI calls per day per server instance, roughly
+   $0.05–0.20; after that the site answers with `[demo]` texts until midnight UTC), `LLM_TIMEOUT_MS` (default 25000), `LLM_DISABLE_THINKING` (default 1 = quick direct
    answers), `LIVE_FALLBACK_TO_MOCK` (default 1 = if the AI fails, show a `[demo]` answer instead of an
    error), `ALLOWED_ORIGINS` (only needed for a custom domain behind a proxy).
 

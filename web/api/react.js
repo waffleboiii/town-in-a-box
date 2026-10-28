@@ -20,7 +20,7 @@ import { handle, json, readJsonBody } from './_lib/http.js';
 import { asInt, asNumber, asText, callJson } from './_lib/llm.js';
 import { MOCK_MODEL, mockReaction } from './_lib/mock.js';
 import { RENDERINGS, buildProfileFr, fillTemplate, renderExposureFr } from './_lib/profile.js';
-import { rateLimit } from './_lib/rateLimit.js';
+import { rateLimit, takeDailyLive } from './_lib/rateLimit.js';
 import { prompts } from './_lib/shared.js';
 import { parseReactRequest } from './_lib/validate.js';
 
@@ -68,8 +68,12 @@ export default {
   async fetch(request) {
     return handle(request, ['POST'], async () => {
       const req = parseReactRequest(await readJsonBody(request));
-      const live = !isMockMode();
+      let live = !isMockMode();
       rateLimit(request, live ? req.residents.length : 0);
+      if (live && !takeDailyLive(req.residents.length)) {
+        console.warn('[react] daily live allowance used up: answering with demo text');
+        live = false;
+      }
 
       if (!live) {
         /** @type {ReactResponse} */

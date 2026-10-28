@@ -72,10 +72,16 @@
   },
   "reaction": {
     "system": "Tu joues le rôle d'un·e habitant·e simulé·e de la région parisienne, décrit·e ci-dessous. Tu n'es pas un assistant. Réagis comme cette personne réagirait vraiment, avec ses priorités, ses contraintes et son vocabulaire — sans caricature, sans exagérer son identité, et sans chercher à plaire. Il est normal d'être indifférent, partagé ou opposé. Les faits calculés qu'on te donne sont exacts : appuie-toi dessus, ne les contredis pas et n'invente pas d'autres chiffres. Tu ne connais pas le résultat d'éventuels votes passés et tu ne dois pas en parler. Réponds uniquement avec un objet JSON conforme au schéma.",
-    "user": "PROFIL\n{{profile}}\n\nCE QUE CETTE PROPOSITION CHANGE CONCRÈTEMENT POUR TOI (faits calculés)\n{{exposure}}\n\nPROPOSITION SOUMISE À LA VILLE\n{{proposal}}\n\nDonne ta réaction :\n- stance : -2 (très opposé·e) à 2 (très favorable)\n- affected : 0 (rien ne change pour moi) à 3 (ça change beaucoup ma vie quotidienne)\n- behaviour_en : en anglais, ce que tu ferais concrètement (une phrase courte)\n- reason_fr : une ou deux phrases à la première personne, dans ta propre voix\n- reason_en : la traduction anglaise fidèle de reason_fr\n- would_participate : probabilité de 0 à 1 que tu te déplaces pour participer ({{channel}}), en étant réaliste sur ton emploi du temps et tes habitudes",
+    "user": "PROFIL\n{{profile}}\n\nCE QUE CETTE PROPOSITION CHANGE CONCRÈTEMENT POUR TOI (faits calculés)\n{{exposure}}\n\nPROPOSITION SOUMISE À LA VILLE\n{{proposal}}\n\nDonne ta réaction, dans cet ordre :\n- reason_fr : une ou deux phrases à la première personne, dans ta propre voix : ce que tu penses de la proposition elle-même\n- reason_en : la traduction anglaise fidèle de reason_fr\n- stance : ton avis sur la proposition, cohérent avec reason_fr. -2 = très opposé·e, -1 = plutôt opposé·e, 0 = indifférent·e ou partagé·e, 1 = plutôt favorable, 2 = très favorable. Ne pas être concerné·e n'est pas une raison d'être contre : si la mesure t'est égale, mets 0 ; si tu l'approuves même sans être concerné·e, mets 1 ou 2.\n- affected : 0 (rien ne change pour moi) à 3 (ça change beaucoup ma vie quotidienne)\n- behaviour_en : en anglais, ce que tu ferais concrètement (une phrase courte)\n- would_participate : probabilité de 0 à 1 que tu te déplaces pour participer ({{channel}}), en étant réaliste sur ton emploi du temps et tes habitudes",
     "schema": {
       "type": "object",
       "properties": {
+        "reason_fr": {
+          "type": "string"
+        },
+        "reason_en": {
+          "type": "string"
+        },
         "stance": {
           "type": "integer",
           "minimum": -2,
@@ -89,12 +95,6 @@
         "behaviour_en": {
           "type": "string"
         },
-        "reason_fr": {
-          "type": "string"
-        },
-        "reason_en": {
-          "type": "string"
-        },
         "would_participate": {
           "type": "number",
           "minimum": 0,
@@ -102,11 +102,11 @@
         }
       },
       "required": [
+        "reason_fr",
+        "reason_en",
         "stance",
         "affected",
         "behaviour_en",
-        "reason_fr",
-        "reason_en",
         "would_participate"
       ],
       "additionalProperties": false
