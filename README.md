@@ -4,6 +4,10 @@
 
 Built for the Nebius x NVIDIA Global AI Hackathon (track: Best Apps and Agents) with **NVIDIA Nemotron 3** models on **Nebius Token Factory** and the **NVIDIA Nemotron-Personas-France** dataset.
 
+**Live demo: https://town-in-a-box.vercel.app** (free, no login; works on desktop and phones).
+
+![One simulated resident's view: their reaction, what the proposal changes for them, and the gap between everyone and likely participants](docs/img/resident-card.png)
+
 > Every resident is synthetic and every text is a *simulated voice*. Results are hypotheses to check with real people, **not evidence of public opinion**.
 
 ---
