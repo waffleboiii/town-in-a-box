@@ -64,8 +64,11 @@ export function ResidentCard({
 }) {
   const { scenario, residentsById, resultsById, districtsByIdx, groupsById, map, view } = useApp();
   const [lang, setLang] = useState<'en' | 'fr'>('en');
-  const [question, setQuestion] = useState('');
-  const [playing, setPlaying] = useState(false);
+  // One card is reused for every resident: a half-typed question stays with the resident it was meant for.
+  const [draft, setDraft] = useState({ residentId, text: '' });
+  const question = draft.residentId === residentId ? draft.text : '';
+  const setQuestion = (text: string) => setDraft({ residentId, text });
+  const [playingId, setPlayingId] = useState<string | null>(null);
   const resident = residentsById.get(residentId);
   const result = resultsById.get(residentId);
 
@@ -95,8 +98,22 @@ export function ResidentCard({
   useEffect(() => {
     const prev = shown.current;
     shown.current = { residentId, newestKey };
-    if (prev.residentId !== residentId) bodyRef.current?.scrollTo({ top: 0 });
-    else if (newestKey && prev.newestKey !== newestKey) newestRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    const body = bodyRef.current;
+    const el = newestRef.current;
+    if (!body) return;
+    if (prev.residentId !== residentId) {
+      body.scrollTo({ top: 0 });
+      return;
+    }
+    if (!newestKey || prev.newestKey === newestKey || !el) return;
+    // Scroll the card only (never the page), just enough to show the entry. An answer that lands
+    // while the reader has scrolled away from its question (to reread something) leaves them there.
+    const b = body.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    const answered = newestKey.endsWith(':done');
+    if (answered && (r.top > b.bottom || r.bottom < b.top)) return;
+    const by = r.top < b.top ? r.top - b.top - 8 : r.bottom > b.bottom ? Math.min(r.bottom - b.bottom + 8, r.top - b.top - 8) : 0;
+    if (by) body.scrollBy({ top: by, behavior: 'smooth' });
   }, [residentId, newestKey]);
 
   if (!resident) return null;
@@ -275,18 +292,18 @@ export function ResidentCard({
                   <button
                     type="button"
                     className="btn btn-small"
-                    disabled={playing || !map}
+                    disabled={playingId === conversation.id || !map}
                     onClick={async () => {
                       if (!map) return;
-                      setPlaying(true);
+                      setPlayingId(conversation.id);
                       try {
                         await map.playConversation(conversation, { lang });
                       } finally {
-                        setPlaying(false);
+                        setPlayingId((p) => (p === conversation.id ? null : p));
                       }
                     }}
                   >
-                    <Icon name="play" size={14} /> {playing ? 'Playing…' : 'Watch on the map'}
+                    <Icon name="play" size={14} /> {playingId === conversation.id ? 'Playing…' : 'Watch on the map'}
                   </button>
                   <button type="button" className="btn btn-small" onClick={() => onNavigate(other.id)}>
                     Meet {other.name.split(' ')[0]}

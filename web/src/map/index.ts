@@ -356,7 +356,7 @@ class TownMap implements ITownMap {
     const t = this.tileAtScreen(sx, sy);
     const inMap = t.x >= 0 && t.y >= 0 && t.x < this.map.width && t.y < this.map.height;
     if (!inMap) {
-      if (this.pickMode === 'none') this.emit('backgroundClick');
+      if (this.pickMode === 'none' && !this.bubbles.hit(sx, sy)) this.emit('backgroundClick');
       return;
     }
     const d = this.grid.at(t.x, t.y);
@@ -375,6 +375,7 @@ class TownMap implements ITownMap {
       this.emit('tileClick', t.x, t.y);
       return;
     }
+    if (this.bubbles.hit(sx, sy)) return; // speech bubbles sit on top: a tap on one does nothing
     const i = this.pickResidentAt(t.wx, t.wy);
     if (i >= 0) {
       this.emit('residentClick', this.residents.ids[i]);

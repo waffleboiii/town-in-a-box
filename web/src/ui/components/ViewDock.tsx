@@ -2,8 +2,9 @@
  * Bottom-centre dock: the headline gap (the most important number on screen) and the big
  * view toggle: Everyone · Can vote · Likely to show up, plus the "after neighbours talked" switch.
  */
-import type { ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import type { Scenario, ViewMode } from '../../types';
+import { rowsForView } from '../aggregate';
 import { useApp } from '../context';
 import { int, pct, pct2, pts } from '../format';
 import { Icon } from '../icons';
@@ -12,9 +13,9 @@ import { Num } from './common';
 
 const VIEW_ICON: Record<ViewMode, string> = { everyone: 'people', eligible: 'ballot', attendees: 'walk' };
 
-/** Hover text for a view button: who is in the group, and why its count is weighted. */
-function viewTitle(v: ViewMode, scenario: Scenario, weighted: number): string {
-  const drawn = scenario.results.filter((r) => (v === 'everyone' ? true : v === 'eligible' ? r.eligible : r.attendee)).length;
+/** Hover text for a view button: who is in the group, and why its count is weighted.
+ *  `drawn`: simulated residents in the view; `byChance`: live runs count each one by their chance of taking part. */
+function viewTitle(v: ViewMode, scenario: Scenario, drawn: number, weighted: number, byChance: boolean): string {
   const counts = drawn === weighted ? '' : ` ${int(drawn)} simulated residents, weighted to the real population: they count as ${int(weighted)}.`;
   if (v === 'everyone') return `Every simulated adult, in Paris and the inner suburbs.${counts}`;
   if (v === 'eligible') {
@@ -22,11 +23,20 @@ function viewTitle(v: ViewMode, scenario: Scenario, weighted: number): string {
       ? `Lives in Paris (not the suburbs), is a French or EU citizen and is on the electoral roll.${counts}`
       : 'Every adult resident can take part in this channel.';
   }
-  return `The residents most likely to take part, up to the expected turnout (${pct(scenario.turnoutTarget, 1)} of those who can take part).${counts}`;
+  const turnout = `the expected turnout (${pct(scenario.turnoutTarget, 1)} of those who can take part)`;
+  if (byChance) {
+    return `Everyone who can take part, each counted by their chance of taking part, so together they match ${turnout}: ${int(drawn)} simulated residents count as about ${int(weighted)}.`;
+  }
+  return `The residents most likely to take part, up to ${turnout}.${counts}`;
 }
 
 export function ViewDock({ mobile }: { mobile?: ReactNode }) {
-  const { scenario, views, view, setView, afterTalk, setAfterTalk, isLiveSample } = useApp();
+  const { scenario, views, view, setView, afterTalk, setAfterTalk, isLiveSample, aggCtx } = useApp();
+  // Simulated residents in each view, for the hover text (they only change with the scenario).
+  const drawn = useMemo(() => {
+    const count = (v: ViewMode) => (scenario ? rowsForView(v, scenario.results, aggCtx).filter((r) => r.weight > 0).length : 0);
+    return { everyone: count('everyone'), eligible: count('eligible'), attendees: count('attendees') };
+  }, [scenario, aggCtx]);
 
   if (!scenario || !views) {
     return (
@@ -114,7 +124,7 @@ export function ViewDock({ mobile }: { mobile?: ReactNode }) {
         <div className="view-toggle" role="group" aria-label="Whose voices to count">
           <div className="vt-group">
             {(['everyone', 'eligible', 'attendees'] as ViewMode[]).map((v) => (
-              <button key={v} type="button" className="vt-btn" aria-pressed={view === v} onClick={() => setView(v)} title={viewTitle(v, scenario, views[v].n)}>
+              <button key={v} type="button" className="vt-btn" aria-pressed={view === v} onClick={() => setView(v)} title={viewTitle(v, scenario, drawn[v], views[v].n, Boolean(aggCtx.attendProb))}>
                 <Icon name={VIEW_ICON[v]} size={20} />
                 <span className="vt-text">
                   <span>{viewLabel(v, scope)}</span>

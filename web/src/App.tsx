@@ -108,6 +108,8 @@ export default function App() {
   const [insightsCollapsed, setInsightsCollapsed] = useState(false);
   const autoCollapsed = useRef(false);
   const [sheet, setSheet] = useState<'proposal' | 'insights' | null>(null);
+  const sheetNow = useLatest(sheet);
+  const sheetUnderCard = useRef<'proposal' | 'insights' | null>(null);
   const [health, setHealth] = useState<ApiHealth | null>(null);
   const [apiOffline, setApiOffline] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -304,22 +306,34 @@ export default function App() {
   // ---------- actions ----------
   const openCard = useCallback((id: number | null, fromMap = false) => {
     setSelected(id);
-    if (id !== null) setSheet(null); // phones: the card replaces an open sheet instead of opening behind it
+    // Phones: the card replaces an open sheet instead of opening behind it; its close button brings the sheet back.
+    if (id !== null) {
+      if (sheetNow.current) sheetUnderCard.current = sheetNow.current;
+      setSheet(null);
+    }
     if (id !== null && fromMap) {
       setInsightsCollapsed((c) => {
         if (!c) autoCollapsed.current = true;
         return true;
       });
     }
-  }, []);
+  }, [sheetNow]);
 
   const closeCard = useCallback(() => {
     setSelected(null);
+    sheetUnderCard.current = null;
     if (autoCollapsed.current) {
       autoCollapsed.current = false;
       setInsightsCollapsed(false);
     }
   }, []);
+
+  /** The card's own close button: back to the sheet it was opened from (phones), else to the map. */
+  const closeCardToSheet = useCallback(() => {
+    const back = sheetUnderCard.current;
+    closeCard();
+    if (back) setSheet(back);
+  }, [closeCard]);
 
   const focusDistrict = useCallback((idx: number) => map?.focusDistrict(idx), [map]);
   const openTab = useCallback((t: TabId) => {
@@ -332,7 +346,7 @@ export default function App() {
     if (id === activeId) return;
     runAbort.current?.abort();
     setActiveId(id);
-    setSelected(null);
+    closeCard();
     setSheet(null);
     setProposalCollapsed(false);
     if (id === 'custom') setEditing(!custom);
@@ -346,7 +360,7 @@ export default function App() {
   }, []);
 
   // Map events, registered once; read the latest state through a ref.
-  const live = useLatest({ pickActive, draft });
+  const live = useLatest({ pickActive, draft, selected });
   useEffect(() => {
     if (!map) return;
     const offs = [
@@ -366,7 +380,7 @@ export default function App() {
       }),
       // Clicking empty map lets go of the selected resident.
       map.on('backgroundClick', () => {
-        if (!live.current.pickActive) closeCard();
+        if (!live.current.pickActive && live.current.selected !== null) closeCard();
       }),
     ];
     return () => offs.forEach((off) => off());
@@ -540,7 +554,7 @@ export default function App() {
                 <ResidentCard
                   residentId={selected}
                   renderPortrait={handle?.renderPortrait ?? null}
-                  onClose={closeCard}
+                  onClose={closeCardToSheet}
                   onNavigate={(id) => openCard(id, false)}
                   asks={asks[askKey] ?? []}
                   onAsk={onAsk}

@@ -50,25 +50,36 @@ export function niceDate(iso: string | undefined): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 }
 
-// Where a long sentence can stop and still read as a finished thought (EN and FR).
-const CLAUSE_BREAK = /(?:[,;:]| [–—-]) | (?=(?:and|but|because|especially|which|although|while|et|mais|car|parce|surtout|notamment|donc|qui) )/g;
-// Small words a cut sentence should not end on ("…character of…", "…zone de La…").
+// Where a long sentence can stop and still read as a finished thought: the main clause stands
+// without what follows ("…, especially…", "…, even though…"). Bubbles only get English text.
+const CLAUSE_BREAK = /(?:[,;:]| [–—-]) | (?=(?:and|because|especially|which|although|while|whereas|even though) )/g;
+// "X, but Y": the opinion is usually in Y, so a bubble never stops before the turn.
+const TURN = /(?:, ?| [–—-] | )(?=(?:but|yet|however)\b)/gi;
+// Small words a cut sentence should not end on ("…character of…", "…the Bois de…").
 const DANGLING =
-  /\s+(?:of|the|a|an|to|in|for|with|from|into|than|as|if|when|on|at|by|and|or|my|our|their|its|this|that|those|who|de|du|des|la|le|les|à|au|aux|en|pour|avec|sur|par|dans|chez|vers|sans|entre|comme|si|quand|et|ou|mon|ma|mes|notre|nos|leur|leurs|ce|cette|ceux|celles|un|une|qui|que)$/i;
+  /\s+(?:of|the|a|an|to|in|for|with|from|into|than|as|if|when|on|at|by|and|or|my|our|their|its|who|de|du|des|la|le|les|à|au|aux|en)$/i;
 
-/** First sentence of a text for a speech bubble. Longer than `max` characters: cut at the last
- *  clause break that keeps most of it (else the last whole word) and end with "…".
+/** First sentence of a text for a speech bubble. Longer than `max` characters: cut at a clause
+ *  break in the last 40% (else the last whole word), never before a "but", and end with "…".
+ *  When the sentence turns on "but" just past `max`, the bubble stretches to show the turn.
  *  The resident card always shows the full text. */
 export function firstSentence(text: string, max = 90): string {
   const t = text.trim().replace(/\s+/g, ' ');
   const m = t.match(/^(.+?[.!?])(\s|$)/);
   const s = m ? m[1] : t;
   if (s.length <= max) return s;
-  const head = s.slice(0, max);
+  const turns = [...s.matchAll(TURN)].map((b) => b.index);
+  let limit = max;
+  const late = turns.find((i) => i >= max - 25);
+  if (late !== undefined && late === turns[0] && late + 20 <= max * 1.6) limit = Math.min(Math.max(max, late + 40), Math.round(max * 1.6));
+  if (s.length <= limit) return s;
+  const head = s.slice(0, limit);
+  const lastTurn = Math.max(-1, ...turns.filter((i) => i < limit - 10));
+  const floor = Math.max(limit * 0.6, lastTurn + 1);
   let cut = -1;
-  for (const b of head.matchAll(CLAUSE_BREAK)) if (b.index >= max * 0.45) cut = b.index;
+  for (const b of head.matchAll(CLAUSE_BREAK)) if (b.index >= floor) cut = b.index;
   if (cut < 0) cut = head.lastIndexOf(' ');
-  if (cut < max * 0.3) cut = max - 1; // one very long word
+  if (cut < limit * 0.3) cut = limit - 1; // one very long word
   let out = s.slice(0, cut).replace(/[\s,;:–—-]+$/, '');
   for (let k = 0; k < 3 && DANGLING.test(out); k++) out = out.replace(DANGLING, '');
   return `${out}…`;

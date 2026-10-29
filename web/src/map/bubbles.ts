@@ -99,6 +99,14 @@ export class SpeechBubble {
     this.text.position.set(10, 6);
   }
 
+  /** Is the screen point (sx, sy) on this bubble? */
+  contains(sx: number, sy: number): boolean {
+    if (!this.node.visible || this.node.alpha < 0.2) return false;
+    const { x, y } = this.node.position;
+    const k = this.node.scale.x;
+    return sx >= x && sx <= x + this.w * k && sy >= y && sy <= y + (this.h + 8) * k;
+  }
+
   destroy(): void {
     this.node.destroy({ children: true });
   }
@@ -127,6 +135,12 @@ export class BubbleLayer {
 
   hidePrefix(prefix: string): void {
     for (const k of [...this.bubbles.keys()]) if (k.startsWith(prefix)) this.hide(k);
+  }
+
+  /** Is the screen point (sx, sy) on any bubble? */
+  hit(sx: number, sy: number): boolean {
+    for (const b of this.bubbles.values()) if (b.contains(sx, sy)) return true;
+    return false;
   }
 
   update(dtMs: number, cam: Camera): void {

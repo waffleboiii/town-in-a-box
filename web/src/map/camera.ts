@@ -34,7 +34,8 @@ export class Camera {
   private vy = 0;
   private keys = new Set<string>();
   private pointers = new Map<number, { x: number; y: number }>();
-  private downAt: { x: number; y: number; t: number } | null = null;
+  /** Where the pointer went down; `stopsGlide`: that press caught the map mid-glide, so it is not a click. */
+  private downAt: { x: number; y: number; t: number; stopsGlide: boolean } | null = null;
   private dragging = false;
   private pinchDist = 0;
   private lastMove = { x: 0, y: 0, t: 0 };
@@ -223,7 +224,7 @@ export class Camera {
       const p = local(e);
       this.pointers.set(e.pointerId, p);
       if (this.pointers.size === 1) {
-        this.downAt = { ...p, t: performance.now() };
+        this.downAt = { ...p, t: performance.now(), stopsGlide: Math.hypot(this.vx, this.vy) > 0.03 };
         this.dragging = false;
         this.vx = this.vy = 0;
         this.lastMove = { ...p, t: performance.now() };
@@ -278,7 +279,7 @@ export class Camera {
       this.pointers.delete(e.pointerId);
       canvas.releasePointerCapture?.(e.pointerId);
       if (this.pointers.size > 0) return;
-      if (!wasDrag && this.downAt) input.onClick(p.x, p.y);
+      if (!wasDrag && this.downAt && !this.downAt.stopsGlide && e.type !== 'pointercancel') input.onClick(p.x, p.y);
       if (performance.now() - this.lastMove.t > 80) this.vx = this.vy = 0;
       this.downAt = null;
       this.dragging = false;
